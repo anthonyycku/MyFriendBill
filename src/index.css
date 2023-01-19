@@ -2,7 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-* {
-    margin: 0;
-    padding: 0;
+html, body, #root {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }

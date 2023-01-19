@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { signIn, signOut, setUserInfo } from "../../../../features/auth/authSlice";
 import LoadingPulse from "../../loading/loading-pulse";
 import { gapi } from "gapi-script";
+import AccountInfo from "./account-info";
 
 const GoogleAuthButton = () => {
   const clientId = '260492928179-bfugkb95ptjvit0hg8ooul8quppar8i5.apps.googleusercontent.com';
@@ -47,13 +48,7 @@ const GoogleAuthButton = () => {
 
       {signedIn ? (
         <>
-          <div className="flex flex-col mr-4 h-12">
-            <p className="text-white">Signed in as:</p>
-            <div className="flex">
-              <img width={20} height={20} src={imageUrl} alt="" referrerPolicy="no-referrer"/>
-              <p className="text-white ml-2">{name}</p>
-            </div>
-          </div>
+          <AccountInfo name={name} imageUrl={imageUrl}/>
           <GoogleLogout
             clientId={clientId}
             buttonText="Log out"
@@ -61,7 +56,7 @@ const GoogleAuthButton = () => {
           />
         </>
       ) : (
-        <div className="h-12" style={{ display: `${!signedIn && isLoading ? 'none' : 'inline'}` }}>
+        <div style={{ display: `${!signedIn && isLoading ? 'none' : 'inline'}` }}>
           <GoogleLogin
             clientId={clientId}
             buttonText="Sign in with Google"
