@@ -13,16 +13,16 @@ const App = () => {
   return (
     <BrowserRouter>
       <NavBar/>
-      <Suspense fallback={<GlobalSpinningLoader/>}>
-        <PageContainer>
+      <PageContainer>
+        <Suspense fallback={<GlobalSpinningLoader/>}>
           <Routes>
             <Route path="/" element={<Home/>}/>
             <Route path="users" element={<Users/>}/>
             <Route path="about" element={<div>about</div>}/>
             <Route path="*" element={<PageNotFound/>}/>
           </Routes>
-        </PageContainer>
-      </Suspense>
+        </Suspense>
+      </PageContainer>
     </BrowserRouter>
   );
 }

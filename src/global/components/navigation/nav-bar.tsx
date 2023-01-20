@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from "react-router-dom";
 import GoogleAuthButton from "./components/google-auth-button";
+import logo from '../../../assets/images/iou-logo.jpg';
+import NavBarMarquee from "../marquee/nav-bar-marquee";
 
 interface LinkButtonProps {
   text: string;
@@ -18,8 +20,11 @@ const NavBar = () => {
 
   return (
     <>
-      <nav className="flex bg-gray-900 w-full text-white px-4 py-2 justify-between items-center max-h-14">
-        <Link to="/" className="h-6 mr-3 sm:h-9 font-bold text-2xl">IOU Keeper</Link>
+      <nav className="flex bg-gray-900 w-full text-white pr-2 py-2 items-center max-h-14">
+        <div className="flex grow">
+          <Link to="/"><img className="h-12" src={logo} alt=""/></Link>
+          <NavBarMarquee/>
+        </div>
         <GoogleAuthButton/>
       </nav>
       <nav className="bg-gray-700 h-12">

@@ -1,20 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import GoogleLogin, { GoogleLoginResponse, GoogleLoginResponseOffline, GoogleLogout } from "react-google-login";
 import type { RootState } from '../../../../app/store';
 import { useSelector, useDispatch } from "react-redux";
-import { signIn, signOut, setUserInfo } from "../../../../features/auth/authSlice";
-import LoadingPulse from "../../loading/loading-pulse";
+import { signIn, signOut } from "../../../../features/auth/authSlice";
 import { gapi } from "gapi-script";
 import AccountInfo from "./account-info";
+import CustomGoogleButton from "./custom-google-button";
 
 const GoogleAuthButton = () => {
   const clientId = '260492928179-bfugkb95ptjvit0hg8ooul8quppar8i5.apps.googleusercontent.com';
 
   const { name, imageUrl } = useSelector((state: RootState) => state.auth.userInfo);
-  const signedIn = useSelector((state: RootState) => state.auth.signedIn);
   const dispatch = useDispatch();
 
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isSignedIn, setIsSignedIn] = useState<boolean>(true);
 
   useEffect(() => {
     const initClient = () => {
@@ -22,19 +21,22 @@ const GoogleAuthButton = () => {
         clientId: clientId,
         scope: ''
       });
-      setTimeout(() => setIsLoading(false), 500);
     };
     gapi.load('client:auth2', initClient);
   }, []);
 
-  const onSuccess = (res: (GoogleLoginResponse | GoogleLoginResponseOffline)) => {
+  useEffect(() => {
+    if (name && imageUrl) setIsSignedIn(true);
+    if (!name && !imageUrl) setIsSignedIn(false);
+  }, [name, imageUrl]);
+
+  const onSuccess = (res: (GoogleLoginResponse | GoogleLoginResponseOffline)): void => {
     const validResponse = res as GoogleLoginResponse;
     const { name, imageUrl } = validResponse.profileObj;
-    dispatch(signIn());
-    dispatch(setUserInfo({ name, imageUrl }))
+    dispatch(signIn({ name, imageUrl }));
   };
 
-  const onFailure = (err: GoogleLoginResponse) => {
+  const onFailure = (err: GoogleLoginResponse): void => {
     console.log('failed', err);
   };
 
@@ -43,29 +45,22 @@ const GoogleAuthButton = () => {
   }
 
   return (
-    <div className="flex">
-      {!signedIn && isLoading && <LoadingPulse/>}
-
-      {signedIn ? (
-        <>
-          <AccountInfo name={name} imageUrl={imageUrl}/>
-          <GoogleLogout
-            clientId={clientId}
-            buttonText="Log out"
-            onLogoutSuccess={logOut}
-          />
-        </>
+    <div className="flex ml-0.5 h-12">
+      {isSignedIn ? (
+        <GoogleLogout
+          clientId={clientId}
+          onLogoutSuccess={logOut}
+          render={renderProps => <AccountInfo onClick={renderProps.onClick} name={name} imageUrl={imageUrl}/>}
+        />
       ) : (
-        <div style={{ display: `${!signedIn && isLoading ? 'none' : 'inline'}` }}>
-          <GoogleLogin
-            clientId={clientId}
-            buttonText="Sign in with Google"
-            onSuccess={onSuccess}
-            onFailure={onFailure}
-            cookiePolicy='single_host_origin'
-            isSignedIn={true}
-          />
-        </div>
+        <GoogleLogin
+          clientId={clientId}
+          onSuccess={onSuccess}
+          onFailure={onFailure}
+          cookiePolicy='single_host_origin'
+          isSignedIn={true}
+          render={renderProps => <CustomGoogleButton onClick={renderProps.onClick}/>}
+        />
       )}
     </div>
   )
