@@ -1,0 +1,29 @@
+@keyframes report-bug-open {
+    from {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.report-bug-open {
+    animation: report-bug-open 0.3s ease-in-out;
+}
+
+@keyframes report-bug-close {
+    from {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+}
+
+.report-bug-close {
+    animation: report-bug-close 0.3s ease-in-out;
+}
