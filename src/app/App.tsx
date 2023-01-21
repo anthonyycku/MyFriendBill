@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import NavBar from "../global/components/navigation/nav-bar";
 import GlobalSpinningLoader from "../global/components/loading/global-spinning-loader";
 import PageContainer from "../global/components/pages/page-container";
+import Footer from "../global/components/footer/footer";
 
 const Home = lazy(() => import('../pages/home/home'));
 const Users = lazy(() => import('../pages/users/users'));
@@ -19,10 +20,12 @@ const App = () => {
             <Route path="/" element={<Home/>}/>
             <Route path="users" element={<Users/>}/>
             <Route path="about" element={<div>about</div>}/>
+            <Route path="/bill-tracker" element={<div>Bill Tracker</div>}/>
             <Route path="*" element={<PageNotFound/>}/>
           </Routes>
         </Suspense>
       </PageContainer>
+      <Footer/>
     </BrowserRouter>
   );
 }

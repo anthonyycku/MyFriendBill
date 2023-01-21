@@ -6,7 +6,7 @@ interface PageContainerProps {
 
 const PageContainer = ({ children }: PageContainerProps) => {
   return (
-    <div className="w-full h-full text-white">
+    <div className="w-full h-full text-white bg-gray-900 pb-12">
       {children}
     </div>
   )

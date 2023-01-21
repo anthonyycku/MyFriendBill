@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import { GoogleImageKey, GoogleNameKey, GoogleSignInKey } from "../../global/constants/google-account.constants";
+import { GoogleImageKey, GoogleNameKey } from "../../global/constants/google-account.constants";
 
 interface UserInfo {
   name: string;
