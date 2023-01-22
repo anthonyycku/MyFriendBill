@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './report-bug.css'
+import ModalBackground from "../../../modal/modal-background";
 
 interface ReportBugFormProps {
   openForm: boolean;
@@ -42,8 +43,8 @@ const ReportBugForm = ({ openForm, setOpenForm }: ReportBugFormProps) => {
   }
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center p-6">
-      <div ref={modalRef} className={`${animationClass} bg-black rounded-lg p-8 w-1/3`}>
+    <ModalBackground>
+      <div ref={modalRef} className={`${animationClass} bg-gray-800 rounded-lg p-8 w-1/3`}>
         <h2 className="text-lg font-medium mb-4">Report a bug</h2>
         <div className="mb-4">
           <label className="block text-gray-500 font-medium mb-2">
@@ -79,7 +80,7 @@ const ReportBugForm = ({ openForm, setOpenForm }: ReportBugFormProps) => {
           </button>
         </div>
       </div>
-    </div>
+    </ModalBackground>
   )
 };
 

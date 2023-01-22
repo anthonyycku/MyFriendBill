@@ -5,7 +5,7 @@ interface CustomGoogleButtonProps {
   onClick: () => void;
 }
 
-const CustomGoogleButton = ({ onClick }: CustomGoogleButtonProps) => {
+const GoogleSignInCustomButton = ({ onClick }: CustomGoogleButtonProps) => {
 
   return (
     <button
@@ -18,4 +18,4 @@ const CustomGoogleButton = ({ onClick }: CustomGoogleButtonProps) => {
   )
 };
 
-export default CustomGoogleButton;
+export default GoogleSignInCustomButton;

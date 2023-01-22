@@ -1,19 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import GoogleLogin, { GoogleLoginResponse, GoogleLoginResponseOffline, GoogleLogout } from "react-google-login";
 import type { RootState } from '../../../../app/store';
 import { useSelector, useDispatch } from "react-redux";
-import { signIn, signOut } from "../../../../features/auth/authSlice";
+import { signIn, signOut, setSignedInStatus } from "../../../../features/auth/authSlice";
 import { gapi } from "gapi-script";
 import AccountInfo from "./account-info";
-import CustomGoogleButton from "./custom-google-button";
+import GoogleSignInCustomButton from "./google-sign-in-custom-button";
 
 const GoogleAuthButton = () => {
   const clientId = '260492928179-bfugkb95ptjvit0hg8ooul8quppar8i5.apps.googleusercontent.com';
 
   const { name, imageUrl } = useSelector((state: RootState) => state.auth.userInfo);
+  const signedIn = useSelector((state: RootState) => state.auth.signedIn);
   const dispatch = useDispatch();
-
-  const [isSignedIn, setIsSignedIn] = useState<boolean>(true);
 
   useEffect(() => {
     const initClient = () => {
@@ -26,8 +25,8 @@ const GoogleAuthButton = () => {
   }, []);
 
   useEffect(() => {
-    if (name && imageUrl) setIsSignedIn(true);
-    if (!name && !imageUrl) setIsSignedIn(false);
+    if (name && imageUrl) dispatch(setSignedInStatus(true));
+    if (!name && !imageUrl) dispatch(setSignedInStatus(false));
   }, [name, imageUrl]);
 
   const onSuccess = (res: (GoogleLoginResponse | GoogleLoginResponseOffline)): void => {
@@ -46,7 +45,7 @@ const GoogleAuthButton = () => {
 
   return (
     <div className="flex ml-0.5 h-12">
-      {isSignedIn ? (
+      {signedIn ? (
         <GoogleLogout
           clientId={clientId}
           onLogoutSuccess={logOut}
@@ -59,7 +58,7 @@ const GoogleAuthButton = () => {
           onFailure={onFailure}
           cookiePolicy='single_host_origin'
           isSignedIn={true}
-          render={renderProps => <CustomGoogleButton onClick={renderProps.onClick}/>}
+          render={renderProps => <GoogleSignInCustomButton onClick={renderProps.onClick}/>}
         />
       )}
     </div>

@@ -19,9 +19,9 @@ const InfoCard = ({ title, description = [], image, path = "/error" }: InfoCardP
           <img src={image} alt=""/>
           <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{title}</h5>
         </div>
-        <div className="flex flex-col flex-grow justify-between py-8">
+        <div className="flex flex-col flex-grow py-8">
           {description.length > 0 && description.map(item => (
-            <div className="pl-8 flex items-center space-x-1" key={item}>
+            <div className="pl-8 flex items-center space-x-1 mb-6" key={item}>
               <i className="fa fa-chevron-right"/>
               <p>{item}</p>
             </div>
