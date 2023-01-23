@@ -1,56 +1,44 @@
 import { createSlice } from '@reduxjs/toolkit';
-import type { PayloadAction } from '@reduxjs/toolkit';
-import { GoogleImageKey, GoogleNameKey } from "../../global/constants/google-account.constants";
+import type { PayloadAction } from '@reduxjs/toolkit'
 
-interface UserInfo {
+export interface Profile {
   name: string;
-  imageUrl: string;
+  image: string;
+  googleId: string;
 }
 
 interface AuthState {
-  signedIn: boolean | null;
-  userInfo: UserInfo;
-}
-
-const getInitialStateFromLocalStorage = (key: string): string => {
-  const property = localStorage.getItem(key);
-  return property === null ? '' : property;
+  signedIn: boolean;
+  profileName: string;
+  profileImage: string;
+  googleId: string;
 }
 
 
 const initialState: AuthState = {
-  signedIn: null,
-  userInfo: {
-    name: getInitialStateFromLocalStorage(GoogleNameKey),
-    imageUrl: getInitialStateFromLocalStorage(GoogleImageKey)
-  }
+  signedIn: false,
+  profileName: '',
+  profileImage: '',
+  googleId: ''
 };
 
 export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    signIn: (state, action: PayloadAction<UserInfo>) => {
-      state.userInfo.name = action.payload.name;
-      state.userInfo.imageUrl = action.payload.imageUrl;
+    signIn: (state, action: PayloadAction<Profile>) => {
       state.signedIn = true;
-      localStorage.setItem(GoogleNameKey, action.payload.name);
-      localStorage.setItem(GoogleImageKey, action.payload.imageUrl);
+      state.profileName = action.payload.name;
+      state.profileImage = action.payload.image;
+      state.googleId = action.payload.googleId;
     },
     signOut: state => {
-      state.userInfo.name = '';
-      state.userInfo.imageUrl = '';
       state.signedIn = false;
-      localStorage.removeItem(GoogleNameKey);
-      localStorage.removeItem(GoogleImageKey);
-    },
-    setSignedInStatus: (state, action: PayloadAction<boolean>) => {
-      state.signedIn = action.payload;
     }
   }
 })
 
-export const { signIn, signOut, setSignedInStatus } = authSlice.actions;
+export const { signIn, signOut } = authSlice.actions;
 
 export default authSlice.reducer;
 

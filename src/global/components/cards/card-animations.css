@@ -35,11 +35,6 @@
     animation: borderRotate var(--d) linear infinite forwards;
 }
 
-.card-border:nth-child(2) {
-    border-image: radial-gradient(ellipse at var(--gradX) var(--gradY), var(--c1), var(--c1) 10%, var(--c2) 40%) 30;
-    animation: borderRadial var(--d) linear infinite forwards;
-}
-
 @keyframes borderRotate {
     100% {
         --angle: 420deg;

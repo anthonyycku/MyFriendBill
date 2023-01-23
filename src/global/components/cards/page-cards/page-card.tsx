@@ -1,16 +1,16 @@
 import React from 'react';
 import { Link } from "react-router-dom";
-import './info-card.css';
+import '../card-animations.css';
 
 
-interface InfoCardProps {
+interface PageCardProps {
   title: string;
   description?: string[];
   path?: string;
   image: string;
 }
 
-const InfoCard = ({ title, description = [], image, path = "/error" }: InfoCardProps) => {
+const PageCard = ({ title, description = [], image, path = "/error" }: PageCardProps) => {
   return (
     <Link to={path}>
       <div
@@ -32,4 +32,4 @@ const InfoCard = ({ title, description = [], image, path = "/error" }: InfoCardP
   )
 };
 
-export default InfoCard;
+export default PageCard;
