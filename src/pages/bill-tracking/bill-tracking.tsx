@@ -35,7 +35,6 @@ const BillTracking = () => {
 
   return (
     <PageContainer>
-
       <PaneContainer width="w-3/4">
         {tableLoading ? (
           <LoadingDots text="Loading table..."/>
@@ -55,7 +54,6 @@ const BillTracking = () => {
           <BillingRightPane selectedRowData={getSelectedRowData(selectedRowId!)}/>
         )}
       </PaneContainer>
-
     </PageContainer>
   )
 };

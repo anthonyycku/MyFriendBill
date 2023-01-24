@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import '../footer/components/report-bug/report-bug.css'
+import '../footer/css/report-bug.css'
 import ModalBackground from "../modal/modal-background";
 
 interface ReportBugFormProps {

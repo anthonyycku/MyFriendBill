@@ -3,6 +3,7 @@ import { DebtEntry } from "../../models/bill-tracking.model";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../app/store";
 import { formatSenderReceiver, renderSenderReceiverColor } from "../../functions/bill-tracking.functions";
+import '../../css/debt-table.css';
 
 interface DebtTableProps {
   displayedTableData: DebtEntry[];
@@ -25,62 +26,52 @@ const DebtTable = ({ displayedTableData, selectedRowId, setSelectedRowId }: Debt
   }
 
   return (
-    <table className="w-full text-sm text-left text-white text-gray-400">
-      <thead className="text-xs uppercase bg-gray-50 bg-gray-700 text-white">
-      <tr>
-        <th scope="col" className={headerClass}>
-          To/From
-        </th>
-        <th scope="col" className={headerClass}>
-          Amount
-        </th>
-        <th scope="col" className={headerClass}>
-          Description
-        </th>
-        <th scope="col" className={headerClass}>
-          Due Date
-        </th>
-        <th scope="col" className={headerClass}>
-          Frequency
-        </th>
-        <th scope="col" className={`${headerClass} max-w-[100px]`}>
-          Completed
-        </th>
-      </tr>
-      </thead>
-
-      <tbody>
-      {displayedTableData.length > 0 && displayedTableData.map((debtItem: DebtEntry) => (
-        <tr
-          key={debtItem.id}
-          onClick={() => setSelectedRowId(debtItem.id)}
-          className={`border-b font-medium border-gray-700 hover:bg-gray-600 cursor-pointer ${selectedRowId === debtItem.id && 'bg-gray-600 border-solid border-2 border-emerald-500'} `}
-        >
-          <th scope="row" className="px-6 py-4 font-medium text-white whitespace-nowrap">
-            {formatSenderReceiver(userId!, debtItem.sender_id, debtItem.sender_data, debtItem.receiver_data)}
-          </th>
-          <td
-            className={`${cellClass} ${renderSenderReceiverColor(userId!, debtItem.sender_id, debtItem.sender_data, debtItem.receiver_data)}`}>
-            {`$ ${debtItem.amount}`}
-          </td>
-          <td className={cellClass}>
-            {debtItem.description}
-          </td>
-          <td className={cellClass}>
-            {formatDate(debtItem.next_recurrence_date)}
-          </td>
-          <td className={cellClass}>
-
-          </td>
-          <td className={`pl-12 max-w-[150px]`}>
-            <button className="hover:text-green-500" onClick={e => e.stopPropagation()}>
-              <i className="fa fa-check-circle-o" style={{ fontSize: '1.5rem', margin: 0 }}></i>
-            </button>
-          </td>
+    <div className="overflow-auto h-full">
+      <table className="w-full text-left text-sm text-white text-gray-400 border-separate border-spacing-0">
+        <thead className="text-xs uppercase bg-gray-50 bg-gray-700 text-white sticky top-0">
+        <tr>
+          <th scope="col" className={headerClass}>To/From</th>
+          <th scope="col" className={headerClass}>Amount</th>
+          <th scope="col" className={headerClass}>Description</th>
+          <th scope="col" className={headerClass}>Due Date</th>
+          <th scope="col" className={headerClass}>Frequency</th>
+          <th scope="col" className={`${headerClass} max-w-[100px]`}>Completed</th>
         </tr>
-      ))}
-      </tbody>
-    </table>
+        </thead>
+
+        <tbody>
+        {displayedTableData.length > 0 && displayedTableData.map((debtItem: DebtEntry) => (
+          <tr
+            key={debtItem.id}
+            onClick={() => setSelectedRowId(debtItem.id)}
+            className={`debt-table-row font-medium border-gray-700 hover:bg-gray-500 cursor-pointer ${selectedRowId === debtItem.id && 'bg-gray-600 debt-table-row-selected'} `}
+          >
+            <th scope="row" className="px-6 py-4 font-medium text-white whitespace-nowrap">
+              {formatSenderReceiver(userId!, debtItem.sender_id, debtItem.sender_data, debtItem.receiver_data)}
+            </th>
+            <td
+              className={`${cellClass} ${renderSenderReceiverColor(userId!, debtItem.sender_id, debtItem.sender_data, debtItem.receiver_data)}`}>
+              {`$ ${debtItem.amount}`}
+            </td>
+            <td className={cellClass}>
+              {debtItem.description}
+            </td>
+            <td className={cellClass}>
+              {formatDate(debtItem.next_recurrence_date)}
+            </td>
+            <td className={cellClass}>
+
+            </td>
+            <td className={`pl-12 max-w-[150px]`}>
+              <button className="hover:text-green-500" onClick={e => e.stopPropagation()}>
+                <i className="fa fa-check-circle-o" style={{ fontSize: '1.5rem', margin: 0 }}></i>
+              </button>
+            </td>
+          </tr>
+        ))}
+        </tbody>
+      </table>
+    </div>
   )
 };
 

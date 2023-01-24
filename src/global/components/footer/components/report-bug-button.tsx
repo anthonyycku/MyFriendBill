@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import ReportBugForm from "../../../forms/report-bug-form";
+import ReportBugForm from "../../forms/report-bug-form";
 
 const ReportBugButton = () => {
   const [openForm, setOpenForm] = useState<boolean>(false);

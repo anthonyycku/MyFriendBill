@@ -23,9 +23,12 @@ const BillingRightPane = ({ selectedRowData }: { selectedRowData: DebtEntry }) =
 
   return (
     <div className="flex flex-col">
-      <span className="font-extrabold">
+      <span className="font-bold">
         {formatSenderReceiver(userId!, sender_id, sender_data, receiver_data)}
       </span>
+      <div className="overflow-auto">
+        Hello dikopas kdoaskdoaskoaskdoas kdasd
+      </div>
     </div>
   )
 };

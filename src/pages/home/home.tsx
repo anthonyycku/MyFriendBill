@@ -35,10 +35,10 @@ const Home = () => {
 
   return (
     <PageContainer>
-      <div className="flex flex-col w-full">
+      <div className="flex flex-col h-max w-full pb-4">
         <DevToggleButton devFeatures={devFeatures} setDevFeatures={setDevFeatures}/>
 
-        <div className="flex flex-wrap gap-x-20 gap-y-10 justify-center mt-6">
+        <div className="flex flex-wrap gap-x-20 gap-y-10 justify-center mt-6 h-full">
           <PageCard title="Bill Tracking" description={billTrackDescription} image={billIcon} path="/bill-tracker"/>
           <PageCard title="Investment Tracking" description={investmentDescription} image={investmentIcon}/>
 

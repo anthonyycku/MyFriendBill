@@ -2,15 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
-html, body, #root {
-    display: flex;
-    flex-direction: column;
+
+html {
+    height: 100vh;
+    --scrollbarBG: #696969;
+    --thumbBG: #31384b;
+}
+
+body, #root {
     height: 100%;
 }
 
-html {
-    --scrollbarBG: #696969;
-    --thumbBG: #31384b;
+#root {
+    display: flex;
+    flex-direction: column;
 }
 
 ::-webkit-scrollbar {

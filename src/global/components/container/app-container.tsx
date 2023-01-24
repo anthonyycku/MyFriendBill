@@ -6,7 +6,7 @@ interface PageContainerProps {
 
 const AppContainer = ({ children }: PageContainerProps) => {
   return (
-    <div className="flex flex-grow text-white bg-gray-900 pb-16">
+    <div className="flex h-full text-white bg-gray-900 overflow-auto">
       {children}
     </div>
   )
