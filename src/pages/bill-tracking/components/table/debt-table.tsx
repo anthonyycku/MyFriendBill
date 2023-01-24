@@ -54,7 +54,7 @@ const DebtTable = ({ displayedTableData, selectedRowId, setSelectedRowId }: Debt
         <tr
           key={debtItem.id}
           onClick={() => setSelectedRowId(debtItem.id)}
-          className={`font-medium border-b border-gray-700 hover:bg-gray-600 cursor-pointer ${selectedRowId === debtItem.id && 'bg-gray-600 border-solid border-2 border-emerald-500'} `}
+          className={`border-b font-medium border-gray-700 hover:bg-gray-600 cursor-pointer ${selectedRowId === debtItem.id && 'bg-gray-600 border-solid border-2 border-emerald-500'} `}
         >
           <th scope="row" className="px-6 py-4 font-medium text-white whitespace-nowrap">
             {formatSenderReceiver(userId!, debtItem.sender_id, debtItem.sender_data, debtItem.receiver_data)}
