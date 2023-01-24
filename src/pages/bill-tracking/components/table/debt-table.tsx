@@ -1,5 +1,5 @@
-import React, { ReactNode, useState } from 'react';
-import { DebtEntry, TransactionData } from "../../models/bill-tracking.model";
+import React from 'react';
+import { DebtEntry } from "../../models/bill-tracking.model";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../app/store";
 import { formatSenderReceiver, renderSenderReceiverColor } from "../../functions/bill-tracking.functions";
@@ -54,7 +54,7 @@ const DebtTable = ({ displayedTableData, selectedRowId, setSelectedRowId }: Debt
         <tr
           key={debtItem.id}
           onClick={() => setSelectedRowId(debtItem.id)}
-          className={`font-medium border-b border-gray-700 hover:bg-gray-600 cursor-pointer ${selectedRowId === debtItem.id && 'bg-gray-600 border-solid border-2 border-emerald-500'}`}
+          className={`font-medium border-b border-gray-700 hover:bg-gray-600 cursor-pointer ${selectedRowId === debtItem.id && 'bg-gray-600 border-solid border-2 border-emerald-500'} `}
         >
           <th scope="row" className="px-6 py-4 font-medium text-white whitespace-nowrap">
             {formatSenderReceiver(userId!, debtItem.sender_id, debtItem.sender_data, debtItem.receiver_data)}
