@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from "react-router-dom";
-import '../card-animations.css';
+import '../css/card-animations.css';
 
 
 interface PageCardProps {

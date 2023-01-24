@@ -2,18 +2,19 @@ import React, { lazy, Suspense, useEffect, useState } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import NavBar from "../global/components/navigation/nav-bar";
 import GlobalSpinningLoader from "../global/components/loading/global-spinning-loader";
-import PageContainer from "../global/components/pages/page-container";
+import AppContainer from "../global/components/container/app-container";
 import Footer from "../global/components/footer/footer";
-import { Profile, signIn } from "../features/auth/authSlice";
+import { AuthProfile, signIn, setUserDatabaseId } from "../features/auth/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "./store";
-import { supabase } from "../supabase-config";
 import LandingPage from "../pages/landing-page/landing-page";
 import { checkUser, checkUserExists, createNewUser } from "./api/app.api";
-import { DB_User } from "./models/app.models";
+import { DbUserResponse } from "./models/app.models";
+import { User } from "@supabase/supabase-js";
 
 const Home = lazy(() => import('../pages/home/home'));
 const Users = lazy(() => import('../pages/users/users'));
+const BillTracking = lazy(() => import("../pages/bill-tracking/bill-tracking"));
 const PageNotFound = lazy(() => import("../pages/error-page/page-not-found"))
 
 const App = () => {
@@ -24,37 +25,43 @@ const App = () => {
   const [pageLoading, setPageLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    checkUser().then(response => {
-      if (response.data.user === null) {
-        setPageLoading(false);
+    checkUser().then((response: { user: User | null }) => {
+      if (response.user === null) {
         return;
       }
 
-      const { full_name, picture } = response.data.user?.user_metadata
-      const googleId: string = response.data.user.id;
-      const profileData: Profile = { name: full_name, image: picture, googleId: googleId }
+      const { full_name, picture } = response.user.user_metadata
+      const googleId: string = response.user.id;
+      const profileData: AuthProfile = { name: full_name, image: picture, googleId: googleId }
       dispatch(signIn(profileData));
-      setPageLoading(false);
-    }).catch(error => {
-      console.log(error);
-    })
+    }).finally(() => setPageLoading(false));
   }, [])
 
   useEffect(() => {
-    if (signedIn) {
-      checkUserExists(googleId).then((response: any) => {
-        if (!response) return;
-        if (response.length === 0) createNewUser(profileName, googleId).then(() => {
-        })
-      });
+    if (!signedIn) return;
+
+    const setUserState = (response: DbUserResponse[] | null) => {
+      if (response === null) return;
+      const userDatabaseData: DbUserResponse = response[0];
+      dispatch(setUserDatabaseId(userDatabaseData.id));
     }
+
+    checkUserExists(googleId).then((response: DbUserResponse[]) => {
+      if (response.length === 0) {
+        createNewUser(profileName, googleId).then((response: DbUserResponse[] | null) => {
+          setUserState(response)
+        }).catch(error => console.error(error))
+      } else {
+        setUserState(response);
+      }
+    }).catch(error => console.error(error))
   }, [signedIn])
 
 
   return (
     <BrowserRouter>
       <NavBar/>
-      <PageContainer>
+      <AppContainer>
         {pageLoading ? (
           <GlobalSpinningLoader/>
         ) : (
@@ -65,7 +72,7 @@ const App = () => {
                   <Route path="/" element={<Home/>}/>
                   <Route path="users" element={<Users/>}/>
                   <Route path="about" element={<div>about</div>}/>
-                  <Route path="/bill-tracker" element={<div>Bill Tracker</div>}/>
+                  <Route path="/bill-tracker" element={<BillTracking/>}/>
                   <Route path="*" element={<PageNotFound/>}/>
                 </Routes>
               </Suspense>
@@ -74,7 +81,7 @@ const App = () => {
             )}
           </>
         )}
-      </PageContainer>
+      </AppContainer>
       <Footer/>
     </BrowserRouter>
   );

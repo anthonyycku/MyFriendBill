@@ -32,7 +32,7 @@ const NavBar = () => {
         {signedIn && <ProfileLogoutButton/>}
       </nav>
       <nav
-        className="min-h-[3rem] bg-gradient-to-r from-green-600 flex font-medium space-x-8 px-2 text-lg items-center shadow-inner shadow-lime-700">
+        className="min-h-[3rem] bg-gradient-to-r from-emerald-600 flex font-medium space-x-8 px-2 text-lg items-center shadow-inner shadow-emerald-700">
         <LinkButton text="Home" path="/"/>
         <LinkButton text="Users" path="users"/>
         <LinkButton text="About" path="about"/>

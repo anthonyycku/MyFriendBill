@@ -1,5 +1,5 @@
 import React from 'react';
-import '../card-animations.css'
+import '../css/card-animations.css'
 import databaseIcon from '../../../../assets/images/database-icon.png'
 import githubIcon from '../../../../assets/images/cat-icon.png'
 

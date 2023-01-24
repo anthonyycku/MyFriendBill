@@ -5,6 +5,7 @@ import investmentIcon from '../../assets/images/invest-icon.png'
 import DevToggleButton from "./components/dev-toggle-button";
 import { DevFeaturesKey } from "../../global/constants/local-storage.constants";
 import DevCard from "../../global/components/cards/page-cards/dev-card";
+import PageContainer from "../../global/components/container/page-container";
 
 const Home = () => {
   const [devFeatures, setDevFeatures] = useState<boolean>(false);
@@ -33,16 +34,18 @@ const Home = () => {
   ];
 
   return (
-    <div className="flex flex-col w-full">
-      <DevToggleButton devFeatures={devFeatures} setDevFeatures={setDevFeatures}/>
+    <PageContainer>
+      <>
+        <DevToggleButton devFeatures={devFeatures} setDevFeatures={setDevFeatures}/>
 
-      <div className="flex flex-wrap gap-x-20 gap-y-10 justify-center mt-6">
-        <PageCard title="Bill Tracking" description={billTrackDescription} image={billIcon} path="/bill-tracker"/>
-        <PageCard title="Investment Tracking" description={investmentDescription} image={investmentIcon}/>
+        <div className="flex flex-wrap gap-x-20 gap-y-10 justify-center mt-6">
+          <PageCard title="Bill Tracking" description={billTrackDescription} image={billIcon} path="/bill-tracker"/>
+          <PageCard title="Investment Tracking" description={investmentDescription} image={investmentIcon}/>
 
-        {devFeatures && <DevCard/>}
-      </div>
-    </div>
+          {devFeatures && <DevCard/>}
+        </div>
+      </>
+    </PageContainer>
   );
 };
 
