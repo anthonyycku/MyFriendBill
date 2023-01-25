@@ -26,7 +26,7 @@ const DebtTable = ({ displayedTableData, selectedRowId, setSelectedRowId }: Debt
 
   return (
     <div className="overflow-auto h-full">
-      <table className="w-full text-left text-sm text-white text-gray-400 border-separate border-spacing-0">
+      <table className="w-full text-left text-sm text-gray-300 border-separate border-spacing-0">
         <thead className="text-xs uppercase bg-gray-50 bg-gray-700 text-white sticky top-0">
         <tr>
           <th scope="col" className={headerClass}>To/From</th>
@@ -34,7 +34,7 @@ const DebtTable = ({ displayedTableData, selectedRowId, setSelectedRowId }: Debt
           <th scope="col" className={headerClass}>Description</th>
           <th scope="col" className={headerClass}>Due Date</th>
           <th scope="col" className={headerClass}>Frequency</th>
-          <th scope="col" className={`${headerClass} max-w-[100px]`}>Completed</th>
+          <th scope="col" className={`${headerClass} max-w-[100px]`}></th>
         </tr>
         </thead>
 

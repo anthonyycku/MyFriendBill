@@ -21,7 +21,7 @@ const BillTracking = () => {
   useEffect(() => {
     if (userDatabaseId === null) return;
 
-    getDebtList(userDatabaseId).then((response: DebtEntry[] | null) => {
+    getDebtList(userDatabaseId!).then((response: DebtEntry[] | null) => {
       setTableData(response!);
       setDisplayedTableData(response!);
     }).catch(error => console.error(error))
