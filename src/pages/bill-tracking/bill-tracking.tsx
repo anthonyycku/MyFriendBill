@@ -1,6 +1,5 @@
-import React, { Suspense, useEffect, useState } from 'react';
+import React, { useDeferredValue, useEffect, useState } from 'react';
 import PageContainer from "../../global/components/container/page-container";
-import DebtTable from "./components/left-pane/debt-table";
 import { getDebtList } from "./api/bill-tracking.api";
 import { useSelector } from "react-redux";
 import { RootState } from "../../app/store";
@@ -9,6 +8,7 @@ import LoadingDots from "../../global/components/loading/loading-dots";
 import PaneContainer from "../../global/components/container/pane-container";
 import BillingRightPane from "./components/right-pane/billing-right-pane";
 import EmptyInfoPane from "./components/right-pane/empty-info-pane";
+import BillingLeftPane from "./components/left-pane/billing-left-pane";
 
 const BillTracking = () => {
   const userDatabaseId = useSelector((state: RootState) => state.auth.userDatabaseId);
@@ -17,6 +17,8 @@ const BillTracking = () => {
   const [tableLoading, setTableLoading] = useState<boolean>(true);
 
   const [selectedRowId, setSelectedRowId] = useState<number | null>(null);
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const deferredSearch: string = useDeferredValue(searchQuery)
 
   useEffect(() => {
     if (userDatabaseId === null) return;
@@ -39,10 +41,12 @@ const BillTracking = () => {
         {tableLoading ? (
           <LoadingDots text="Loading table..."/>
         ) : (
-          <DebtTable
+          <BillingLeftPane
             displayedTableData={displayedTableData}
             selectedRowId={selectedRowId}
             setSelectedRowId={setSelectedRowId}
+            setSearchQuery={setSearchQuery}
+            deferredSearch={deferredSearch!}
           />
         )}
       </PaneContainer>
