@@ -1,14 +1,14 @@
 import React, { Suspense, useEffect, useState } from 'react';
 import PageContainer from "../../global/components/container/page-container";
-import DebtTable from "./components/table/debt-table";
+import DebtTable from "./components/left-pane/debt-table";
 import { getDebtList } from "./api/bill-tracking.api";
 import { useSelector } from "react-redux";
 import { RootState } from "../../app/store";
 import { DebtEntry } from "./models/bill-tracking.model";
 import LoadingDots from "../../global/components/loading/loading-dots";
 import PaneContainer from "../../global/components/container/pane-container";
-import BillingRightPane from "./components/pane/billing-right-pane";
-import BillingSelectRow from "./components/pane/billing-select-row";
+import BillingRightPane from "./components/right-pane/billing-right-pane";
+import EmptyInfoPane from "./components/right-pane/empty-info-pane";
 
 const BillTracking = () => {
   const userDatabaseId = useSelector((state: RootState) => state.auth.userDatabaseId);
@@ -49,7 +49,7 @@ const BillTracking = () => {
 
       <PaneContainer width="w-1/4">
         {selectedRowId === null ? (
-          <BillingSelectRow/>
+          <EmptyInfoPane/>
         ) : (
           <BillingRightPane selectedRowData={getSelectedRowData(selectedRowId!)}/>
         )}

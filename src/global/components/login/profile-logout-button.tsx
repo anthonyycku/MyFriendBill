@@ -37,7 +37,7 @@ const ProfileLogoutButton = () => {
         className="flex font-medium mr-1 text-black bg-white rounded px-2 border-b-2 border-green-500 items-center">
         <img width={25} src={profileImage || ''} alt="" referrerPolicy="no-referrer" className="rounded-xl"/>
         {showName && <p className="mx-2">{profileName}</p>}
-        <button onClick={signOutWithGoogle} className="hover:text-blue-400">(Sign out)</button>
+        <button onClick={signOutWithGoogle} className="hover:text-amber-600">(Sign out)</button>
       </div>
     </div>
   )
