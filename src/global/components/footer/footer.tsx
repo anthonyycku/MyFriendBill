@@ -1,5 +1,5 @@
 import React from 'react';
-import ReportBugButton from "./components/report-bug-button";
+import ReportBugButton from "./report-bug/report-bug-button";
 
 const Footer = () => {
   return (
