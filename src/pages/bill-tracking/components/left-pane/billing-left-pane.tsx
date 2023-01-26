@@ -2,6 +2,9 @@ import React from 'react';
 import DebtTable from "./debt-table";
 import { DebtEntry } from "../../models/bill-tracking.model";
 import DebtSearchBar from "./components/debt-search.bar";
+import EmptyTable from "./components/empty-table";
+import CreateButton from "../../../../global/components/buttons/create-button";
+import { handleCreateNewEntry } from "../../functions/bill-tracking.functions";
 
 export interface DebtTableProps {
   displayedTableData: DebtEntry[];
@@ -18,16 +21,27 @@ const BillingLeftPane = ({
                            setSearchQuery,
                            deferredSearch
                          }: DebtTableProps) => {
+
+
   return (
     <div className="flex flex-col h-full">
-      <DebtSearchBar setSearchQuery={setSearchQuery!} deferredSearch={deferredSearch!}/>
 
-      <DebtTable
-        displayedTableData={displayedTableData}
-        selectedRowId={selectedRowId}
-        setSelectedRowId={setSelectedRowId}
-        deferredSearch={deferredSearch!}
-      />
+      {displayedTableData.length > 0 && (
+        <div className="flex justify-between mb-2">
+          <DebtSearchBar setSearchQuery={setSearchQuery!} deferredSearch={deferredSearch!}/>
+          <CreateButton handleClick={handleCreateNewEntry} text="Create new debt"/>
+        </div>
+      )}
+      {displayedTableData.length === 0 ? (
+        <EmptyTable/>
+      ) : (
+        <DebtTable
+          displayedTableData={displayedTableData}
+          selectedRowId={selectedRowId}
+          setSelectedRowId={setSelectedRowId}
+          deferredSearch={deferredSearch!}
+        />
+      )}
     </div>
   )
 };

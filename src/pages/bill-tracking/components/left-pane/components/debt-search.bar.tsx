@@ -10,7 +10,7 @@ const DebtSearchBar = ({
   }
 
   return (
-    <div className="mb-2">
+    <>
       <label className="mb-2 text-sm font-medium sr-only text-white">Search</label>
       <div className="relative">
         <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -21,13 +21,14 @@ const DebtSearchBar = ({
           </svg>
         </div>
         <input
+          type="search"
           value={deferredSearch}
-          className="block min-w-[200px] w-1/5 p-4 pl-10 text-sm border rounded-lg bg-gray-50 bg-gray-700 border-gray-600 text-white outline-0"
+          className="block min-w-[200px] w-1/5 p-2 pl-10 border text-sm rounded-lg bg-gray-50 bg-gray-700 border-gray-600 text-white outline-0"
           placeholder="Search"
           onChange={e => handleQueryChange(e.target.value)}
         />
       </div>
-    </div>
+    </>
   )
 };
 

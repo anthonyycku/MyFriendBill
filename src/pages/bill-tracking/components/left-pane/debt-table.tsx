@@ -18,7 +18,7 @@ const DebtTable = ({ displayedTableData, selectedRowId, setSelectedRowId, deferr
   const cellClassLong = "px-6 py-4 truncate"
 
   const filterSearchQuery = (debtItem: DebtEntry) => {
-    let userIsSender: boolean = userId === debtItem.sender_id
+    let userIsSender: boolean = userId === debtItem.sender_id;
 
     return (
       debtItem.amount.toString().includes(deferredSearch!) ||
@@ -46,7 +46,7 @@ const DebtTable = ({ displayedTableData, selectedRowId, setSelectedRowId, deferr
         </thead>
 
         <tbody>
-        {displayedTableData.length > 0 && displayedTableData.filter(debtItem => filterSearchQuery(debtItem)).map(debtItem => (
+        {displayedTableData.filter(debtItem => filterSearchQuery(debtItem)).map(debtItem => (
 
           <tr
             key={debtItem.id}

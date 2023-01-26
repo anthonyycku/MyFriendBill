@@ -12,7 +12,6 @@ import BillingLeftPane from "./components/left-pane/billing-left-pane";
 
 const BillTracking = () => {
   const userDatabaseId = useSelector((state: RootState) => state.auth.userDatabaseId);
-  const [tableData, setTableData] = useState<DebtEntry[]>([]);
   const [displayedTableData, setDisplayedTableData] = useState<DebtEntry[]>([]);
   const [tableLoading, setTableLoading] = useState<boolean>(true);
 
@@ -24,15 +23,14 @@ const BillTracking = () => {
     if (userDatabaseId === null) return;
 
     getDebtList(userDatabaseId!).then((response: DebtEntry[] | null) => {
-      setTableData(response!);
       setDisplayedTableData(response!);
     }).catch(error => console.error(error))
       .finally(() => setTableLoading(false));
   }, [userDatabaseId]);
 
   const getSelectedRowData = (id: number): DebtEntry => {
-    const index = tableData.findIndex(entry => entry.id === id);
-    return tableData[index];
+    const index = displayedTableData.findIndex(entry => entry.id === id);
+    return displayedTableData[index];
   }
 
   return (
