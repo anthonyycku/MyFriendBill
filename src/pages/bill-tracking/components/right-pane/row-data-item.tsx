@@ -15,7 +15,7 @@ const RowDataItem = ({ heading, data, inline = true, rawData }: RowDataItemProps
       <p className={`font-medium col-span-1`}>{heading}</p>
       {heading === 'Due Date' ? (
         <div className="flex items-center space-x-2 col-span-3">
-          <p className={`text-gray-300 ${pastDueDate(rawData)}`}>{data}</p>
+          <p className={`${rawData === null ? 'text-gray-300' : pastDueDate(rawData)}`}>{data}</p>
           {pastDueDate(rawData) && <i className={`fa fa-exclamation-triangle ${pastDueDate(rawData)}`}/>}
         </div>
       ) : (

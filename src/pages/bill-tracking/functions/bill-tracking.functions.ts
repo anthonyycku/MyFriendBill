@@ -25,7 +25,11 @@ const getDaysDifference = (dueDate: Date) => {
   return daysDiff;
 }
 
-export const formatDate = (next_recurrence_date: Date): string => {
+export const formatDate = (next_recurrence_date: Date | null): string => {
+  if (next_recurrence_date === null) {
+    return 'No due date';
+  }
+
   const dueDate = new Date(next_recurrence_date);
   const daysDiff = getDaysDifference(dueDate);
 
@@ -39,7 +43,11 @@ export const formatDate = (next_recurrence_date: Date): string => {
   }
 }
 
-export const pastDueDate = (next_recurrence_date: Date): string => {
+export const pastDueDate = (next_recurrence_date: Date | null): string => {
+  if (next_recurrence_date === null) {
+    return '';
+  }
+
   const dueDate = new Date(next_recurrence_date);
   const daysDiff = getDaysDifference(dueDate);
 
@@ -50,5 +58,5 @@ export const pastDueDate = (next_recurrence_date: Date): string => {
 }
 
 export const handleCreateNewEntry = () => {
-  
+
 };

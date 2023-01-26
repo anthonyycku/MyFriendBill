@@ -72,7 +72,8 @@ const DebtTable = ({ displayedTableData, selectedRowId, setSelectedRowId, deferr
 
             {/*Due Date*/}
             <td className={cellClassLong}>
-              <span className={`flex space-x-2 items-center ${pastDueDate(debtItem.next_recurrence_date)}`}>
+              <span
+                className={`flex space-x-2 items-center ${pastDueDate(debtItem.next_recurrence_date)}`}>
                 <p>{formatDate(debtItem.next_recurrence_date)}</p>
                 {pastDueDate(debtItem.next_recurrence_date) && <i className="fa fa-exclamation-triangle"/>}
               </span>
