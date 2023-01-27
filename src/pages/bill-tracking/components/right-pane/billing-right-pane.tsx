@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { DebtEntry } from "../../models/bill-tracking.model";
 import { formatDate, formatSenderReceiver, renderSenderReceiverColor } from "../../functions/bill-tracking.functions";
 import { useSelector } from "react-redux";
@@ -7,20 +7,27 @@ import RowDataItem from "./row-data-item";
 
 const BillingRightPane = ({ selectedRowData }: { selectedRowData: DebtEntry }) => {
   const userId = useSelector((state: RootState) => state.auth.userDatabaseId);
+  const [note, setNote] = useState<string>('');
+
+  useEffect(() => {
+    setNote(selectedRowData.note);
+  }, [selectedRowData]);
+
+  const handleTextAreaChange = (value: string) => {
+    setNote(value);
+  };
 
   const handleCompleteButton = () => {
-    
-  }
+
+  };
 
   const {
     sender_id,
-    receiver_id,
     amount,
     next_recurrence_date,
     completed,
     frequency_interval,
     created_at,
-    id,
     receiver_data,
     sender_data,
     description
@@ -30,9 +37,10 @@ const BillingRightPane = ({ selectedRowData }: { selectedRowData: DebtEntry }) =
     <div className="flex flex-col justify-between h-full">
       <div className="space-y-4">
         <div className="flex justify-between flex-wrap">
-        <span style={{ fontSize: '1.2rem' }} className="font-bold">
-          {formatSenderReceiver(userId!, sender_id, sender_data, receiver_data)}
-        </span>
+          <span
+            style={{ fontSize: '1.2rem' }}
+            className="font-bold">{formatSenderReceiver(userId!, sender_id, sender_data, receiver_data)}
+          </span>
           <p
             style={{ fontSize: '1.5rem' }}
             className={`${renderSenderReceiverColor(userId!, sender_id)} font-bold`}>
@@ -46,6 +54,21 @@ const BillingRightPane = ({ selectedRowData }: { selectedRowData: DebtEntry }) =
           <RowDataItem heading="Due Date" data={formatDate(next_recurrence_date)} rawData={next_recurrence_date}/>
           <RowDataItem heading="Frequency" data={frequency_interval}/>
         </div>
+
+        <span className="relative">
+          <textarea
+            className="w-full rounded bg-gray-600 text-white outline-0 p-2 max-h-[200px] mt-4"
+            rows={4}
+            value={note}
+            onChange={e => handleTextAreaChange(e.target.value)}
+          />
+          <i className="fa fa-repeat absolute bottom-2 right-14 hover:text-red-500 cursor-pointer"
+             style={{ fontSize: '2rem' }}/>
+          <i
+            className="fa fa-check-square absolute bottom-2 right-4 hover:text-emerald-300 cursor-pointer"
+            style={{ fontSize: '2rem' }}
+          />
+          </span>
       </div>
 
       <div className="self-center w-full">

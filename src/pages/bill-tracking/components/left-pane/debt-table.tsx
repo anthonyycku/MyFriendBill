@@ -10,8 +10,15 @@ import {
 } from "../../functions/bill-tracking.functions";
 import '../../css/debt-table.css';
 import { DebtTableProps } from "./billing-left-pane";
+import { DebtDirection } from "../../constants/bill-tracking.constants";
 
-const DebtTable = ({ displayedTableData, selectedRowId, setSelectedRowId, deferredSearch }: DebtTableProps) => {
+const DebtTable = ({
+                     debtDirection = DebtDirection.ALL,
+                     displayedTableData,
+                     selectedRowId,
+                     setSelectedRowId,
+                     deferredSearch
+                   }: DebtTableProps) => {
   const userId = useSelector((state: RootState) => state.auth.userDatabaseId);
 
   const headerClass = "px-6 py-3"
@@ -31,6 +38,17 @@ const DebtTable = ({ displayedTableData, selectedRowId, setSelectedRowId, deferr
     );
   };
 
+  const filterDebtDirection = (debtItem: DebtEntry) => {
+    switch (debtDirection) {
+      case (DebtDirection.FROM):
+        return debtItem.receiver_id === userId;
+      case (DebtDirection.TO):
+        return debtItem.sender_id === userId;
+      default:
+        return true;
+    }
+  };
+
   return (
     <div className="overflow-auto h-full">
       <table className="w-full text-left text-sm text-gray-300 border-separate border-spacing-0 table-fixed">
@@ -46,51 +64,53 @@ const DebtTable = ({ displayedTableData, selectedRowId, setSelectedRowId, deferr
         </thead>
 
         <tbody>
-        {displayedTableData.filter(debtItem => filterSearchQuery(debtItem)).map(debtItem => (
+        {displayedTableData
+          .filter(debtItem => filterDebtDirection(debtItem))
+          .filter(debtItem => filterSearchQuery(debtItem))
+          .map(debtItem => (
+            <tr
+              key={debtItem.id}
+              onClick={() => setSelectedRowId(debtItem.id)}
+              className={`debt-table-row font-medium border-gray-700 hover:bg-gray-500 cursor-pointer ${selectedRowId === debtItem.id && 'bg-gray-600 debt-table-row-selected'} `}
+            >
 
-          <tr
-            key={debtItem.id}
-            onClick={() => setSelectedRowId(debtItem.id)}
-            className={`debt-table-row font-medium border-gray-700 hover:bg-gray-500 cursor-pointer ${selectedRowId === debtItem.id && 'bg-gray-600 debt-table-row-selected'} `}
-          >
+              {/* Name */}
+              <th scope="row" className="px-6 py-4 font-medium text-white truncate">
+                {formatSenderReceiver(userId!, debtItem.sender_id, debtItem.sender_data, debtItem.receiver_data)}
+              </th>
 
-            {/* Name */}
-            <th scope="row" className="px-6 py-4 font-medium text-white truncate">
-              {formatSenderReceiver(userId!, debtItem.sender_id, debtItem.sender_data, debtItem.receiver_data)}
-            </th>
+              {/*Amount*/}
+              <td
+                className={`px-6 py-4 truncate ${renderSenderReceiverColor(userId!, debtItem.sender_id)}`}>
+                {`$ ${debtItem.amount}`}
+              </td>
 
-            {/*Amount*/}
-            <td
-              className={`px-6 py-4 truncate ${renderSenderReceiverColor(userId!, debtItem.sender_id)}`}>
-              {`$ ${debtItem.amount}`}
-            </td>
+              {/*Description*/}
+              <td className={cellClassLong}>
+                {debtItem.description}
+              </td>
 
-            {/*Description*/}
-            <td className={cellClassLong}>
-              {debtItem.description}
-            </td>
-
-            {/*Due Date*/}
-            <td className={cellClassLong}>
+              {/*Due Date*/}
+              <td className={cellClassLong}>
               <span
                 className={`flex space-x-2 items-center ${pastDueDate(debtItem.next_recurrence_date)}`}>
                 <p>{formatDate(debtItem.next_recurrence_date)}</p>
                 {pastDueDate(debtItem.next_recurrence_date) && <i className="fa fa-exclamation-triangle"/>}
               </span>
-            </td>
+              </td>
 
-            {/*Frequency*/}
-            <td className={cellClassLong}>
-            </td>
+              {/*Frequency*/}
+              <td className={cellClassLong}>
+              </td>
 
-            {/*Complete*/}
-            <td className={`pl-12`}>
-              <button className="hover:text-green-500" onClick={e => e.stopPropagation()}>
-                <i className="fa fa-check-circle-o" style={{ fontSize: '1.5rem', margin: 0 }}></i>
-              </button>
-            </td>
-          </tr>
-        ))}
+              {/*Complete*/}
+              <td className={`pl-12`}>
+                <button className="hover:text-green-500" onClick={e => e.stopPropagation()}>
+                  <i className="fa fa-check-circle-o" style={{ fontSize: '1.5rem', margin: 0 }}></i>
+                </button>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>

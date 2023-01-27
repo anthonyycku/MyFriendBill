@@ -15,4 +15,5 @@ export interface DebtEntry {
   receiver_id: number;
   sender_data: TransactionData;
   receiver_data: TransactionData;
+  note: string;
 }

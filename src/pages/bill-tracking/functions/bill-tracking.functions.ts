@@ -60,3 +60,4 @@ export const pastDueDate = (next_recurrence_date: Date | null): string => {
 export const handleCreateNewEntry = () => {
 
 };
+

@@ -16,8 +16,7 @@ const BillTracking = () => {
   const [tableLoading, setTableLoading] = useState<boolean>(true);
 
   const [selectedRowId, setSelectedRowId] = useState<number | null>(null);
-  const [searchQuery, setSearchQuery] = useState<string>('');
-  const deferredSearch: string = useDeferredValue(searchQuery)
+
 
   useEffect(() => {
     if (userDatabaseId === null) return;
@@ -43,13 +42,11 @@ const BillTracking = () => {
             displayedTableData={displayedTableData}
             selectedRowId={selectedRowId}
             setSelectedRowId={setSelectedRowId}
-            setSearchQuery={setSearchQuery}
-            deferredSearch={deferredSearch!}
           />
         )}
       </PaneContainer>
 
-      <PaneContainer width="w-1/4">
+      <PaneContainer width="w-1/4" overflowY>
         {selectedRowId === null ? (
           <EmptyInfoPane/>
         ) : (
