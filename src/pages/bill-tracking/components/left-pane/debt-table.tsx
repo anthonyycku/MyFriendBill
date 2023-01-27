@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { DebtEntry } from "../../models/bill-tracking.model";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../app/store";
@@ -7,18 +7,20 @@ import {
   formatSenderReceiver,
   pastDueDate,
   renderSenderReceiverColor
-} from "../../functions/bill-tracking.functions";
+} from "../../state/functions/bill-tracking.functions";
 import '../../css/debt-table.css';
-import { DebtTableProps } from "./billing-left-pane";
 import { DebtDirection } from "../../constants/bill-tracking.constants";
+import { BillTrackingContext } from "../../state/context/bill-tracking-provider";
 
-const DebtTable = ({
-                     debtDirection = DebtDirection.ALL,
-                     displayedTableData,
-                     selectedRowId,
-                     setSelectedRowId,
-                     deferredSearch
-                   }: DebtTableProps) => {
+const DebtTable = () => {
+  const {
+    displayedTableData,
+    selectedRowId,
+    setSelectedRowId,
+    setSelectedRowData,
+    deferredSearch,
+    debtDirection
+  } = useContext(BillTrackingContext);
   const userId = useSelector((state: RootState) => state.auth.userDatabaseId);
 
   const headerClass = "px-6 py-3"
@@ -49,6 +51,11 @@ const DebtTable = ({
     }
   };
 
+  const handleRowClick = (row: DebtEntry) => {
+    setSelectedRowId(row.id)
+    setSelectedRowData(row);
+  }
+
   return (
     <div className="overflow-auto h-full">
       <table className="w-full text-left text-sm text-gray-300 border-separate border-spacing-0 table-fixed">
@@ -70,7 +77,7 @@ const DebtTable = ({
           .map(debtItem => (
             <tr
               key={debtItem.id}
-              onClick={() => setSelectedRowId(debtItem.id)}
+              onClick={() => handleRowClick(debtItem)}
               className={`debt-table-row font-medium border-gray-700 hover:bg-gray-500 cursor-pointer ${selectedRowId === debtItem.id && 'bg-gray-600 debt-table-row-selected'} `}
             >
 

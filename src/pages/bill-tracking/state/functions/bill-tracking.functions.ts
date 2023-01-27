@@ -1,4 +1,4 @@
-import { TransactionData } from "../models/bill-tracking.model";
+import { TransactionData } from "../../models/bill-tracking.model";
 
 export const formatSenderReceiver = (userId: number, sender_id: number, sender_data: TransactionData, receiver_data: TransactionData): string => {
   let resultString: string;
@@ -58,6 +58,5 @@ export const pastDueDate = (next_recurrence_date: Date | null): string => {
 }
 
 export const handleCreateNewEntry = () => {
-
 };
 

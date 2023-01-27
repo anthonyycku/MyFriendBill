@@ -1,9 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { BillTrackingContext } from "../../../state/context/bill-tracking-provider";
 
-const DebtSearchBar = ({
-                         setSearchQuery,
-                         deferredSearch
-                       }: { setSearchQuery: (query: string) => void, deferredSearch: string }) => {
+const DebtSearchBar = () => {
+  const { setSearchQuery, deferredSearch } = useContext(BillTrackingContext);
 
   const handleQueryChange = (value: string) => {
     setSearchQuery(value);

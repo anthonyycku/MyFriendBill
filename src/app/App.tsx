@@ -14,7 +14,7 @@ import { User } from "@supabase/supabase-js";
 
 const Home = lazy(() => import('../pages/home/home'));
 const Users = lazy(() => import('../pages/users/users'));
-const BillTracking = lazy(() => import("../pages/bill-tracking/bill-tracking"));
+const BillTrackingMain = lazy(() => import("../pages/bill-tracking/bill-tracking-main"));
 const PageNotFound = lazy(() => import("../pages/error-page/page-not-found"))
 
 const App = () => {
@@ -72,7 +72,7 @@ const App = () => {
                   <Route path="/" element={<Home/>}/>
                   <Route path="users" element={<Users/>}/>
                   <Route path="about" element={<div>about</div>}/>
-                  <Route path="/bill-tracker" element={<BillTracking/>}/>
+                  <Route path="/bill-tracker" element={<BillTrackingMain/>}/>
                   <Route path="*" element={<PageNotFound/>}/>
                 </Routes>
               </Suspense>

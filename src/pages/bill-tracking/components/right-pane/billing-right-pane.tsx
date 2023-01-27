@@ -1,27 +1,31 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { DebtEntry } from "../../models/bill-tracking.model";
-import { formatDate, formatSenderReceiver, renderSenderReceiverColor } from "../../functions/bill-tracking.functions";
+import {
+  formatDate
+} from "../../state/functions/bill-tracking.functions";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../app/store";
-import RowDataItem from "./row-data-item";
+import RowDataItem from "./components/row-data-item";
+import NoteTextArea from "./components/note-text-area";
+import PaneHeader from "./components/pane-header";
+import { BillTrackingContext } from "../../state/context/bill-tracking-provider";
 
-const BillingRightPane = ({ selectedRowData }: { selectedRowData: DebtEntry }) => {
+const BillingRightPane = () => {
+  const { selectedRowData } = useContext(BillTrackingContext);
+
   const userId = useSelector((state: RootState) => state.auth.userDatabaseId);
   const [note, setNote] = useState<string>('');
 
   useEffect(() => {
-    setNote(selectedRowData.note);
+    setNote(selectedRowData!.note);
   }, [selectedRowData]);
-
-  const handleTextAreaChange = (value: string) => {
-    setNote(value);
-  };
 
   const handleCompleteButton = () => {
 
   };
 
   const {
+    id,
     sender_id,
     amount,
     next_recurrence_date,
@@ -31,44 +35,27 @@ const BillingRightPane = ({ selectedRowData }: { selectedRowData: DebtEntry }) =
     receiver_data,
     sender_data,
     description
-  } = selectedRowData;
+  } = selectedRowData!;
 
   return (
     <div className="flex flex-col justify-between h-full">
       <div className="space-y-4">
-        <div className="flex justify-between flex-wrap">
-          <span
-            style={{ fontSize: '1.2rem' }}
-            className="font-bold">{formatSenderReceiver(userId!, sender_id, sender_data, receiver_data)}
-          </span>
-          <p
-            style={{ fontSize: '1.5rem' }}
-            className={`${renderSenderReceiverColor(userId!, sender_id)} font-bold`}>
-            {`$${amount}`}
-          </p>
-        </div>
+        <PaneHeader
+          userId={userId!}
+          sender_id={sender_id}
+          sender_data={sender_data}
+          receiver_data={receiver_data}
+          amount={amount}
+        />
 
         <div className="overflow-auto space-y-4">
           <RowDataItem heading="Description" data={description} inline={false}/>
           <RowDataItem heading="Creation Date" data={formatDate(created_at)}/>
           <RowDataItem heading="Due Date" data={formatDate(next_recurrence_date)} rawData={next_recurrence_date}/>
           <RowDataItem heading="Frequency" data={frequency_interval}/>
-        </div>
 
-        <span className="relative">
-          <textarea
-            className="w-full rounded bg-gray-600 text-white outline-0 p-2 max-h-[200px] mt-4"
-            rows={4}
-            value={note}
-            onChange={e => handleTextAreaChange(e.target.value)}
-          />
-          <i className="fa fa-repeat absolute bottom-2 right-14 hover:text-red-500 cursor-pointer"
-             style={{ fontSize: '2rem' }}/>
-          <i
-            className="fa fa-check-square absolute bottom-2 right-4 hover:text-emerald-300 cursor-pointer"
-            style={{ fontSize: '2rem' }}
-          />
-          </span>
+          <NoteTextArea note={note} setNote={setNote} debtId={id}/>
+        </div>
       </div>
 
       <div className="self-center w-full">

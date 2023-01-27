@@ -15,3 +15,17 @@ export async function getDebtList(userDatabaseId: number) {
 export async function updateDebt(id: number) {
 
 }
+
+export async function updateNote(debtId: number, note: string) {
+  let jsonNote = JSON.stringify(note);
+  jsonNote = jsonNote.substring(1, jsonNote.length - 1);
+
+  const { data, error } = await supabase
+    .from('debt')
+    .update({ note: jsonNote })
+    .eq("id", debtId)
+
+  if (error) throw error;
+
+  return data;
+}

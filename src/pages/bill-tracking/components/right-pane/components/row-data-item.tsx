@@ -1,5 +1,5 @@
 import React from 'react';
-import { pastDueDate } from "../../functions/bill-tracking.functions";
+import { pastDueDate } from "../../../state/functions/bill-tracking.functions";
 
 interface RowDataItemProps {
   heading: string;
