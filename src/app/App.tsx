@@ -14,7 +14,7 @@ import { User } from "@supabase/supabase-js";
 
 const Home = lazy(() => import('../pages/home/home'));
 const Users = lazy(() => import('../pages/users/users'));
-const BillTrackingMain = lazy(() => import("../pages/bill-tracking/bill-tracking-main"));
+const BillTracking = lazy(() => import("../pages/bill-tracking/bill-tracking"));
 const PageNotFound = lazy(() => import("../pages/error-page/page-not-found"))
 
 const App = () => {
@@ -62,17 +62,16 @@ const App = () => {
     <BrowserRouter>
       <NavBar/>
       <AppContainer>
-        {pageLoading ? (
-          <GlobalSpinningLoader/>
-        ) : (
+        {pageLoading && <GlobalSpinningLoader/>}
+        {!pageLoading && (
           <>
             {signedIn ? (
               <Suspense fallback={<GlobalSpinningLoader/>}>
                 <Routes>
                   <Route path="/" element={<Home/>}/>
-                  <Route path="users" element={<Users/>}/>
-                  <Route path="about" element={<div>about</div>}/>
-                  <Route path="/bill-tracker" element={<BillTrackingMain/>}/>
+                  <Route path="/users" element={<Users/>}/>
+                  <Route path="/about" element={<p>about</p>}/>
+                  <Route path="/bill-tracker" element={<BillTracking/>}/>
                   <Route path="*" element={<PageNotFound/>}/>
                 </Routes>
               </Suspense>

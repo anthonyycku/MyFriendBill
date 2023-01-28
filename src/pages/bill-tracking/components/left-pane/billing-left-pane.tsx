@@ -5,7 +5,7 @@ import DebtSearchBar from "./components/debt-search.bar";
 import EmptyTable from "./components/empty-table";
 import CreateButton from "../../../../global/components/buttons/create-button";
 import DialogSpinningLoader from "../../../../global/components/loading/dialog-spinning-loader";
-import CreateDebtDialog from "../../dialog/create-debt-dialog";
+import CreateEditDebtDialog from "../../dialog/create-edit-debt-dialog";
 import { DebtDirection } from "../../constants/bill-tracking.constants";
 import DropdownMenu from "../../../../global/components/menu/dropdown-menu";
 import UseDialogHook from "../../../../global/components/dialog/hooks/use-dialog-hook";
@@ -20,15 +20,15 @@ const BillingLeftPane = () => {
   const { modalRef, setOpenDialog, openDialog, animationClass } = UseDialogHook();
 
   const debtDirectionList = [
-    { name: DebtDirection.ALL, action: () => setDebtDirection(DebtDirection.ALL) },
-    { name: DebtDirection.FROM, action: () => setDebtDirection(DebtDirection.FROM) },
-    { name: DebtDirection.TO, action: () => setDebtDirection(DebtDirection.TO) }
+    DebtDirection.ALL,
+    DebtDirection.FROM,
+    DebtDirection.TO
   ]
 
   return (
     <>
       <Suspense fallback={<DialogSpinningLoader/>}>
-        {openDialog && <CreateDebtDialog animationClass={animationClass} modalRef={modalRef}/>}
+        {openDialog && <CreateEditDebtDialog animationClass={animationClass} modalRef={modalRef}/>}
       </Suspense>
 
       <div className="flex flex-col h-full">

@@ -18,9 +18,8 @@ const ReportBugForm = ({ animationClass, modalRef }: DialogProps) => {
   }
 
   return (
-    <DialogContainer animationClass={animationClass} modalRef={modalRef}>
+    <DialogContainer title="Report a bug" animationClass={animationClass} modalRef={modalRef}>
       <>
-        <h2 className="text-lg font-medium mb-4">Report a bug</h2>
         <div className="mb-4">
           <label className="block text-gray-400 font-medium mb-2">Description</label>
           <textarea

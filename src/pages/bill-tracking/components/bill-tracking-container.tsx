@@ -11,7 +11,7 @@ import EmptyInfoPane from "./right-pane/empty-info-pane";
 import BillingLeftPane from "./left-pane/billing-left-pane";
 import { BillTrackingContext } from "../state/context/bill-tracking-context";
 
-const BillTracking = () => {
+const BillTrackingContainer = () => {
   const { setDisplayedTableData, selectedRowId } = useContext(BillTrackingContext)
 
   const userDatabaseId = useSelector((state: RootState) => state.auth.userDatabaseId);
@@ -39,4 +39,4 @@ const BillTracking = () => {
   )
 };
 
-export default BillTracking;
+export default BillTrackingContainer;

@@ -12,10 +12,6 @@ export async function getDebtList(userDatabaseId: number) {
   return debt;
 }
 
-export async function updateDebt(id: number) {
-
-}
-
 export async function updateNote(debtId: number, note: string) {
 
   const { data, error } = await supabase

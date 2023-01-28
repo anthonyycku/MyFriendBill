@@ -1,12 +1,8 @@
 import React from 'react';
 
-export interface MenuItems {
-  name: string;
-}
-
 interface DropdownMenuProps<T> {
   defaultValue: string;
-  menuItems: MenuItems[];
+  menuItems: string[];
   styles?: string;
   setChangeValue: (direction: T) => void;
 }
@@ -19,12 +15,12 @@ const DropdownMenu = ({ menuItems, defaultValue, styles = '', setChangeValue }: 
       onChange={e => setChangeValue(e.target.value)}
       className={`${styles} cursor-pointer font-medium outline-0 bg-gray-50 border border-gray-300 text-sm rounded-lg block w-full min-w-[80px] p-2 bg-gray-700 border-gray-600 text-gray-400 focus:border-blue-500`}
     >
-      {menuItems.length > 0 && menuItems.map((item: MenuItems) => (
+      {menuItems.length > 0 && menuItems.map(option => (
         <option
           className="font-medium "
-          key={item.name}
+          key={option}
         >
-          {item.name}
+          {option}
         </option>
       ))}
     </select>

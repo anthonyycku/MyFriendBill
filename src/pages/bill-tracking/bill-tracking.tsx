@@ -1,13 +1,13 @@
 import React from 'react';
-import BillTracking from "./components/bill-tracking";
+import BillTrackingContainer from "./components/bill-tracking-container";
 import { BillTrackingProvider } from "./state/context/bill-tracking-context";
 
-const BillTrackingMain = () => {
+const BillTracking = () => {
   return (
     <BillTrackingProvider>
-      <BillTracking/>
+      <BillTrackingContainer/>
     </BillTrackingProvider>
   )
 };
 
-export default BillTrackingMain;
+export default BillTracking;
