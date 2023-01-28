@@ -10,7 +10,7 @@ import {
 } from "../../state/functions/bill-tracking.functions";
 import '../../css/debt-table.css';
 import { DebtDirection } from "../../constants/bill-tracking.constants";
-import { BillTrackingContext } from "../../state/context/bill-tracking-provider";
+import { BillTrackingContext } from "../../state/context/bill-tracking-context";
 
 const DebtTable = () => {
   const {

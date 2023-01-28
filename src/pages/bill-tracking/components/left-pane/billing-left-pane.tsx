@@ -9,7 +9,7 @@ import CreateDebtDialog from "../../dialog/create-debt-dialog";
 import { DebtDirection } from "../../constants/bill-tracking.constants";
 import DropdownMenu from "../../../../global/components/menu/dropdown-menu";
 import UseDialogHook from "../../../../global/components/dialog/hooks/use-dialog-hook";
-import { BillTrackingContext } from "../../state/context/bill-tracking-provider";
+import { BillTrackingContext } from "../../state/context/bill-tracking-context";
 
 const BillingLeftPane = () => {
   const {

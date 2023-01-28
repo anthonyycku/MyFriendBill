@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../../app/store";
 import { DebtDirection } from "../../constants/bill-tracking.constants";
 
-interface BillTrackingProvider {
+interface BillTrackerContextModel {
   displayedTableData: DebtEntry[];
   setDisplayedTableData: (data: DebtEntry[]) => void;
   selectedRowId: number | null;
@@ -16,9 +16,10 @@ interface BillTrackingProvider {
   setDebtDirection: (direction: string) => void;
   searchQuery: string;
   setSearchQuery: (query: string) => void;
+  updateTableData: (index: number, newData: Partial<DebtEntry>) => void;
 }
 
-export const BillTrackingContext = createContext<BillTrackingProvider>({
+export const BillTrackingContext = createContext<BillTrackerContextModel>({
   displayedTableData: [],
   setDisplayedTableData: () => {
   },
@@ -34,6 +35,8 @@ export const BillTrackingContext = createContext<BillTrackingProvider>({
   },
   searchQuery: '',
   setSearchQuery: () => {
+  },
+  updateTableData: () => {
   }
 });
 
@@ -46,6 +49,15 @@ export const BillTrackingProvider = ({ children }: any) => {
   const [searchQuery, setSearchQuery] = useState<string>('');
   const deferredSearch = useDeferredValue(searchQuery!);
 
+  const updateTableData = (debtId: number, newData: Partial<DebtEntry>) => {
+    setDisplayedTableData(currentTable => {
+      const updatedTable = [...currentTable];
+      const index = updatedTable.findIndex(debt => debt.id === debtId);
+      updatedTable[index] = { ...currentTable[index], ...newData }
+      return updatedTable;
+    });
+  };
+
   const states = {
     displayedTableData,
     setDisplayedTableData,
@@ -57,7 +69,8 @@ export const BillTrackingProvider = ({ children }: any) => {
     debtDirection,
     setDebtDirection,
     searchQuery,
-    setSearchQuery
+    setSearchQuery,
+    updateTableData
   };
 
   return (

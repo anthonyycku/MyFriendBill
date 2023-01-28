@@ -1,6 +1,6 @@
 import React from 'react';
 import BillTracking from "./components/bill-tracking";
-import { BillTrackingProvider } from "./state/context/bill-tracking-provider";
+import { BillTrackingProvider } from "./state/context/bill-tracking-context";
 
 const BillTrackingMain = () => {
   return (

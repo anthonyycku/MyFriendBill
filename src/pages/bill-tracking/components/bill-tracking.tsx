@@ -9,7 +9,7 @@ import PaneContainer from "../../../global/components/container/pane-container";
 import BillingRightPane from "./right-pane/billing-right-pane";
 import EmptyInfoPane from "./right-pane/empty-info-pane";
 import BillingLeftPane from "./left-pane/billing-left-pane";
-import { BillTrackingContext } from "../state/context/bill-tracking-provider";
+import { BillTrackingContext } from "../state/context/bill-tracking-context";
 
 const BillTracking = () => {
   const { setDisplayedTableData, selectedRowId } = useContext(BillTrackingContext)

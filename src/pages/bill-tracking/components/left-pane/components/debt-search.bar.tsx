@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { BillTrackingContext } from "../../../state/context/bill-tracking-provider";
+import { BillTrackingContext } from "../../../state/context/bill-tracking-context";
 
 const DebtSearchBar = () => {
   const { setSearchQuery, deferredSearch } = useContext(BillTrackingContext);
