@@ -7,7 +7,7 @@ const DirectionToggle = ({
                          }: { debtDirection: string, setDebtDirection: (dir: string) => void }) => {
 
   const style = (option: string): string => {
-    return option === debtDirection ? 'focus:bg-gray-800 bg-gray-800 border border-1 border-gray-400' : 'bg-gray-700'
+    return option === debtDirection ? 'focus:bg-gray-800 bg-gray-800 border border-1 border-gray-400 shadow-[inset_0_0_3px_3px_#323232]' : 'bg-gray-700'
   }
 
   return (

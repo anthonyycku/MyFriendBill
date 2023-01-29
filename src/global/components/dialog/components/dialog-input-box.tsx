@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 
-interface DialogInputBoxProps {
+interface DialogInputBoxProps<T> {
   heading: string;
   type?: string;
   required?: boolean;
   fullWidth?: boolean;
+  value: T;
+  setValue: (param: T) => void;
 }
 
 const DialogInputBox = (
@@ -12,8 +14,10 @@ const DialogInputBox = (
     heading,
     type = 'text',
     required = false,
-    fullWidth = false
-  }: DialogInputBoxProps) => {
+    fullWidth = false,
+    value,
+    setValue
+  }: DialogInputBoxProps<any>) => {
   return (
     <div className={`relative z-0 min-w-[200px] ${fullWidth ? 'w-full' : 'w-1/3'} mb-6 group`}>
       <input
@@ -21,6 +25,8 @@ const DialogInputBox = (
         placeholder=" "
         required={required}
         type={type}
+        defaultValue={value}
+        onChange={e => setValue(e.target.value)}
       />
       <label
         htmlFor="floating_email"

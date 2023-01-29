@@ -17,3 +17,13 @@ export interface DebtEntry {
   receiver_data: TransactionData;
   note: string;
 }
+
+export interface CreateEntry {
+  amount: number;
+  description: string;
+  frequency_interval?: number;
+  next_recurrence_date: Date;
+  sender_id: number;
+  receiver_id: number;
+  note: string;
+}

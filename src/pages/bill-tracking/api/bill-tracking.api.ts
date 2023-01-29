@@ -1,4 +1,5 @@
 import { supabase } from "../../../supabase-config";
+import { CreateEntry, DebtEntry } from "../models/bill-tracking.model";
 
 export async function getDebtList(userDatabaseId: number) {
   const { data: debt, error } = await supabase
@@ -13,7 +14,6 @@ export async function getDebtList(userDatabaseId: number) {
 }
 
 export async function updateNote(debtId: number, note: string) {
-
   const { data, error } = await supabase
     .from('debt')
     .update({ note: note })
@@ -22,4 +22,18 @@ export async function updateNote(debtId: number, note: string) {
   if (error) throw error;
 
   return data;
+}
+
+export async function getUsersList() {
+  const { data: user, error } = await supabase
+    .from('user')
+    .select('id, name')
+
+  if (error) throw error;
+
+  return user;
+}
+
+export async function createNewDebt(debtEntry: CreateEntry) {
+
 }
