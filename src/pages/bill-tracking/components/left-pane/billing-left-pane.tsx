@@ -28,7 +28,8 @@ const BillingLeftPane = () => {
   return (
     <>
       <Suspense fallback={<DialogSpinningLoader/>}>
-        {openDialog && <CreateEditDebtDialog animationClass={animationClass} modalRef={modalRef}/>}
+        {openDialog &&
+            <CreateEditDebtDialog animationClass={animationClass} modalRef={modalRef} setOpenDialog={setOpenDialog}/>}
       </Suspense>
 
       <div className="flex flex-col h-full">

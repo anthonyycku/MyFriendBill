@@ -34,6 +34,12 @@ export async function getUsersList() {
   return user;
 }
 
-export async function createNewDebt(debtEntry: CreateEntry) {
+export async function createNewDebt(debtData: CreateEntry) {
+  const { data, error } = await supabase
+    .from('debt')
+    .insert([debtData])
 
+  if (error) throw error;
+
+  return data;
 }

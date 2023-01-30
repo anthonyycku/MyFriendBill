@@ -21,8 +21,8 @@ export interface DebtEntry {
 export interface CreateEntry {
   amount: number;
   description: string;
-  frequency_interval?: number;
-  next_recurrence_date: Date;
+  frequency_interval?: string | null;
+  next_recurrence_date: Date | null;
   sender_id: number;
   receiver_id: number;
   note: string;

@@ -13,7 +13,7 @@ const SelectedUser = ({
 
   return (
     <>
-      <input value={user.name} type="text" className="rounded-l bg-gray-500 min-w-56 w-auto ml-4 px-2" disabled/>
+      <input value={user.name} type="text" className="w-52 rounded-l bg-gray-500 w-auto ml-4 px-2" disabled/>
       <button
         onClick={() => setShowUsers(!showUsers)}
         type="button"

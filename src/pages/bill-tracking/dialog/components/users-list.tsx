@@ -6,9 +6,10 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../../app/store";
 
 const UsersList = ({
+                     otherUser,
                      setOtherUser,
                      setShowUsers
-                   }: { setShowUsers: (show: boolean) => void, setOtherUser: (user: UserData) => void }) => {
+                   }: { otherUser: UserData, setShowUsers: (show: boolean) => void, setOtherUser: (user: UserData) => void }) => {
   const userId = useSelector((state: RootState) => state.auth.userDatabaseId);
   const [usersList, setUsersList] = useState<UserData[]>([]);
   const [loadingList, setLoadingList] = useState<boolean>(true);
@@ -26,8 +27,12 @@ const UsersList = ({
     setShowUsers(false);
   }
 
+  const selectedUserStyle = (currentUser: UserData): string => {
+    return otherUser.id === currentUser.id ? 'shadow-[inset_0_0_5px_1px_#10b305]' : ''
+  }
+
   return (
-    <div className="w-full bg-gray-600 h-40 rounded overflow-auto">
+    <div className="w-full bg-gray-600 h-40 rounded overflow-auto mt-4">
       {loadingList ? (
         <LoadingDots text="Fetching users..."/>
       ) : (
@@ -36,7 +41,7 @@ const UsersList = ({
             <button
               key={user.id}
               onClick={() => handleUserSelect(user)}
-              className="hover:bg-gray-500 text-left p-1"
+              className={`hover:bg-gray-500 text-left p-1 px-2 ${selectedUserStyle(user)}`}
             >
               {user.name}
             </button>
