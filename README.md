@@ -1,4 +1,5 @@
 -- App still under development and NOT hosted --
+This idea was born out of my desire to keep my React skills sharp - and I didn't want to use excel anymore to keep track of people who owe me money
 
 
 Most recent UI (1/31/2023)
