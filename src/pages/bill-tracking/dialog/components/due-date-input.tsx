@@ -28,7 +28,7 @@ const DueDateInput = ({ dueDate, setDueDate }: { dueDate: Date | null, setDueDat
       </div>
 
       <button type="button"
-              className={`flex items-center space-x-1 border border-gray-500 rounded px-4 py-1.5 ml-2 ${disabledStyle()}`}
+              className={`hover:bg-orange-600 flex items-center space-x-1 border border-gray-500 rounded px-4 py-1.5 ml-2 ${disabledStyle()}`}
               onClick={disableInput}
       >
         <i className="fa fa-calendar-times-o"/>

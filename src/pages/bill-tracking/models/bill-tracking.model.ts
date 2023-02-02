@@ -9,7 +9,7 @@ export interface DebtEntry {
   created_at: string;
   completed: boolean;
   description: string;
-  frequency_interval?: number;
+  frequency_interval: string | null;
   next_recurrence_date: string | null;
   sender_id: number;
   receiver_id: number;
@@ -18,7 +18,8 @@ export interface DebtEntry {
   note: string;
 }
 
-export interface CreateEntry {
+export interface DebtEntryValidation {
+  id?: number;
   amount: number;
   description: string;
   frequency_interval?: string | null;

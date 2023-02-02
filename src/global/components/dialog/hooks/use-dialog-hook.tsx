@@ -6,13 +6,6 @@ const UseDialogHook = () => {
   const [animationClass, setAnimationClass] = useState<string>('report-bug-open');
   const modalRef = useRef<HTMLDivElement>(null);
 
-  // const handleClickOutside = (event: MouseEvent) => {
-  //   if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
-  //     setAnimationClass('report-bug-close')
-  //     setTimeout(() => setOpenDialog(false), 300)
-  //   }
-  // };
-
   const handleClickOutside = (event: MouseEvent) => {
     if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
       setAnimationClass('report-bug-close')

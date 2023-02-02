@@ -1,4 +1,4 @@
-import { createContext, useDeferredValue, useState } from "react";
+import { createContext, useDeferredValue, useEffect, useState } from "react";
 import { DebtEntry } from "../../models/bill-tracking.model";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../app/store";
@@ -7,8 +7,6 @@ import { DebtDirection } from "../../constants/bill-tracking.constants";
 interface BillTrackerContextModel {
   displayedTableData: DebtEntry[];
   setDisplayedTableData: (data: DebtEntry[]) => void;
-  selectedRowId: number | null;
-  setSelectedRowId: (id: number | null) => void;
   selectedRowData: DebtEntry | null;
   setSelectedRowData: (data: DebtEntry) => void;
   deferredSearch: string;
@@ -22,9 +20,6 @@ interface BillTrackerContextModel {
 export const BillTrackingContext = createContext<BillTrackerContextModel>({
   displayedTableData: [],
   setDisplayedTableData: () => {
-  },
-  selectedRowId: null,
-  setSelectedRowId: () => {
   },
   selectedRowData: null,
   setSelectedRowData: () => {
@@ -43,11 +38,15 @@ export const BillTrackingContext = createContext<BillTrackerContextModel>({
 export const BillTrackingProvider = ({ children }: any) => {
   const userId = useSelector((state: RootState) => state.auth.userDatabaseId);
   const [displayedTableData, setDisplayedTableData] = useState<DebtEntry[]>([]);
-  const [selectedRowId, setSelectedRowId] = useState<number | null>(null);
   const [selectedRowData, setSelectedRowData] = useState<DebtEntry | null>(null)
   const [debtDirection, setDebtDirection] = useState<string>(DebtDirection.ALL);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const deferredSearch = useDeferredValue(searchQuery!);
+
+  const getRowDataById = (selectedId: number): DebtEntry => {
+    const index = displayedTableData.findIndex(debt => debt.id === selectedId);
+    return displayedTableData[index];
+  }
 
   const updateTableData = (debtId: number, newData: Partial<DebtEntry>) => {
     setDisplayedTableData(currentTable => {
@@ -58,11 +57,15 @@ export const BillTrackingProvider = ({ children }: any) => {
     });
   };
 
+  useEffect(() => {
+    if (displayedTableData.length === 0 || selectedRowData === null) return;
+
+    setSelectedRowData(getRowDataById(selectedRowData.id));
+  }, [displayedTableData]);
+
   const states = {
     displayedTableData,
     setDisplayedTableData,
-    selectedRowId,
-    setSelectedRowId,
     selectedRowData,
     setSelectedRowData,
     deferredSearch,

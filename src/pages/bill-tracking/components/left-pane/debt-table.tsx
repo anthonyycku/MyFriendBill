@@ -15,8 +15,7 @@ import { BillTrackingContext } from "../../state/context/bill-tracking-context";
 const DebtTable = () => {
   const {
     displayedTableData,
-    selectedRowId,
-    setSelectedRowId,
+    selectedRowData,
     setSelectedRowData,
     deferredSearch,
     debtDirection
@@ -52,7 +51,6 @@ const DebtTable = () => {
   };
 
   const handleRowClick = (row: DebtEntry) => {
-    setSelectedRowId(row.id)
     setSelectedRowData(row);
   }
 
@@ -78,7 +76,7 @@ const DebtTable = () => {
             <tr
               key={debtItem.id}
               onClick={() => handleRowClick(debtItem)}
-              className={`debt-table-row font-medium border-gray-700 hover:bg-gray-500 cursor-pointer ${selectedRowId === debtItem.id && 'bg-gray-600 debt-table-row-selected'} `}
+              className={`debt-table-row font-medium border-gray-700 hover:bg-gray-500 cursor-pointer ${selectedRowData?.id === debtItem.id && 'bg-gray-600 debt-table-row-selected'} `}
             >
 
               {/* Name */}

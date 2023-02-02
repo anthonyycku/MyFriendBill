@@ -11,7 +11,6 @@ import { DateTime } from "luxon";
 const BillingRightPane = () => {
   const { selectedRowData } = useContext(BillTrackingContext);
 
-
   const handleCompleteButton = () => {
 
   };

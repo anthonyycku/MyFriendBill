@@ -12,7 +12,7 @@ import BillingLeftPane from "./left-pane/billing-left-pane";
 import { BillTrackingContext } from "../state/context/bill-tracking-context";
 
 const BillTrackingContainer = () => {
-  const { setDisplayedTableData, selectedRowId } = useContext(BillTrackingContext)
+  const { setDisplayedTableData, selectedRowData } = useContext(BillTrackingContext)
 
   const userDatabaseId = useSelector((state: RootState) => state.auth.userDatabaseId);
   const [tableLoading, setTableLoading] = useState<boolean>(true);
@@ -33,7 +33,7 @@ const BillTrackingContainer = () => {
       </PaneContainer>
 
       <PaneContainer width="w-1/4" overflowY>
-        {selectedRowId === null ? <EmptyInfoPane/> : <BillingRightPane/>}
+        {selectedRowData === null ? <EmptyInfoPane/> : <BillingRightPane/>}
       </PaneContainer>
     </PageContainer>
   )
