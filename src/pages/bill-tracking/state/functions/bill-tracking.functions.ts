@@ -20,9 +20,8 @@ export const renderSenderReceiverColor = (userId: number, sender_id: number): st
 }
 
 export const formatDate = (next_recurrence_date: string | null): string => {
-  if (next_recurrence_date === null) {
-    return 'No due date';
-  }
+  if (next_recurrence_date === null) return 'No due date';
+
 
   const dueDate = DateTime.fromISO(next_recurrence_date);
   const today = DateTime.local();
@@ -39,19 +38,29 @@ export const formatDate = (next_recurrence_date: string | null): string => {
   }
 }
 
-export const pastDueDate = (next_recurrence_date: string | null): string => {
-  if (next_recurrence_date === null) {
-    return '';
-  }
+export const textColorFormat = (next_recurrence_date: string | null): string => {
+  if (next_recurrence_date === null) return '';
 
   const dueDate = DateTime.fromISO(next_recurrence_date);
   const today = DateTime.local();
   let { days } = dueDate.diff(today, 'days').toObject();
   days = Math.ceil(days!);
 
-  if (days! <= 0) {
-    return 'text-orange-400'
-  }
+  if (days! <= 0) return 'text-orange-400'
+
+  return '';
+}
+
+export const textOpacityFormat = (next_recurrence_date: string | null): string => {
+  if (next_recurrence_date === null) return '';
+
+  const dueDate = DateTime.fromISO(next_recurrence_date);
+  const today = DateTime.local();
+  let { days } = dueDate.diff(today, 'days').toObject();
+  days = Math.ceil(days!);
+
+  if (days! < 0) return 'text-opacity-50';
+
   return '';
 }
 

@@ -5,8 +5,8 @@ import { RootState } from "../../../../app/store";
 import {
   formatDate,
   formatSenderReceiver,
-  pastDueDate,
-  renderSenderReceiverColor
+  textColorFormat,
+  renderSenderReceiverColor, textOpacityFormat
 } from "../../state/functions/bill-tracking.functions";
 import '../../css/debt-table.css';
 import { DebtDirection } from "../../constants/bill-tracking.constants";
@@ -82,32 +82,33 @@ const DebtTable = () => {
             >
 
               {/* Name */}
-              <th scope="row" className="px-6 py-4 font-medium text-white truncate">
+              <th scope="row"
+                  className={`px-6 py-4 font-medium text-white truncate ${textOpacityFormat(debtItem.next_recurrence_date)}`}>
                 {formatSenderReceiver(userId!, debtItem.sender_id, debtItem.sender_data, debtItem.receiver_data)}
               </th>
 
               {/*Amount*/}
               <td
-                className={`px-6 py-4 truncate ${renderSenderReceiverColor(userId!, debtItem.sender_id)}`}>
+                className={`px-6 py-4 truncate ${renderSenderReceiverColor(userId!, debtItem.sender_id)} ${textOpacityFormat(debtItem.next_recurrence_date)}`}>
                 {`$ ${debtItem.amount}`}
               </td>
 
               {/*Description*/}
-              <td className={cellClassLong}>
+              <td className={`${cellClassLong} ${textOpacityFormat(debtItem.next_recurrence_date)}`}>
                 {debtItem.description}
               </td>
 
               {/*Due Date*/}
-              <td className={cellClassLong}>
+              <td className={`${cellClassLong} ${textOpacityFormat(debtItem.next_recurrence_date)}`}>
               <span
-                className={`flex space-x-2 items-center ${pastDueDate(debtItem.next_recurrence_date)}`}>
+                className={`flex space-x-2 items-center ${textColorFormat(debtItem.next_recurrence_date)} ${textOpacityFormat(debtItem.next_recurrence_date)}`}>
                 <p>{formatDate(debtItem.next_recurrence_date)}</p>
-                {pastDueDate(debtItem.next_recurrence_date) && <i className="fa fa-exclamation-triangle"/>}
+                {textColorFormat(debtItem.next_recurrence_date) && <i className="fa fa-exclamation-triangle"/>}
               </span>
               </td>
 
               {/*Frequency*/}
-              <td className={cellClassLong}>
+              <td className={`${cellClassLong} ${textOpacityFormat(debtItem.next_recurrence_date)}`}>
               </td>
 
               {/*Complete*/}

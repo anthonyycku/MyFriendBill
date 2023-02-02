@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import DialogContainer from "../../../global/components/dialog/dialog-container";
 import { DialogProps } from "../../../global/components/dialog/models/dialog-props";
 import DialogInputBox from "../../../global/components/dialog/components/dialog-input-box";
@@ -20,10 +20,10 @@ export interface UserData {
   name: string;
 }
 
-const CreateEditDebtDialog = ({
-                                animationClass, modalRef, setOpenDialog = () => {
+const CreateEditDebtDialog: FC<DialogProps> = ({
+                                                 animationClass, modalRef, setOpenDialog = () => {
   }
-                              }: DialogProps) => {
+                                               }) => {
   const userId = useSelector((state: RootState) => state.auth.userDatabaseId);
   const [debtDirection, setDebtDirection] = useState<string>(DebtDirection.TO);
   const [otherUser, setOtherUser] = useState<UserData>({ name: '', id: null });

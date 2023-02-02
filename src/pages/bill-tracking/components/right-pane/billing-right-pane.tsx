@@ -31,7 +31,7 @@ const BillingRightPane = () => {
 
         <div className="overflow-auto space-y-4">
           <RowDataItem heading="Description" data={description} inline={false}/>
-          <RowDataItem heading="Creation Date" data={DateTime.fromISO(created_at).toFormat("MM/dd/yyyy")}/>
+          <RowDataItem heading="Creation Date" data={DateTime.fromISO(created_at).toFormat("MM/dd/yyyy, HH:mm")}/>
           <RowDataItem heading="Due Date" data={formatDate(next_recurrence_date)} rawData={next_recurrence_date}/>
           <RowDataItem heading="Frequency" data={frequency_interval}/>
 
