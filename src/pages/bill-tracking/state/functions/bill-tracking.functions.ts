@@ -1,4 +1,5 @@
 import { TransactionData } from "../../models/bill-tracking.model";
+import { DateTime, Duration } from 'luxon';
 
 export const formatSenderReceiver = (userId: number, sender_id: number, sender_data: TransactionData, receiver_data: TransactionData): string => {
   let resultString: string;
@@ -18,40 +19,37 @@ export const renderSenderReceiverColor = (userId: number, sender_id: number): st
   }
 }
 
-const getDaysDifference = (dueDate: Date) => {
-  const today = new Date();
-  const timeDiff = dueDate.getTime() - today.getTime();
-  const daysDiff = Math.round(timeDiff / (1000 * 60 * 60 * 24));
-  return daysDiff;
-}
-
-export const formatDate = (next_recurrence_date: Date | null): string => {
+export const formatDate = (next_recurrence_date: string | null): string => {
   if (next_recurrence_date === null) {
     return 'No due date';
   }
 
-  const dueDate = new Date(next_recurrence_date);
-  const daysDiff = getDaysDifference(dueDate);
+  const dueDate = DateTime.fromISO(next_recurrence_date);
+  const today = DateTime.local();
+  let { days } = dueDate.diff(today, 'days').toObject();
+  days = Math.ceil(days!);
 
-  if (daysDiff === 0) {
-    return `${dueDate.toLocaleDateString()} (Today)`
-  } else if (daysDiff > 0) {
-    return `${dueDate.toLocaleDateString()} (In ${daysDiff} day${daysDiff === 1 ? '' : 's'})`
+  if (days === 0) {
+    return `${dueDate.toFormat("MM/dd/yyyy")} (Today)`
+  } else if (days! > 0) {
+    return `${dueDate.toFormat("MM/dd/yyyy")} (In ${days} day${days === 1 ? '' : 's'})`
   } else {
-    const daysDiffAbsolute = Math.abs(daysDiff);
-    return `${dueDate.toLocaleDateString()} (${daysDiffAbsolute} day${daysDiffAbsolute === 1 ? '' : 's'} ago)`
+    const daysDiffAbsolute = Math.abs(days!);
+    return `${dueDate.toFormat("MM/dd/yyyy")} (${daysDiffAbsolute} day${daysDiffAbsolute === 1 ? '' : 's'} ago)`
   }
 }
 
-export const pastDueDate = (next_recurrence_date: Date | null): string => {
+export const pastDueDate = (next_recurrence_date: string | null): string => {
   if (next_recurrence_date === null) {
     return '';
   }
 
-  const dueDate = new Date(next_recurrence_date);
-  const daysDiff = getDaysDifference(dueDate);
+  const dueDate = DateTime.fromISO(next_recurrence_date);
+  const today = DateTime.local();
+  let { days } = dueDate.diff(today, 'days').toObject();
+  days = Math.ceil(days!);
 
-  if (daysDiff <= 0) {
+  if (days! <= 0) {
     return 'text-orange-400'
   }
   return '';

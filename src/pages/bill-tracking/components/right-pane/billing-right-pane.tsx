@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import {
   formatDate
 } from "../../state/functions/bill-tracking.functions";
@@ -6,6 +6,7 @@ import RowDataItem from "./components/row-data-item";
 import NoteTextArea from "./components/note-text-area";
 import PaneHeader from "./components/pane-header";
 import { BillTrackingContext } from "../../state/context/bill-tracking-context";
+import { DateTime } from "luxon";
 
 const BillingRightPane = () => {
   const { selectedRowData } = useContext(BillTrackingContext);
@@ -30,7 +31,7 @@ const BillingRightPane = () => {
 
         <div className="overflow-auto space-y-4">
           <RowDataItem heading="Description" data={description} inline={false}/>
-          <RowDataItem heading="Creation Date" data={formatDate(created_at)}/>
+          <RowDataItem heading="Creation Date" data={DateTime.fromISO(created_at).toFormat("MM/dd/yyyy")}/>
           <RowDataItem heading="Due Date" data={formatDate(next_recurrence_date)} rawData={next_recurrence_date}/>
           <RowDataItem heading="Frequency" data={frequency_interval}/>
 

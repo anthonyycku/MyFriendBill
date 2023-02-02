@@ -6,11 +6,11 @@ export interface TransactionData {
 export interface DebtEntry {
   id: number;
   amount: number;
-  created_at: Date;
+  created_at: string;
   completed: boolean;
   description: string;
   frequency_interval?: number;
-  next_recurrence_date: Date;
+  next_recurrence_date: string | null;
   sender_id: number;
   receiver_id: number;
   sender_data: TransactionData;
