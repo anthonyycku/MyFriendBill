@@ -11,6 +11,7 @@ import {
 import '../../css/debt-table.css';
 import { DebtDirection } from "../../constants/bill-tracking.constants";
 import { BillTrackingContext } from "../../state/context/bill-tracking-context";
+import { DateTime } from "luxon";
 
 const DebtTable = () => {
   const {
@@ -24,6 +25,16 @@ const DebtTable = () => {
 
   const headerClass = "px-6 py-3"
   const cellClassLong = "px-6 py-4 truncate"
+
+  const sortByDate = (tableData: DebtEntryFromDb[]) => {
+    return tableData.sort((a: DebtEntryFromDb, b: DebtEntryFromDb) => {
+      const dateA = a.next_recurrence_date ? DateTime.fromISO(a.next_recurrence_date!) : null;
+      const dateB = b.next_recurrence_date ? DateTime.fromISO(b.next_recurrence_date!) : null;
+      if (!dateA) return 1;
+      if (!dateB) return -1;
+      return dateA.diff(dateB).as('seconds');
+    })
+  }
 
   const filterSearchQuery = (debtItem: DebtEntryFromDb) => {
     let userIsSender: boolean = userId === debtItem.sender_id;
@@ -69,7 +80,7 @@ const DebtTable = () => {
         </thead>
 
         <tbody>
-        {displayedTableData
+        {sortByDate(displayedTableData)
           .filter(debtItem => filterDebtDirection(debtItem))
           .filter(debtItem => filterSearchQuery(debtItem))
           .map(debtItem => (

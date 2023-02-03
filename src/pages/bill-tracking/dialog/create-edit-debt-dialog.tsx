@@ -34,7 +34,7 @@ const CreateEditDebtDialog: FC<DialogProps> = ({
                                                  setOpenDialog = () => {
                                                  }
                                                }) => {
-  const { selectedRowData, updateTableData, createNewTableData } = useContext(BillTrackingContext);
+  const { selectedRowData, updateTableData, setDisplayedTableData } = useContext(BillTrackingContext);
 
   const userId = useSelector((state: RootState) => state.auth.userDatabaseId);
   const [debtId, setDebtId] = useState<number | null>(null);
@@ -149,10 +149,13 @@ const CreateEditDebtDialog: FC<DialogProps> = ({
 
     const data = isEdit ? { id: debtId!, ...debtData } : debtData;
     const submitCallFn = isEdit ? updateDebt : createNewDebt;
-    const updateTableFn = (data: DebtEntryFromDb) => isEdit ? updateTableData(data.id!, data) : createNewTableData(data);
 
     submitCallFn(data).then(response => {
-      updateTableFn(response);
+      if (isEdit) {
+        updateTableData(response.id, response);
+      } else {
+        setDisplayedTableData(response);
+      }
       toast(`Success: ${isEdit ? 'Edit' : 'Create New'} Entry`,
         { type: 'success' });
       setOpenDialog(false);
