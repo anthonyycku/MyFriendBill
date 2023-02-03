@@ -1,5 +1,5 @@
 import { supabase } from "../../../supabase-config";
-import { DebtEntryValidation, DebtEntry } from "../models/bill-tracking.model";
+import { DebtEntryInput, DebtEntryFromDb } from "../models/bill-tracking.model";
 
 export async function getDebtList(userDatabaseId: number) {
   const { data: debt, error } = await supabase
@@ -34,7 +34,7 @@ export async function getUsersList() {
   return user;
 }
 
-export async function createNewDebt(debtData: DebtEntryValidation) {
+export async function createNewDebt(debtData: DebtEntryInput) {
   const { data, error } = await supabase
     .from('debt')
     .insert([debtData])
@@ -44,10 +44,11 @@ export async function createNewDebt(debtData: DebtEntryValidation) {
   return data;
 }
 
-export async function updateDebt(debtData: DebtEntryValidation) {
+export async function updateDebt(debtData: DebtEntryInput) {
   const { data, error } = await supabase
     .from('debt')
     .update(debtData)
+    .eq("id", debtData.id)
 
   if (error) throw error;
 

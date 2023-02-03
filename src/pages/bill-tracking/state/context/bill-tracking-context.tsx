@@ -1,20 +1,20 @@
 import { createContext, useDeferredValue, useEffect, useState } from "react";
-import { DebtEntry } from "../../models/bill-tracking.model";
+import { DebtEntryFromDb } from "../../models/bill-tracking.model";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../app/store";
 import { DebtDirection } from "../../constants/bill-tracking.constants";
 
 interface BillTrackerContextModel {
-  displayedTableData: DebtEntry[];
-  setDisplayedTableData: (data: DebtEntry[]) => void;
-  selectedRowData: DebtEntry | null;
-  setSelectedRowData: (data: DebtEntry) => void;
+  displayedTableData: DebtEntryFromDb[];
+  setDisplayedTableData: (data: DebtEntryFromDb[]) => void;
+  selectedRowData: DebtEntryFromDb | null;
+  setSelectedRowData: (data: DebtEntryFromDb) => void;
   deferredSearch: string;
   debtDirection: string;
   setDebtDirection: (direction: string) => void;
   searchQuery: string;
   setSearchQuery: (query: string) => void;
-  updateTableData: (index: number, newData: Partial<DebtEntry>) => void;
+  updateTableData: (index: number, newData: Partial<DebtEntryFromDb>) => void;
 }
 
 export const BillTrackingContext = createContext<BillTrackerContextModel>({
@@ -37,18 +37,18 @@ export const BillTrackingContext = createContext<BillTrackerContextModel>({
 
 export const BillTrackingProvider = ({ children }: any) => {
   const userId = useSelector((state: RootState) => state.auth.userDatabaseId);
-  const [displayedTableData, setDisplayedTableData] = useState<DebtEntry[]>([]);
-  const [selectedRowData, setSelectedRowData] = useState<DebtEntry | null>(null)
+  const [displayedTableData, setDisplayedTableData] = useState<DebtEntryFromDb[]>([]);
+  const [selectedRowData, setSelectedRowData] = useState<DebtEntryFromDb | null>(null)
   const [debtDirection, setDebtDirection] = useState<string>(DebtDirection.ALL);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const deferredSearch = useDeferredValue(searchQuery!);
 
-  const getRowDataById = (selectedId: number): DebtEntry => {
+  const getRowDataById = (selectedId: number): DebtEntryFromDb => {
     const index = displayedTableData.findIndex(debt => debt.id === selectedId);
     return displayedTableData[index];
   }
 
-  const updateTableData = (debtId: number, newData: Partial<DebtEntry>) => {
+  const updateTableData = (debtId: number, newData: Partial<DebtEntryFromDb>) => {
     setDisplayedTableData(currentTable => {
       const updatedTable = [...currentTable];
       const index = updatedTable.findIndex(debt => debt.id === debtId);

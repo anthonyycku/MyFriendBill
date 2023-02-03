@@ -3,7 +3,7 @@ import PageContainer from "../../../global/components/container/page-container";
 import { getDebtList } from "../api/bill-tracking.api";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../app/store";
-import { DebtEntry } from "../models/bill-tracking.model";
+import { DebtEntryFromDb } from "../models/bill-tracking.model";
 import LoadingDots from "../../../global/components/loading/loading-dots";
 import PaneContainer from "../../../global/components/container/pane-container";
 import BillingRightPane from "./right-pane/billing-right-pane";
@@ -20,7 +20,7 @@ const BillTrackingContainer = () => {
   useEffect(() => {
     if (userDatabaseId === null) return;
 
-    getDebtList(userDatabaseId!).then((response: DebtEntry[] | null) => {
+    getDebtList(userDatabaseId!).then((response: DebtEntryFromDb[] | null) => {
       setDisplayedTableData(response!);
     }).catch(error => console.error(error))
       .finally(() => setTableLoading(false));

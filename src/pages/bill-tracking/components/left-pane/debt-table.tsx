@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { DebtEntry } from "../../models/bill-tracking.model";
+import { DebtEntryFromDb } from "../../models/bill-tracking.model";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../app/store";
 import {
@@ -25,7 +25,7 @@ const DebtTable = () => {
   const headerClass = "px-6 py-3"
   const cellClassLong = "px-6 py-4 truncate"
 
-  const filterSearchQuery = (debtItem: DebtEntry) => {
+  const filterSearchQuery = (debtItem: DebtEntryFromDb) => {
     let userIsSender: boolean = userId === debtItem.sender_id;
 
     return (
@@ -39,7 +39,7 @@ const DebtTable = () => {
     );
   };
 
-  const filterDebtDirection = (debtItem: DebtEntry) => {
+  const filterDebtDirection = (debtItem: DebtEntryFromDb) => {
     switch (debtDirection) {
       case (DebtDirection.FROM):
         return debtItem.receiver_id === userId;
@@ -50,7 +50,7 @@ const DebtTable = () => {
     }
   };
 
-  const handleRowClick = (row: DebtEntry) => {
+  const handleRowClick = (row: DebtEntryFromDb) => {
     setSelectedRowData(row);
   }
 
@@ -107,6 +107,7 @@ const DebtTable = () => {
 
               {/*Frequency*/}
               <td className={`${cellClassLong} ${textOpacityFormat(debtItem.next_recurrence_date)}`}>
+                {debtItem.frequency_interval}
               </td>
 
               {/*Complete*/}

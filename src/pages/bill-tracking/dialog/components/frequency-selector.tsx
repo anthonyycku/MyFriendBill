@@ -2,7 +2,10 @@ import React from 'react';
 import DropdownMenu from "../../../../global/components/menu/dropdown-menu";
 import { FrequencyOptions } from "../../constants/bill-tracking.constants";
 
-const FrequencySelector = ({ setFrequency }: { setFrequency: (freq: string | null) => void }) => {
+const FrequencySelector = ({
+                             frequency,
+                             setFrequency
+                           }: { frequency: string, setFrequency: (freq: string) => void }) => {
 
   const frequencyOptions = [
     FrequencyOptions.ONE_TIME, FrequencyOptions.EVERY_WEEK, FrequencyOptions.BIWEEKLY, FrequencyOptions.MONTHLY, FrequencyOptions.MONTHLY_TWO, FrequencyOptions.MONTHLY_THREE, FrequencyOptions.MONTHLY_SIX, FrequencyOptions.ANNUALLY
@@ -14,7 +17,7 @@ const FrequencySelector = ({ setFrequency }: { setFrequency: (freq: string | nul
 
       <span className="w-40">
       <DropdownMenu
-        defaultValue={FrequencyOptions.EVERY_WEEK}
+        value={frequency}
         menuItems={frequencyOptions}
         setChangeValue={setFrequency}
       />

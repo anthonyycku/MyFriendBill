@@ -3,7 +3,7 @@ export interface TransactionData {
   name: string;
 }
 
-export interface DebtEntry {
+export interface DebtEntryFromDb {
   id: number;
   amount: number;
   created_at: string;
@@ -18,7 +18,7 @@ export interface DebtEntry {
   note: string;
 }
 
-export interface DebtEntryValidation {
+export interface DebtEntryInput {
   id?: number;
   amount: number;
   description: string;

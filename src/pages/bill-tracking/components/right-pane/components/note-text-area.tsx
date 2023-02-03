@@ -47,11 +47,16 @@ const NoteTextArea = () => {
         <p className="font-medium">Notes:</p>
 
         {!isEdit && (
-          <i onClick={() => setIsEdit(true)} className="fa fa-pencil-square-o hover:text-orange-500 cursor-pointer"/>
+          <i
+            id="edit-note"
+            onClick={() => setIsEdit(true)}
+            className="fa fa-pencil-square-o hover:text-orange-500 cursor-pointer"
+          />
         )}
 
         {isEdit && !updating && (
           <i
+
             onClick={handleNoteUpdate}
             className="fa fa-check-square hover:text-emerald-500 cursor-pointer"
             style={{ fontSize: '1.2rem' }}

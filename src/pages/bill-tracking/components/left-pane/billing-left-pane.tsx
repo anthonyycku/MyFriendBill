@@ -1,20 +1,21 @@
-import React, { Suspense, useContext, useDeferredValue, useEffect, useState } from 'react';
+import React, { lazy, Suspense, useContext } from 'react';
 import DebtTable from "./debt-table";
-import { DebtEntry } from "../../models/bill-tracking.model";
 import DebtSearchBar from "./components/debt-search.bar";
 import EmptyTable from "./components/empty-table";
 import CreateButton from "../../../../global/components/buttons/create-button";
 import DialogSpinningLoader from "../../../../global/components/loading/dialog-spinning-loader";
-import CreateEditDebtDialog from "../../dialog/create-edit-debt-dialog";
 import { DebtDirection } from "../../constants/bill-tracking.constants";
 import DropdownMenu from "../../../../global/components/menu/dropdown-menu";
 import UseDialogHook from "../../../../global/components/dialog/hooks/use-dialog-hook";
 import { BillTrackingContext } from "../../state/context/bill-tracking-context";
 
+const CreateEditDebtDialog = lazy(() => import("../../dialog/create-edit-debt-dialog"));
+
 const BillingLeftPane = () => {
   const {
     displayedTableData,
-    setDebtDirection
+    setDebtDirection,
+    debtDirection
   } = useContext(BillTrackingContext);
 
   const { modalRef, setOpenDialog, openDialog, animationClass } = UseDialogHook();
@@ -39,7 +40,7 @@ const BillingLeftPane = () => {
             <div className="flex items-center">
               <DebtSearchBar/>
               <DropdownMenu
-                defaultValue={DebtDirection.ALL}
+                value={debtDirection}
                 setChangeValue={setDebtDirection}
                 menuItems={debtDirectionList}
                 styles="ml-2"

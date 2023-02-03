@@ -2,7 +2,7 @@ import React, { FC, SyntheticEvent, useContext, useEffect, useState } from 'reac
 import DialogContainer from "../../../global/components/dialog/dialog-container";
 import { DialogProps } from "../../../global/components/dialog/models/dialog-props";
 import DialogInputBox from "../../../global/components/dialog/components/dialog-input-box";
-import { DebtDirection } from "../constants/bill-tracking.constants";
+import { DebtDirection, FrequencyOptions } from "../constants/bill-tracking.constants";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../app/store";
 import DirectionToggle from "./components/direction-toggle";
@@ -12,7 +12,7 @@ import NoteInput from "./components/note-input";
 import DueDateInput from "./components/due-date-input";
 import FrequencySelector from "./components/frequency-selector";
 import Divider from "../../../global/components/divider/divider";
-import { DebtEntryValidation } from "../models/bill-tracking.model";
+import { DebtEntryInput } from "../models/bill-tracking.model";
 import { createNewDebt, updateDebt } from "../api/bill-tracking.api";
 import { BillTrackingContext } from "../state/context/bill-tracking-context";
 import { DateTime } from "luxon";
@@ -40,7 +40,7 @@ const CreateEditDebtDialog: FC<DialogProps> = ({
   const [amount, setAmount] = useState<number>(0);
   const [description, setDescription] = useState<string>('');
   const [dueDate, setDueDate] = useState<Date | null>(null);
-  const [frequency, setFrequency] = useState<string | null>(null);
+  const [frequency, setFrequency] = useState<string | null>(FrequencyOptions.ONE_TIME);
   const [note, setNote] = useState<string>('');
 
   const [showUsers, setShowUsers] = useState<boolean>(false);
@@ -77,16 +77,16 @@ const CreateEditDebtDialog: FC<DialogProps> = ({
     }
 
     const getOtherUser = (): UserData => {
-      if (sender_data.id === userId) return sender_data;
-      else return receiver_data;
+      if (sender_data.id === userId) return receiver_data;
+      else return sender_data;
     }
 
     setDebtDirection(getDebtDirection());
     setOtherUser(getOtherUser());
     setAmount(amount);
     setDescription(description);
-    setDueDate(next_recurrence_date !== null ? DateTime.fromFormat(next_recurrence_date, 'dd-MM-yyyy').toJSDate : null);
-    setFrequency(frequency_interval);
+    setDueDate(next_recurrence_date !== null ? DateTime.fromFormat(next_recurrence_date!, 'yyyy-MM-dd').toJSDate() : null);
+    setFrequency(frequency_interval || FrequencyOptions.ONE_TIME);
     setNote(note);
     setDebtId(id);
 
@@ -128,32 +128,26 @@ const CreateEditDebtDialog: FC<DialogProps> = ({
     e.preventDefault();
     if (isError()) return;
 
-    const debtData: DebtEntryValidation = {
+    const debtData: DebtEntryInput = {
       sender_id: senderId!,
       receiver_id: receiverId!,
       amount: +Number(amount).toFixed(2),
       description: description,
       next_recurrence_date: dueDate,
-      frequency_interval: frequency,
+      frequency_interval: dueDate === null ? null : frequency,
       note: note
     }
 
-    if (!isEdit) {
-      createNewDebt(debtData).then(response => {
-        setOpenDialog(false);
-      }).catch(error => {
-        setUnknownError(true);
-        console.error(error)
-      })
-    } else {
-      const updateData = { id: debtId!, ...debtData }
-      updateDebt(updateData).then(response => {
-        console.log(response)
-      }).catch(error => {
-        setUnknownError(true);
-        console.error(error);
-      })
-    }
+    const data = isEdit ? { id: debtId!, ...debtData } : debtData;
+    const submitCall = isEdit ? updateDebt : createNewDebt;
+
+    submitCall(data).then(response => {
+      console.log(response);
+      setOpenDialog(false);
+    }).catch(error => {
+      setUnknownError(true);
+      console.error(error);
+    })
   }
 
   return (
@@ -187,7 +181,7 @@ const CreateEditDebtDialog: FC<DialogProps> = ({
 
           <DueDateInput dueDate={dueDate} setDueDate={setDueDate}/>
 
-          {dueDate && <FrequencySelector setFrequency={setFrequency}/>}
+          {dueDate && <FrequencySelector frequency={frequency!} setFrequency={setFrequency}/>}
 
           <NoteInput note={note} setNote={setNote}/>
 
