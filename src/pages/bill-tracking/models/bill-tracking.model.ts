@@ -7,7 +7,6 @@ export interface DebtEntryFromDb {
   id: number;
   amount: number;
   created_at: string;
-  completed: boolean;
   description: string;
   frequency_interval: string | null;
   next_recurrence_date: string | null;
@@ -23,7 +22,7 @@ export interface DebtEntryInput {
   amount: number;
   description: string;
   frequency_interval?: string | null;
-  next_recurrence_date: Date | null;
+  next_recurrence_date: Date | string | null;
   sender_id: number;
   receiver_id: number;
   note: string;

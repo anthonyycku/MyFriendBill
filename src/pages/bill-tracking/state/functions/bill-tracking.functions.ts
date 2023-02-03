@@ -1,4 +1,4 @@
-import { TransactionData } from "../../models/bill-tracking.model";
+import { DebtEntryFromDb, TransactionData } from "../../models/bill-tracking.model";
 import { DateTime, Duration } from 'luxon';
 
 export const formatSenderReceiver = (userId: number, sender_id: number, sender_data: TransactionData, receiver_data: TransactionData): string => {
@@ -63,4 +63,3 @@ export const textOpacityFormat = (next_recurrence_date: string | null): string =
 
   return '';
 }
-

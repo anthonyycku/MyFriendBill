@@ -14,7 +14,7 @@ const PageCard = ({ title, description = [], image, path = "/error" }: PageCardP
   return (
     <Link to={path}>
       <div
-        className="flex flex-col max-h-96 w-96 card-border p-6 border shadow-[1px_1px_3px_0] shadow-lime-800 bg-gray-800 hover:bg-gray-700">
+        className="flex flex-col h-96 w-96 card-border p-6 border shadow-[1px_1px_3px_0] shadow-lime-800 bg-gray-800 hover:bg-gray-700">
         <div className="flex flex-col items-center">
           <img src={image} alt=""/>
           <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{title}</h5>

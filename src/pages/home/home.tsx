@@ -28,9 +28,8 @@ const Home = () => {
   ];
 
   const investmentDescription = [
-    "Track initial investments",
-    "Calculate future savings",
-    "Lose money"
+    "Under development",
+    "HELP"
   ];
 
   return (

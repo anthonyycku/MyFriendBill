@@ -24,6 +24,7 @@ const UsersList = ({
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
+    setLoadingList(true);
     getUsersList(userId!).then(response => {
       const filteredUsers = response.filter((user: UserTableData) => user.id !== userId);
       const usersList = filteredUsers.filter((user: UserTableData) => !user.owner_id).sort((a, b) => a.name.localeCompare(b.name));
