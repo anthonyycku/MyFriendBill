@@ -59,6 +59,12 @@ export async function updateDebt(debtData: DebtEntryInput) {
   return data[0];
 }
 
-export async function createDummyUser(debtData: UserTableData) {
+export async function createCustomUser(userData: Partial<UserTableData>) {
+  const { data, error } = await supabase
+    .from('user')
+    .insert([userData])
 
+  if (error) throw error;
+
+  return data;
 }

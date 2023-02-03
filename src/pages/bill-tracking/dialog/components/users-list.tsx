@@ -1,9 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import LoadingDots from "../../../../global/components/loading/loading-dots";
-import { getUsersList } from "../../api/bill-tracking.api";
+import { createCustomUser, getUsersList } from "../../api/bill-tracking.api";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../app/store";
 import { UserTableData } from "../../../../models/user.model";
+import { Tooltip } from "react-tooltip";
+import { errorHandler } from "../../../../global/functions/error-handler/error-handler";
+import "react-tooltip/dist/react-tooltip.css";
 
 const UsersList = ({
                      otherUser,
@@ -14,6 +17,11 @@ const UsersList = ({
   const [usersList, setUsersList] = useState<UserTableData[]>([]);
   const [customUsersList, setCustomUsersList] = useState<UserTableData[]>([]);
   const [loadingList, setLoadingList] = useState<boolean>(true);
+  const [refresh, setRefresh] = useState(false);
+
+  const [toggleInput, setToggleInput] = useState(false);
+  const [newUserName, setNewUserName] = useState<string>('')
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     getUsersList(userId!).then(response => {
@@ -24,7 +32,11 @@ const UsersList = ({
       setCustomUsersList(customUsersList);
     }).catch(error => console.error(error))
       .finally(() => setLoadingList(false));
-  }, [])
+  }, [refresh])
+
+  useEffect(() => {
+    if (toggleInput) inputRef.current!.focus();
+  }, [toggleInput])
 
   const handleUserSelect = (user: UserTableData) => {
     setOtherUser(user);
@@ -33,6 +45,16 @@ const UsersList = ({
 
   const selectedUserStyle = (currentUser: UserTableData): string => {
     return otherUser.id === currentUser.id ? 'shadow-[inset_0_0_5px_1px_#10b305]' : ''
+  }
+
+  const onSubmitNewUser = () => {
+    if (newUserName.length === 0) return;
+    setToggleInput(false);
+    const data: Partial<UserTableData> = { name: newUserName, owner_id: userId }
+
+    createCustomUser(data).then(() => {
+      setRefresh(prev => !prev);
+    }).catch(error => errorHandler(error));
   }
 
   return (
@@ -53,8 +75,39 @@ const UsersList = ({
               </button>
             ))}
           </div>
+
           <div className="flex flex-col w-full">
-            <div className="self-center font-medium p-2">Your custom users</div>
+            <span className="w-full flex items-center justify-center">
+            <p className="font-medium p-2">Your custom users</p>
+              <Tooltip anchorId="custom-user-add" content="Add custom user" place="top" variant="info"/>
+              <button
+                onClick={() => setToggleInput(prev => !prev)}
+                id="custom-user-add"
+                type="button"
+                className="bg-emerald-500 hover:bg-emerald-700 text-white px-1 font-bold rounded-full"
+              >
+              <i className="fa fa-user-plus"/>
+                </button>
+            </span>
+
+            {toggleInput && (
+              <div className="flex items-center border-b border-emerald-500 mx-2 mb-2">
+                <input
+                  ref={inputRef}
+                  value={newUserName}
+                  onChange={e => setNewUserName(e.target.value)}
+                  className="appearance-none bg-transparent border-none w-full text-white px-2 leading-tight focus:outline-none"
+                  type="text" placeholder="Enter custom user"/>
+                <button
+                  className="mb-1 flex-shrink-0 bg-teal-500 hover:bg-emerald-700 border-teal-500 hover:border-emerald-700 text-sm border-4 text-white px-2 rounded"
+                  type="button"
+                  onClick={onSubmitNewUser}
+                >
+                  Add
+                </button>
+              </div>
+            )}
+
             {customUsersList.length > 0 && customUsersList.map(user => (
               <button
                 key={user.id}
