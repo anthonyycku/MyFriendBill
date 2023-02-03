@@ -1,5 +1,6 @@
 import { supabase } from "../../../supabase-config";
 import { DebtEntryInput } from "../models/bill-tracking.model";
+import { UserTableData } from "../../../models/user.model";
 
 export async function getDebtList(userDatabaseId: number) {
   const { data: debt, error } = await supabase
@@ -24,10 +25,11 @@ export async function updateNote(debtId: number, note: string) {
   return data;
 }
 
-export async function getUsersList() {
+export async function getUsersList(userId: number) {
   const { data: user, error } = await supabase
     .from('user')
-    .select('id, name')
+    .select('id, name, owner_id')
+    .or(`owner_id.eq.${userId}, owner_id.is.null`)
 
   if (error) throw error;
 
@@ -38,11 +40,11 @@ export async function createNewDebt(debtData: DebtEntryInput) {
   const { data, error } = await supabase
     .from('debt')
     .insert([debtData])
-    .select()
+    .select(`*, sender_data: sender_id(id, name), receiver_data: receiver_id(id, name)`)
 
   if (error) throw error;
 
-  return data;
+  return data[0];
 }
 
 export async function updateDebt(debtData: DebtEntryInput) {
@@ -50,9 +52,13 @@ export async function updateDebt(debtData: DebtEntryInput) {
     .from('debt')
     .update(debtData)
     .eq("id", debtData.id)
-    .select()
+    .select(`*, sender_data: sender_id(id, name), receiver_data: receiver_id(id, name)`)
 
   if (error) throw error;
 
   return data[0];
+}
+
+export async function createDummyUser(debtData: UserTableData) {
+
 }

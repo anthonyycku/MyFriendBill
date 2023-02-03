@@ -15,6 +15,7 @@ interface BillTrackerContextModel {
   searchQuery: string;
   setSearchQuery: (query: string) => void;
   updateTableData: (index: number, newData: Partial<DebtEntryFromDb>) => void;
+  insertNewDebt: (data: DebtEntryFromDb) => void;
 }
 
 export const BillTrackingContext = createContext<BillTrackerContextModel>({
@@ -32,6 +33,8 @@ export const BillTrackingContext = createContext<BillTrackerContextModel>({
   setSearchQuery: () => {
   },
   updateTableData: () => {
+  },
+  insertNewDebt: () => {
   }
 });
 
@@ -57,6 +60,10 @@ export const BillTrackingProvider = ({ children }: any) => {
     });
   };
 
+  const insertNewDebt = (newData: DebtEntryFromDb) => {
+    setDisplayedTableData(prev => [...prev, newData]);
+  }
+
   useEffect(() => {
     if (displayedTableData.length === 0 || selectedRowData === null) return;
 
@@ -73,7 +80,8 @@ export const BillTrackingProvider = ({ children }: any) => {
     setDebtDirection,
     searchQuery,
     setSearchQuery,
-    updateTableData
+    updateTableData,
+    insertNewDebt
   };
 
   return (

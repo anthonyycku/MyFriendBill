@@ -19,13 +19,8 @@ import { DateTime } from "luxon";
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { errorHandler } from "../../../global/functions/error-handler/error-handler";
-import { id } from "date-fns/locale";
 import BasicLoader from "../../../global/components/loading/basic-loader";
-
-export interface UserData {
-  id: number | null;
-  name: string;
-}
+import { UserTableData } from "../../../models/user.model";
 
 const CreateEditDebtDialog: FC<DialogProps> = ({
                                                  isEdit = false,
@@ -34,12 +29,12 @@ const CreateEditDebtDialog: FC<DialogProps> = ({
                                                  setOpenDialog = () => {
                                                  }
                                                }) => {
-  const { selectedRowData, updateTableData, setDisplayedTableData } = useContext(BillTrackingContext);
+  const { selectedRowData, updateTableData, insertNewDebt, setSelectedRowData } = useContext(BillTrackingContext);
 
   const userId = useSelector((state: RootState) => state.auth.userDatabaseId);
   const [debtId, setDebtId] = useState<number | null>(null);
   const [debtDirection, setDebtDirection] = useState<string>(DebtDirection.TO);
-  const [otherUser, setOtherUser] = useState<UserData>({ name: '', id: null });
+  const [otherUser, setOtherUser] = useState<UserTableData>({ name: '', id: null });
   const [senderId, setSenderId] = useState<number | null>(null);
   const [receiverId, setReceiverId] = useState<number | null>(null);
   const [amount, setAmount] = useState<number>(0);
@@ -84,7 +79,7 @@ const CreateEditDebtDialog: FC<DialogProps> = ({
 
     }
 
-    const getOtherUser = (): UserData => {
+    const getOtherUser = (): UserTableData => {
       if (sender_data.id === userId) return receiver_data;
       else return sender_data;
     }
@@ -154,7 +149,8 @@ const CreateEditDebtDialog: FC<DialogProps> = ({
       if (isEdit) {
         updateTableData(response.id, response);
       } else {
-        setDisplayedTableData(response);
+        insertNewDebt(response);
+        setSelectedRowData(response);
       }
       toast(`Success: ${isEdit ? 'Edit' : 'Create New'} Entry`,
         { type: 'success' });

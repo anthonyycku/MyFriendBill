@@ -1,11 +1,11 @@
 import React from 'react';
-import { UserData } from "../create-edit-debt-dialog";
+import { UserTableData } from "../../../../models/user.model";
 
 const SelectedUser = ({
                         user,
                         showUsers,
                         setShowUsers
-                      }: { user: UserData, showUsers: boolean, setShowUsers: (show: boolean) => void }) => {
+                      }: { user: UserTableData, showUsers: boolean, setShowUsers: (show: boolean) => void }) => {
 
   const buttonFocus = (): string => {
     return showUsers ? 'focus:bg-gray-800 bg-gray-800 border border-1 border-gray-400 shadow-[inset_0_0_3px_3px_#323232]' : 'bg-gray-600';

@@ -64,6 +64,3 @@ export const textOpacityFormat = (next_recurrence_date: string | null): string =
   return '';
 }
 
-export const handleCreateNewEntry = () => {
-};
-
