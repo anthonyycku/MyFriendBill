@@ -12,10 +12,15 @@ import NoteInput from "./components/note-input";
 import DueDateInput from "./components/due-date-input";
 import FrequencySelector from "./components/frequency-selector";
 import Divider from "../../../global/components/divider/divider";
-import { DebtEntryInput } from "../models/bill-tracking.model";
+import { DebtEntryFromDb, DebtEntryInput } from "../models/bill-tracking.model";
 import { createNewDebt, updateDebt } from "../api/bill-tracking.api";
 import { BillTrackingContext } from "../state/context/bill-tracking-context";
 import { DateTime } from "luxon";
+import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+import { errorHandler } from "../../../global/functions/error-handler/error-handler";
+import { id } from "date-fns/locale";
+import BasicLoader from "../../../global/components/loading/basic-loader";
 
 export interface UserData {
   id: number | null;
@@ -29,7 +34,7 @@ const CreateEditDebtDialog: FC<DialogProps> = ({
                                                  setOpenDialog = () => {
                                                  }
                                                }) => {
-  const { selectedRowData } = useContext(BillTrackingContext);
+  const { selectedRowData, updateTableData, createNewTableData } = useContext(BillTrackingContext);
 
   const userId = useSelector((state: RootState) => state.auth.userDatabaseId);
   const [debtId, setDebtId] = useState<number | null>(null);
@@ -48,6 +53,9 @@ const CreateEditDebtDialog: FC<DialogProps> = ({
   const [noUserError, setNoUserError] = useState<boolean>(false);
   const [amountError, setAmountError] = useState<boolean>(false);
   const [unknownError, setUnknownError] = useState<boolean>(false);
+
+  const [loading, setLoading] = useState(false);
+
 
   useEffect(() => {
     if (!isEdit || selectedRowData === null) return;
@@ -127,6 +135,7 @@ const CreateEditDebtDialog: FC<DialogProps> = ({
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
     if (isError()) return;
+    setLoading(true);
 
     const debtData: DebtEntryInput = {
       sender_id: senderId!,
@@ -139,14 +148,17 @@ const CreateEditDebtDialog: FC<DialogProps> = ({
     }
 
     const data = isEdit ? { id: debtId!, ...debtData } : debtData;
-    const submitCall = isEdit ? updateDebt : createNewDebt;
+    const submitCallFn = isEdit ? updateDebt : createNewDebt;
+    const updateTableFn = (data: DebtEntryFromDb) => isEdit ? updateTableData(data.id!, data) : createNewTableData(data);
 
-    submitCall(data).then(response => {
-      console.log(response);
+    submitCallFn(data).then(response => {
+      updateTableFn(response);
+      toast(`Success: ${isEdit ? 'Edit' : 'Create New'} Entry`,
+        { type: 'success' });
       setOpenDialog(false);
     }).catch(error => {
       setUnknownError(true);
-      console.error(error);
+      errorHandler(error, setLoading);
     })
   }
 
@@ -193,9 +205,12 @@ const CreateEditDebtDialog: FC<DialogProps> = ({
               {amountError && <p className="text-red-500">Amount cannot be 0 or less</p>}
               {unknownError && <p className="text-red-500">Unknown error occurred</p>}
             </div>
-            <button className="max-h-[40px] bg-green-500 hover:bg-green-700 text-white p-2 rounded-lg"
-                    type="submit">
-              Submit
+            <button
+              className="w-[66px] max-h-[40px] bg-green-500 hover:bg-green-700 text-white p-2 rounded-lg"
+              type="submit"
+              disabled={loading}
+            >
+              {loading ? <BasicLoader size="small"/> : 'Submit'}
             </button>
           </div>
         </div>

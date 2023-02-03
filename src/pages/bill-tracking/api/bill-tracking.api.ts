@@ -38,10 +38,11 @@ export async function createNewDebt(debtData: DebtEntryInput) {
   const { data, error } = await supabase
     .from('debt')
     .insert([debtData])
+    .select()
 
   if (error) throw error;
 
-  return data;
+  return data[0];
 }
 
 export async function updateDebt(debtData: DebtEntryInput) {
@@ -49,8 +50,9 @@ export async function updateDebt(debtData: DebtEntryInput) {
     .from('debt')
     .update(debtData)
     .eq("id", debtData.id)
+    .select()
 
   if (error) throw error;
 
-  return data;
+  return data[0];
 }
