@@ -4,6 +4,7 @@ export interface TransactionData {
 }
 
 export interface DebtEntryFromDb {
+  original_id?: number;
   id: number;
   amount: number;
   created_at: string;

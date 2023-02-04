@@ -8,7 +8,7 @@ interface BillTrackerContextModel {
   displayedTableData: DebtEntryFromDb[];
   setDisplayedTableData: (data: DebtEntryFromDb[]) => void;
   selectedRowData: DebtEntryFromDb | null;
-  setSelectedRowData: (data: DebtEntryFromDb) => void;
+  setSelectedRowData: (data: DebtEntryFromDb | null) => void;
   deferredSearch: string;
   debtDirection: string;
   setDebtDirection: (direction: string) => void;
@@ -16,6 +16,11 @@ interface BillTrackerContextModel {
   setSearchQuery: (query: string) => void;
   updateTableData: (index: number, newData: Partial<DebtEntryFromDb>) => void;
   insertNewDebt: (data: DebtEntryFromDb) => void;
+  deleteFromTableData: (id: number) => void;
+  archivedTableData: DebtEntryFromDb[];
+  setArchivedTableData: (data: DebtEntryFromDb[]) => void;
+  isArchive: boolean;
+  setIsArchive: (archive: boolean) => void;
 }
 
 export const BillTrackingContext = createContext<BillTrackerContextModel>({
@@ -35,12 +40,22 @@ export const BillTrackingContext = createContext<BillTrackerContextModel>({
   updateTableData: () => {
   },
   insertNewDebt: () => {
+  },
+  deleteFromTableData: () => {
+  },
+  archivedTableData: [],
+  setArchivedTableData: () => {
+  },
+  isArchive: false,
+  setIsArchive: () => {
   }
 });
 
 export const BillTrackingProvider = ({ children }: any) => {
   const userId = useSelector((state: RootState) => state.auth.userDatabaseId);
+  const [isArchive, setIsArchive] = useState(true);
   const [displayedTableData, setDisplayedTableData] = useState<DebtEntryFromDb[]>([]);
+  const [archivedTableData, setArchivedTableData] = useState<DebtEntryFromDb[]>([]);
   const [selectedRowData, setSelectedRowData] = useState<DebtEntryFromDb | null>(null)
   const [debtDirection, setDebtDirection] = useState<string>(DebtDirection.ALL);
   const [searchQuery, setSearchQuery] = useState<string>('');
@@ -60,6 +75,15 @@ export const BillTrackingProvider = ({ children }: any) => {
     });
   };
 
+  const deleteFromTableData = (debtId: number) => {
+    setDisplayedTableData(currentTable => {
+      const updatedTable = [...currentTable];
+      const index = updatedTable.findIndex(debt => debt.id === debtId);
+      updatedTable.splice(index, 1);
+      return updatedTable;
+    });
+  }
+
   const insertNewDebt = (newData: DebtEntryFromDb) => {
     setDisplayedTableData(prev => [...prev, newData]);
   }
@@ -69,6 +93,11 @@ export const BillTrackingProvider = ({ children }: any) => {
 
     setSelectedRowData(getRowDataById(selectedRowData.id));
   }, [displayedTableData]);
+
+
+  useEffect(() => {
+    setSelectedRowData(null);
+  }, [isArchive])
 
   const states = {
     displayedTableData,
@@ -81,7 +110,12 @@ export const BillTrackingProvider = ({ children }: any) => {
     searchQuery,
     setSearchQuery,
     updateTableData,
-    insertNewDebt
+    insertNewDebt,
+    deleteFromTableData,
+    archivedTableData,
+    setArchivedTableData,
+    isArchive,
+    setIsArchive
   };
 
   return (

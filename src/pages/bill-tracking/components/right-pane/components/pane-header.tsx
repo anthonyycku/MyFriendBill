@@ -12,7 +12,7 @@ const CreateEditDebtDialog = lazy(() => import("../../../dialog/create-edit-debt
 
 const PaneHeader = () => {
   const userId = useSelector((state: RootState) => state.auth.userDatabaseId);
-  const { selectedRowData } = useContext(BillTrackingContext);
+  const { selectedRowData, isArchive } = useContext(BillTrackingContext);
   const { sender_id, sender_data, receiver_data, amount } = selectedRowData!;
 
   const { animationClass, modalRef, setOpenDialog, openDialog } = useDialogHook();
@@ -34,14 +34,16 @@ const PaneHeader = () => {
           style={{ fontSize: '1.2rem' }}
           className="font-bold">{formatSenderReceiver(userId!, sender_id, sender_data, receiver_data)}
         </span>
-
-        <i
-          id="edit-entry-icon"
-          onClick={() => setOpenDialog(true)}
-          className="fa fa-pencil-square-o hover:text-orange-500 cursor-pointer ml-3"
-        />
-
-        <Tooltip anchorId="edit-entry-icon" place="right" content="Edit debt entry" variant="info"/>
+        {!isArchive && (
+          <>
+            <i
+              id="edit-entry-icon"
+              onClick={() => setOpenDialog(true)}
+              className="fa fa-pencil-square-o hover:text-orange-500 cursor-pointer ml-3"
+            />
+            <Tooltip anchorId="edit-entry-icon" place="right" content="Edit debt entry" variant="info"/>
+          </>
+        )}
       </div>
 
       <p

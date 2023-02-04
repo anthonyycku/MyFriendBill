@@ -4,7 +4,13 @@ import BasicLoader from "../../../../../global/components/loading/basic-loader";
 import { BillTrackingContext } from "../../../state/context/bill-tracking-context";
 
 const NoteTextArea = () => {
-  const { selectedRowData, updateTableData, displayedTableData, setSelectedRowData } = useContext(BillTrackingContext);
+  const {
+    selectedRowData,
+    updateTableData,
+    displayedTableData,
+    setSelectedRowData,
+    isArchive
+  } = useContext(BillTrackingContext);
   const { note, id } = selectedRowData!;
 
   const [updating, setUpdating] = useState<boolean>(false);
@@ -16,6 +22,7 @@ const NoteTextArea = () => {
   }, [selectedRowData]);
 
   useEffect(() => {
+    if (isArchive) return;
     const newIndex = displayedTableData.findIndex(debt => id === debt.id);
     setSelectedRowData(displayedTableData[newIndex]);
   }, [displayedTableData])
@@ -46,7 +53,7 @@ const NoteTextArea = () => {
       <div className="flex items-center space-x-3 mt-5">
         <p className="font-medium">Notes:</p>
 
-        {!isEdit && (
+        {!isEdit && !isArchive && (
           <i
             id="edit-note"
             onClick={() => setIsEdit(true)}

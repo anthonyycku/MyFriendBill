@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { SyntheticEvent, useContext, useEffect, useState } from 'react';
 import { DebtEntryFromDb } from "../../models/bill-tracking.model";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../app/store";
@@ -12,6 +12,9 @@ import '../../css/debt-table.css';
 import { DebtDirection } from "../../constants/bill-tracking.constants";
 import { BillTrackingContext } from "../../state/context/bill-tracking-context";
 import { DateTime } from "luxon";
+import { completeDebt, sendToArchive } from "../../api/bill-tracking.api";
+import { toast } from "react-toastify";
+import { errorHandler } from "../../../../global/functions/error-handler/error-handler";
 
 const DebtTable = () => {
   const {
@@ -19,9 +22,14 @@ const DebtTable = () => {
     selectedRowData,
     setSelectedRowData,
     deferredSearch,
-    debtDirection
+    debtDirection,
+    deleteFromTableData,
+    updateTableData,
+    archivedTableData,
+    isArchive
   } = useContext(BillTrackingContext);
   const userId = useSelector((state: RootState) => state.auth.userDatabaseId);
+
 
   const headerClass = "px-6 py-3"
   const cellClassLong = "px-6 py-4 truncate"
@@ -61,9 +69,34 @@ const DebtTable = () => {
     }
   };
 
-  const handleRowClick = (row: DebtEntryFromDb) => {
-    setSelectedRowData(row);
+  const handleComplete = (selectedRowData: DebtEntryFromDb) => {
+
+    const updatedRowData: Partial<DebtEntryFromDb> = { original_id: selectedRowData.id, ...selectedRowData };
+    delete updatedRowData.receiver_data;
+    delete updatedRowData.sender_data;
+    delete updatedRowData.id;
+
+    sendToArchive(updatedRowData!).then(response => {
+    }).catch(error => errorHandler(error));
+
+    completeDebt(updatedRowData!).then((response: DebtEntryFromDb) => {
+      if (response === null) {
+        deleteFromTableData(updatedRowData.id!);
+        setSelectedRowData(null);
+      } else {
+        updateTableData(response.id, response);
+      }
+      toast(`Success: Debt archived and completed. Next due date has been updated.`, { type: 'success' })
+    }).catch(error => errorHandler(error));
   }
+
+  const deleteArchive = () => {
+
+  }
+
+  useEffect(() => {
+    console.log(selectedRowData);
+  }, [selectedRowData])
 
   return (
     <div className="overflow-auto h-full">
@@ -80,14 +113,14 @@ const DebtTable = () => {
         </thead>
 
         <tbody>
-        {sortByDate(displayedTableData)
+        {sortByDate(isArchive ? archivedTableData : displayedTableData)
           .filter(debtItem => filterDebtDirection(debtItem))
           .filter(debtItem => filterSearchQuery(debtItem))
           .map(debtItem => (
             <tr
               key={debtItem.id}
-              onClick={() => handleRowClick(debtItem)}
-              className={`debt-table-row font-medium border-gray-700 hover:bg-gray-500 cursor-pointer ${selectedRowData?.id === debtItem.id && 'bg-gray-600 debt-table-row-selected'} `}
+              onClick={() => setSelectedRowData(debtItem)}
+              className={`debt-table-row font-medium border-gray-700 hover:bg-gray-500 cursor-pointer ${debtItem.id === selectedRowData?.id ? 'bg-gray-600 debt-table-row-selected' : ''} `}
             >
 
               {/* Name */}
@@ -122,11 +155,19 @@ const DebtTable = () => {
               </td>
 
               {/*Complete*/}
-              <td className={`pl-12`}>
-                <button className="hover:text-green-500" onClick={e => e.stopPropagation()}>
-                  <i className="fa fa-check-circle-o" style={{ fontSize: '1.5rem', margin: 0 }}></i>
-                </button>
-              </td>
+              {!isArchive ? (
+                <td className={`pl-12`}>
+                  <button className="hover:text-green-500" onClick={() => handleComplete(debtItem)}>
+                    <i className="fa fa-check-circle-o" style={{ fontSize: '1.5rem', margin: 0 }}></i>
+                  </button>
+                </td>
+              ) : (
+                <td className={`pl-12`}>
+                  <button className="hover:text-red-500" onClick={() => deleteArchive()}>
+                    <i className="fa fa-trash" style={{ fontSize: '1.5rem', margin: 0 }}></i>
+                  </button>
+                </td>
+              )}
             </tr>
           ))}
         </tbody>

@@ -16,6 +16,18 @@ export async function getDebtList(userDatabaseId: number) {
   return debt;
 }
 
+export async function getArchiveList(userDatabaseId: number) {
+  const { data, error } = await supabase
+    .from('archive')
+    .select(`*, sender_data: sender_id(id, name), receiver_data: receiver_id(id, name)`)
+    .or(`sender_id.eq.${userDatabaseId}, receiver_id.eq.${userDatabaseId}`)
+    .order('next_recurrence_date', { ascending: true })
+
+  if (error) throw error;
+
+  return data;
+}
+
 export async function updateNote(debtId: number, note: string) {
   const { data, error } = await supabase
     .from('debt')
@@ -71,11 +83,7 @@ export async function createCustomUser(userData: Partial<UserTableData>) {
   return data;
 }
 
-export async function getArchiveList(userId: number) {
-
-}
-
-export async function sendToArchive(debtData: DebtEntryInput) {
+export async function sendToArchive(debtData: Partial<DebtEntryFromDb>) {
   const { data, error } = await supabase
     .from('archive')
     .insert([debtData])
@@ -117,9 +125,9 @@ export async function completeDebt(debtData: Partial<DebtEntryFromDb>) {
       }
     }
 
-    const updatedDebt = debtData;
+    const updatedDebt = { ...debtData };
     const currentDueDate = updatedDebt.next_recurrence_date;
-    updatedDebt.next_recurrence_date = DateTime.fromISO(<string>currentDueDate!).plus(formatDuration()).toISODate();
+    updatedDebt.next_recurrence_date = DateTime.fromISO(currentDueDate!).plus(formatDuration()).toISODate();
 
     const { data, error } = await supabase
       .from('debt')
@@ -128,6 +136,6 @@ export async function completeDebt(debtData: Partial<DebtEntryFromDb>) {
       .select(`*, sender_data: sender_id(id, name), receiver_data: receiver_id(id, name)`)
 
     if (error) throw error;
-    return data;
+    return data[0];
   }
 }

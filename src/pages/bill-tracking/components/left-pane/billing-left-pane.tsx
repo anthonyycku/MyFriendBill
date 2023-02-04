@@ -15,7 +15,9 @@ const BillingLeftPane = () => {
   const {
     displayedTableData,
     setDebtDirection,
-    debtDirection
+    debtDirection,
+    isArchive,
+    setIsArchive
   } = useContext(BillTrackingContext);
 
   const { modalRef, setOpenDialog, openDialog, animationClass } = UseDialogHook();
@@ -45,10 +47,13 @@ const BillingLeftPane = () => {
                 menuItems={debtDirectionList}
                 styles="ml-2"
               />
+              <button type="button" onClick={() => setIsArchive(!isArchive)}>Archive</button>
             </div>
 
             <div className="flex">
-              <CreateButton handleClick={() => setOpenDialog(true)} text="Create new debt"/>
+              {!isArchive && (
+                <CreateButton handleClick={() => setOpenDialog(true)} text="Create new debt"/>
+              )}
             </div>
           </div>
         )}
