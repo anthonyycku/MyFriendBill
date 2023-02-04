@@ -1,4 +1,7 @@
 [version 1](https://myfriendbill.netlify.app/)
+
+
+
 This idea was born out of my desire to keep my React skills sharp - and I didn't want to use excel anymore to keep track of people who owe me money
 
 UI (2/4/2023)
