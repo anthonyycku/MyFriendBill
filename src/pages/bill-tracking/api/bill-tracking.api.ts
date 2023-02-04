@@ -87,9 +87,20 @@ export async function sendToArchive(debtData: Partial<DebtEntryFromDb>) {
   const { data, error } = await supabase
     .from('archive')
     .insert([debtData])
+    .select(`*, sender_data: sender_id(id, name), receiver_data: receiver_id(id, name)`)
 
   if (error) throw error;
 
+  return data[0];
+}
+
+export async function deleteArchiveById(id: number) {
+  const { data, error } = await supabase
+    .from('archive')
+    .delete()
+    .eq('id', id)
+
+  if (error) throw error;
   return data;
 }
 

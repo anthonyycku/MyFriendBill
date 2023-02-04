@@ -8,6 +8,7 @@ import { DebtDirection } from "../../constants/bill-tracking.constants";
 import DropdownMenu from "../../../../global/components/menu/dropdown-menu";
 import UseDialogHook from "../../../../global/components/dialog/hooks/use-dialog-hook";
 import { BillTrackingContext } from "../../state/context/bill-tracking-context";
+import ArchiveToggleButton from "./components/archive-toggle-button";
 
 const CreateEditDebtDialog = lazy(() => import("../../dialog/create-edit-debt-dialog"));
 
@@ -47,7 +48,7 @@ const BillingLeftPane = () => {
                 menuItems={debtDirectionList}
                 styles="ml-2"
               />
-              <button type="button" onClick={() => setIsArchive(!isArchive)}>Archive</button>
+              <ArchiveToggleButton/>
             </div>
 
             <div className="flex">

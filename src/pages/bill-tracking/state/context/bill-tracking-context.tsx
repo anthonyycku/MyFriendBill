@@ -21,6 +21,8 @@ interface BillTrackerContextModel {
   setArchivedTableData: (data: DebtEntryFromDb[]) => void;
   isArchive: boolean;
   setIsArchive: (archive: boolean) => void;
+  insertNewArchive: (data: DebtEntryFromDb) => void;
+  deleteFromArchiveTable: (id: number) => void;
 }
 
 export const BillTrackingContext = createContext<BillTrackerContextModel>({
@@ -48,12 +50,16 @@ export const BillTrackingContext = createContext<BillTrackerContextModel>({
   },
   isArchive: false,
   setIsArchive: () => {
+  },
+  insertNewArchive: () => {
+  },
+  deleteFromArchiveTable: () => {
   }
 });
 
 export const BillTrackingProvider = ({ children }: any) => {
   const userId = useSelector((state: RootState) => state.auth.userDatabaseId);
-  const [isArchive, setIsArchive] = useState(true);
+  const [isArchive, setIsArchive] = useState(false);
   const [displayedTableData, setDisplayedTableData] = useState<DebtEntryFromDb[]>([]);
   const [archivedTableData, setArchivedTableData] = useState<DebtEntryFromDb[]>([]);
   const [selectedRowData, setSelectedRowData] = useState<DebtEntryFromDb | null>(null)
@@ -83,6 +89,19 @@ export const BillTrackingProvider = ({ children }: any) => {
       return updatedTable;
     });
   }
+
+  const deleteFromArchiveTable = (debtId: number) => {
+    setArchivedTableData(currentTable => {
+      const updatedTable = [...currentTable];
+      const index = updatedTable.findIndex(debt => debt.id === debtId);
+      updatedTable.splice(index, 1);
+      return updatedTable;
+    })
+  }
+
+  const insertNewArchive = (newData: DebtEntryFromDb) => {
+    setArchivedTableData(prev => [...prev, newData]);
+  };
 
   const insertNewDebt = (newData: DebtEntryFromDb) => {
     setDisplayedTableData(prev => [...prev, newData]);
@@ -115,7 +134,9 @@ export const BillTrackingProvider = ({ children }: any) => {
     archivedTableData,
     setArchivedTableData,
     isArchive,
-    setIsArchive
+    setIsArchive,
+    insertNewArchive,
+    deleteFromArchiveTable
   };
 
   return (

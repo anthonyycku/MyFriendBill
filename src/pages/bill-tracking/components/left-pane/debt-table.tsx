@@ -12,7 +12,7 @@ import '../../css/debt-table.css';
 import { DebtDirection } from "../../constants/bill-tracking.constants";
 import { BillTrackingContext } from "../../state/context/bill-tracking-context";
 import { DateTime } from "luxon";
-import { completeDebt, sendToArchive } from "../../api/bill-tracking.api";
+import { completeDebt, deleteArchiveById, sendToArchive } from "../../api/bill-tracking.api";
 import { toast } from "react-toastify";
 import { errorHandler } from "../../../../global/functions/error-handler/error-handler";
 
@@ -26,7 +26,9 @@ const DebtTable = () => {
     deleteFromTableData,
     updateTableData,
     archivedTableData,
-    isArchive
+    isArchive,
+    insertNewArchive,
+    deleteFromArchiveTable
   } = useContext(BillTrackingContext);
   const userId = useSelector((state: RootState) => state.auth.userDatabaseId);
 
@@ -35,9 +37,10 @@ const DebtTable = () => {
   const cellClassLong = "px-6 py-4 truncate"
 
   const sortByDate = (tableData: DebtEntryFromDb[]) => {
+    const dateType = isArchive ? 'created_at' : 'next_recurrence_date'
     return tableData.sort((a: DebtEntryFromDb, b: DebtEntryFromDb) => {
-      const dateA = a.next_recurrence_date ? DateTime.fromISO(a.next_recurrence_date!) : null;
-      const dateB = b.next_recurrence_date ? DateTime.fromISO(b.next_recurrence_date!) : null;
+      const dateA = a[dateType] ? DateTime.fromISO(a[dateType]!) : null;
+      const dateB = b[dateType] ? DateTime.fromISO(b[dateType]!) : null;
       if (!dateA) return 1;
       if (!dateB) return -1;
       return dateA.diff(dateB).as('seconds');
@@ -70,13 +73,16 @@ const DebtTable = () => {
   };
 
   const handleComplete = (selectedRowData: DebtEntryFromDb) => {
-
-    const updatedRowData: Partial<DebtEntryFromDb> = { original_id: selectedRowData.id, ...selectedRowData };
+    const updatedRowData: Partial<DebtEntryFromDb> = { ...selectedRowData };
     delete updatedRowData.receiver_data;
     delete updatedRowData.sender_data;
-    delete updatedRowData.id;
+    delete updatedRowData.created_at;
 
-    sendToArchive(updatedRowData!).then(response => {
+    const archiveRowData = { original_id: selectedRowData!.id, ...updatedRowData };
+    delete archiveRowData.id;
+
+    sendToArchive(archiveRowData).then(response => {
+      insertNewArchive(response);
     }).catch(error => errorHandler(error));
 
     completeDebt(updatedRowData!).then((response: DebtEntryFromDb) => {
@@ -90,8 +96,12 @@ const DebtTable = () => {
     }).catch(error => errorHandler(error));
   }
 
-  const deleteArchive = () => {
-
+  const deleteArchive = (debtItem: DebtEntryFromDb) => {
+    deleteArchiveById(debtItem.id).then(response => {
+      deleteFromArchiveTable(debtItem.id);
+      setSelectedRowData(null);
+      toast('Success: Archived debt deleted.', { type: 'success' });
+    }).catch(error => errorHandler(error));
   }
 
   return (
@@ -102,7 +112,7 @@ const DebtTable = () => {
           <th scope="col" className={headerClass}>To/From</th>
           <th scope="col" className={headerClass}>Amount</th>
           <th scope="col" className={headerClass}>Description</th>
-          <th scope="col" className={headerClass}>Due Date</th>
+          <th scope="col" className={headerClass}>{`${isArchive ? 'Archive Date' : 'Due Date'}`}</th>
           <th scope="col" className={headerClass}>Frequency</th>
           <th scope="col" className={headerClass}></th>
         </tr>
@@ -122,7 +132,7 @@ const DebtTable = () => {
               {/* Name */}
               <th scope="row"
                   className={`px-6 py-4 font-medium text-white truncate ${textOpacityFormat(debtItem.next_recurrence_date)}`}>
-                {formatSenderReceiver(userId!, debtItem.sender_id, debtItem.sender_data, debtItem.receiver_data)}
+                {`${formatSenderReceiver(userId!, debtItem.sender_id, debtItem.sender_data, debtItem.receiver_data)}`}
               </th>
 
               {/*Amount*/}
@@ -137,13 +147,21 @@ const DebtTable = () => {
               </td>
 
               {/*Due Date*/}
-              <td className={`${cellClassLong} ${textOpacityFormat(debtItem.next_recurrence_date)}`}>
+              {isArchive ? (
+                <td className={`${cellClassLong}`}>
+                  <span>
+                    <p>{formatDate(debtItem.created_at)}</p>
+                  </span>
+                </td>
+              ) : (
+                <td className={`${cellClassLong} ${textOpacityFormat(debtItem.next_recurrence_date)}`}>
               <span
                 className={`flex space-x-2 items-center ${textColorFormat(debtItem.next_recurrence_date)} ${textOpacityFormat(debtItem.next_recurrence_date)}`}>
                 <p>{formatDate(debtItem.next_recurrence_date)}</p>
                 {textColorFormat(debtItem.next_recurrence_date) && <i className="fa fa-exclamation-triangle"/>}
               </span>
-              </td>
+                </td>
+              )}
 
               {/*Frequency*/}
               <td className={`${cellClassLong} ${textOpacityFormat(debtItem.next_recurrence_date)}`}>
@@ -159,7 +177,7 @@ const DebtTable = () => {
                 </td>
               ) : (
                 <td className={`pl-12`}>
-                  <button className="hover:text-red-500" onClick={() => deleteArchive()}>
+                  <button className="hover:text-red-500" onClick={() => deleteArchive(debtItem)}>
                     <i className="fa fa-trash" style={{ fontSize: '1.5rem', margin: 0 }}></i>
                   </button>
                 </td>

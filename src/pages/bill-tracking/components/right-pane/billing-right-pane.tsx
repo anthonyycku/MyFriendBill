@@ -7,7 +7,7 @@ import NoteTextArea from "./components/note-text-area";
 import PaneHeader from "./components/pane-header";
 import { BillTrackingContext } from "../../state/context/bill-tracking-context";
 import { DateTime } from "luxon";
-import { completeDebt, sendToArchive } from "../../api/bill-tracking.api";
+import { completeDebt, deleteArchiveById, sendToArchive } from "../../api/bill-tracking.api";
 import { errorHandler } from "../../../../global/functions/error-handler/error-handler";
 import { DebtEntryFromDb } from "../../models/bill-tracking.model";
 import { toast } from "react-toastify";
@@ -19,7 +19,9 @@ const BillingRightPane = () => {
     updateTableData,
     deleteFromTableData,
     setSelectedRowData,
-    isArchive
+    isArchive,
+    insertNewArchive,
+    deleteFromArchiveTable
   } = useContext(BillTrackingContext);
 
   const {
@@ -30,13 +32,16 @@ const BillingRightPane = () => {
   } = selectedRowData!;
 
   const handleComplete = () => {
-    const updatedRowData = { original_id: selectedRowData!.id, ...selectedRowData };
+    const updatedRowData: Partial<DebtEntryFromDb> = { ...selectedRowData };
     delete updatedRowData.receiver_data;
     delete updatedRowData.sender_data;
-    delete updatedRowData.id;
+    delete updatedRowData.created_at;
 
-    sendToArchive(updatedRowData!).then(response => {
-      toast(`Success: Debt archived`, { type: 'info' })
+    const archiveRowData = { original_id: selectedRowData!.id, ...updatedRowData };
+    delete archiveRowData.id;
+
+    sendToArchive(archiveRowData).then(response => {
+      insertNewArchive(response);
     }).catch(error => errorHandler(error));
 
     completeDebt(updatedRowData!).then((response: DebtEntryFromDb) => {
@@ -46,7 +51,15 @@ const BillingRightPane = () => {
       } else {
         updateTableData(response.id, response);
       }
-      toast(`Success: Debt fulfilled`, { type: 'success' })
+      toast(`Success: Debt archived and completed. Next due date has been updated.`, { type: 'success' })
+    }).catch(error => errorHandler(error));
+  }
+
+  const deleteArchive = () => {
+    deleteArchiveById(selectedRowData!.id).then(response => {
+      deleteFromArchiveTable(selectedRowData!.id);
+      setSelectedRowData(null);
+      toast('Success: Archived debt deleted.', { type: 'success' });
     }).catch(error => errorHandler(error));
   }
 
@@ -57,7 +70,8 @@ const BillingRightPane = () => {
 
         <div className="overflow-auto space-y-4">
           <RowDataItem heading="Description" data={description} inline={false}/>
-          <RowDataItem heading="Creation Date" data={DateTime.fromISO(created_at).toFormat("MM/dd/yyyy, HH:mm")}/>
+          <RowDataItem heading={isArchive ? "Archive Date" : "Creation Date"}
+                       data={DateTime.fromISO(created_at).toFormat("MM/dd/yyyy, HH:mm")}/>
           <RowDataItem heading="Due Date" data={formatDate(next_recurrence_date)} rawData={next_recurrence_date}/>
           <RowDataItem heading="Frequency" data={frequency_interval}/>
 
@@ -66,7 +80,14 @@ const BillingRightPane = () => {
       </div>
 
       {isArchive ? (
-        <>Delete</>
+        <div className="self-center w-full">
+          <button
+            className="w-full text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-800"
+            onClick={deleteArchive}
+          >
+            Delete
+          </button>
+        </div>
       ) : (
         <div className="self-center w-full">
           <button

@@ -32,7 +32,8 @@ const PaneHeader = () => {
       <div>
         <span
           style={{ fontSize: '1.2rem' }}
-          className="font-bold">{formatSenderReceiver(userId!, sender_id, sender_data, receiver_data)}
+          className="font-bold">
+          {`${formatSenderReceiver(userId!, sender_id, sender_data, receiver_data)} ${isArchive ? '(Archive)' : ''}`}
         </span>
         {!isArchive && (
           <>
