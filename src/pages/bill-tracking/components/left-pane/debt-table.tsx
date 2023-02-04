@@ -94,10 +94,6 @@ const DebtTable = () => {
 
   }
 
-  useEffect(() => {
-    console.log(selectedRowData);
-  }, [selectedRowData])
-
   return (
     <div className="overflow-auto h-full">
       <table className="w-full text-left text-sm text-gray-300 border-separate border-spacing-0 table-fixed">

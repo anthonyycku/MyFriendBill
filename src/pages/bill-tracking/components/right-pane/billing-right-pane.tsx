@@ -22,6 +22,13 @@ const BillingRightPane = () => {
     isArchive
   } = useContext(BillTrackingContext);
 
+  const {
+    description,
+    created_at,
+    next_recurrence_date,
+    frequency_interval
+  } = selectedRowData!;
+
   const handleComplete = () => {
     const updatedRowData = { original_id: selectedRowData!.id, ...selectedRowData };
     delete updatedRowData.receiver_data;
@@ -49,12 +56,10 @@ const BillingRightPane = () => {
         <PaneHeader/>
 
         <div className="overflow-auto space-y-4">
-          <RowDataItem heading="Description" data={selectedRowData!.description} inline={false}/>
-          <RowDataItem heading="Creation Date"
-                       data={DateTime.fromISO(selectedRowData!.created_at).toFormat("MM/dd/yyyy, HH:mm")}/>
-          <RowDataItem heading="Due Date" data={formatDate(selectedRowData!.next_recurrence_date)}
-                       rawData={selectedRowData!.next_recurrence_date}/>
-          <RowDataItem heading="Frequency" data={selectedRowData!.frequency_interval}/>
+          <RowDataItem heading="Description" data={description} inline={false}/>
+          <RowDataItem heading="Creation Date" data={DateTime.fromISO(created_at).toFormat("MM/dd/yyyy, HH:mm")}/>
+          <RowDataItem heading="Due Date" data={formatDate(next_recurrence_date)} rawData={next_recurrence_date}/>
+          <RowDataItem heading="Frequency" data={frequency_interval}/>
 
           <NoteTextArea/>
         </div>

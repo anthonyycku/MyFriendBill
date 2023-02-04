@@ -7,8 +7,6 @@ const NoteTextArea = () => {
   const {
     selectedRowData,
     updateTableData,
-    displayedTableData,
-    setSelectedRowData,
     isArchive
   } = useContext(BillTrackingContext);
   const { note, id } = selectedRowData!;
@@ -20,12 +18,6 @@ const NoteTextArea = () => {
   useEffect(() => {
     setNewNote(note);
   }, [selectedRowData]);
-
-  useEffect(() => {
-    if (isArchive) return;
-    const newIndex = displayedTableData.findIndex(debt => id === debt.id);
-    setSelectedRowData(displayedTableData[newIndex]);
-  }, [displayedTableData])
 
   const handleTextAreaChange = (value: string) => {
     setNewNote(value);
@@ -70,7 +62,7 @@ const NoteTextArea = () => {
           />
         )}
 
-        {updating && <BasicLoader size="small"/>}
+        {updating && <BasicLoader size="small" position="left"/>}
        </div>
 
       <div className="mb-5">
