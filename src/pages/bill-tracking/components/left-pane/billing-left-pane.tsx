@@ -17,8 +17,7 @@ const BillingLeftPane = () => {
     displayedTableData,
     setDebtDirection,
     debtDirection,
-    isArchive,
-    setIsArchive
+    isArchive
   } = useContext(BillTrackingContext);
 
   const { modalRef, setOpenDialog, openDialog, animationClass } = UseDialogHook();
@@ -27,7 +26,7 @@ const BillingLeftPane = () => {
     DebtDirection.ALL,
     DebtDirection.FROM,
     DebtDirection.TO
-  ]
+  ];
 
   return (
     <>
@@ -41,6 +40,7 @@ const BillingLeftPane = () => {
         {displayedTableData.length > 0 && (
           <div className="flex justify-between mb-2 flex-wrap">
             <div className="flex items-center">
+              <ArchiveToggleButton/>
               <DebtSearchBar/>
               <DropdownMenu
                 value={debtDirection}
@@ -48,7 +48,6 @@ const BillingLeftPane = () => {
                 menuItems={debtDirectionList}
                 styles="ml-2"
               />
-              <ArchiveToggleButton/>
             </div>
 
             <div className="flex">

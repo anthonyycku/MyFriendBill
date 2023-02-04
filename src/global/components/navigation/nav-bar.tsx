@@ -22,10 +22,10 @@ const NavBar = () => {
         {signedIn && <ProfileLogoutButton/>}
       </nav>
       <nav
-        className="min-h-[3rem] bg-gradient-to-r from-emerald-600 flex font-medium space-x-8 px-5 text-lg items-center shadow-inner shadow-emerald-700">
+        className="min-h-[3rem] bg-gradient-to-r from-green-600 flex font-medium space-x-8 px-5 text-lg items-center shadow-inner shadow-emerald-700">
         {location.pathname !== '/' && (
           <button
-            className="bg-transparent hover:bg-amber-600 text-white font-bold py-2 px-4 rounded w-fit flex items-center space-x-2"
+            className="bg-transparent hover:bg-emerald-500 text-white font-bold py-2 px-4 rounded w-fit flex items-center space-x-2"
             onClick={() => navigate(-1)}
             type="button"
           >

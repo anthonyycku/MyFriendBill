@@ -9,7 +9,7 @@ const ArchiveToggleButton = () => {
   }
 
   return (
-    <div className="inline-flex rounded-md shadow-sm ml-2">
+    <div className="inline-flex rounded-md shadow-sm">
       <button
         type="button"
         onClick={() => setIsArchive(false)}
