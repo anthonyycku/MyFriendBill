@@ -1,4 +1,4 @@
-[version 1](https://myfriendbill.netlify.app/)
+Version 1 hosted: [version 1](https://myfriendbill.netlify.app/)
 
 
 
