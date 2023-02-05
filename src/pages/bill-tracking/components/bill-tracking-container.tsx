@@ -37,7 +37,7 @@ const BillTrackingContainer = () => {
         {tableLoading ? <LoadingDots text="Loading table..."/> : <BillingLeftPane/>}
       </PaneContainer>
 
-      <PaneContainer style="md:w-1/3 h-1/3 md:h-full" overflowY>
+      <PaneContainer style="md:w-1/3 h-3/5 md:h-full" overflowY>
         {selectedRowData === null ? <EmptyInfoPane/> : <BillingRightPane/>}
       </PaneContainer>
     </PageContainer>
