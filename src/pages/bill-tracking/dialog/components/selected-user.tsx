@@ -12,8 +12,9 @@ const SelectedUser = ({
   }
 
   return (
-    <>
-      <input value={user.name} type="text" className="w-52 rounded-l bg-gray-500 w-auto ml-4 px-2" disabled/>
+    <div className="flex items-center mt-2 2xl:mt-0">
+      <input value={user.name} type="text" className="h-[36px] w-52 rounded-l bg-gray-500 w-auto 2xl:ml-4 px-2"
+             disabled/>
       <button
         onClick={() => setShowUsers(!showUsers)}
         type="button"
@@ -22,7 +23,7 @@ const SelectedUser = ({
         Find Users
         <i className="fa fa-user ml-2"/>
       </button>
-    </>
+    </div>
   )
 };
 

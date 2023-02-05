@@ -19,7 +19,7 @@ const DialogInputBox = (
     placeholder = " "
   }: DialogInputBoxProps<any>) => {
   return (
-    <div className={`flex items-center min-w-[200px]`}>
+    <div className={`flex min-w-[200px] flex-col 2xl:flex-row`}>
       <label className="w-36 font-medium">{`${heading}:`}</label>
       <input
         className="w-52 focus:text-white bg-gray-500 appearance-none rounded py-2 px-4 text-gray-300 leading-tight focus:outline-none focus:border-purple-500 border border-1 border-gray-600"

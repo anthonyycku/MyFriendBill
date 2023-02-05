@@ -59,7 +59,7 @@ const UsersList = ({
   }
 
   return (
-    <div className="w-full bg-gray-600 h-40 rounded overflow-auto mt-4">
+    <div className="w-full bg-gray-600 h-40 rounded overflow-auto mt-4 p-2">
       {loadingList ? (
         <LoadingDots text="Fetching users..."/>
       ) : (
@@ -70,7 +70,7 @@ const UsersList = ({
               <button
                 key={user.id}
                 onClick={() => handleUserSelect(user)}
-                className={`hover:bg-gray-500 text-left p-1 px-4 ${selectedUserStyle(user)}`}
+                className={`hover:bg-gray-500 text-left p-1 px-4 ${selectedUserStyle(user)} truncate`}
               >
                 {user.name}
               </button>

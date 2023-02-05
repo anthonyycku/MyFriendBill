@@ -15,7 +15,7 @@ const DueDateInput = ({ dueDate, setDueDate }: { dueDate: Date | null, setDueDat
   }
 
   return (
-    <div className="my-4 flex items-center min-w-[200px]">
+    <div className="my-4 flex flex-col 2xl:flex-row">
       <label className="w-36 font-medium">{`Due Date:`}</label>
 
       <div>
@@ -29,7 +29,7 @@ const DueDateInput = ({ dueDate, setDueDate }: { dueDate: Date | null, setDueDat
       </div>
 
       <button type="button"
-              className={`hover:bg-orange-600 flex items-center space-x-1 border border-gray-500 rounded px-4 py-1.5 ml-2 ${disabledStyle()}`}
+              className={`w-40 min-w-[150px] mt-1 2xl:mt-0 2xl:ml-2 hover:bg-orange-600 flex items-center space-x-1 border border-gray-500 rounded px-4 py-1.5 ${disabledStyle()}`}
               onClick={disableInput}
       >
         <i className="fa fa-calendar-times-o"/>

@@ -165,21 +165,23 @@ const CreateEditDebtDialog: FC<DialogProps> = ({
       <form onSubmit={e => handleSubmit(e)}>
         <div className="flex flex-col">
 
-          <div className="flex">
+          <div className="flex flex-wrap 2xl:flex-row">
             <DirectionToggle debtDirection={debtDirection} setDebtDirection={setDebtDirection}/>
             <SelectedUser user={otherUser} showUsers={showUsers} setShowUsers={setShowUsers}/>
+            <span className="flex flex-col w-full">
+              {showUsers && <UsersList otherUser={otherUser} setShowUsers={setShowUsers} setOtherUser={setOtherUser}/>}
+            </span>
           </div>
-          {showUsers && <UsersList otherUser={otherUser} setShowUsers={setShowUsers} setOtherUser={setOtherUser}/>}
 
           <span className="my-4">
-        <DialogInputBox
-          value={isEdit ? amount : undefined}
-          setValue={setAmount}
-          heading="Amount ($)"
-          type="number"
-          placeholder="Amount ($)"
-          required
-        />
+            <DialogInputBox
+              value={isEdit ? amount : undefined}
+              setValue={setAmount}
+              heading="Amount ($)"
+              type="number"
+              placeholder="Amount ($)"
+              required
+            />
           </span>
 
           <DialogInputBox

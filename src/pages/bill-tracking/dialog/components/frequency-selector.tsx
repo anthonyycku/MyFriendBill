@@ -12,7 +12,7 @@ const FrequencySelector = ({
   ];
 
   return (
-    <div className="flex items-center">
+    <div className="flex flex-col 2xl:flex-row mb-4">
       <label className="w-36 font-medium">Frequency:</label>
 
       <span className="w-40">
