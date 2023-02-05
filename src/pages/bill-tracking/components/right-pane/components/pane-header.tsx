@@ -1,5 +1,9 @@
 import React, { lazy, Suspense, useContext, useState } from 'react';
-import { formatSenderReceiver, renderSenderReceiverColor } from "../../../state/functions/bill-tracking.functions";
+import {
+  formatAmount,
+  formatSenderReceiver,
+  renderSenderReceiverColor
+} from "../../../state/functions/bill-tracking.functions";
 import { BillTrackingContext } from "../../../state/context/bill-tracking-context";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../../app/store";
@@ -50,7 +54,7 @@ const PaneHeader = () => {
       <p
         style={{ fontSize: '1.5rem' }}
         className={`${renderSenderReceiverColor(userId!, sender_id)} font-bold`}>
-        {`$${amount}`}
+        {`$${formatAmount(amount)}`}
       </p>
     </div>
   )

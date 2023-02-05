@@ -6,7 +6,7 @@ import {
   formatDate,
   formatSenderReceiver,
   textColorFormat,
-  renderSenderReceiverColor, textOpacityFormat
+  renderSenderReceiverColor, textOpacityFormat, formatAmount
 } from "../../state/functions/bill-tracking.functions";
 import '../../css/debt-table.css';
 import { DebtDirection } from "../../constants/bill-tracking.constants";
@@ -15,6 +15,8 @@ import { DateTime } from "luxon";
 import { completeDebt, deleteArchiveById, sendToArchive } from "../../api/bill-tracking.api";
 import { toast } from "react-toastify";
 import { errorHandler } from "../../../../global/functions/error-handler/error-handler";
+import { Tooltip } from "react-tooltip";
+import "react-tooltip/dist/react-tooltip.css";
 
 const DebtTable = () => {
   const {
@@ -138,7 +140,7 @@ const DebtTable = () => {
               {/*Amount*/}
               <td
                 className={`px-6 py-4 truncate ${renderSenderReceiverColor(userId!, debtItem.sender_id)} ${textOpacityFormat(debtItem.next_recurrence_date)}`}>
-                {`$ ${debtItem.amount}`}
+                {`$ ${formatAmount(debtItem.amount)}`}
               </td>
 
               {/*Description*/}
@@ -172,14 +174,19 @@ const DebtTable = () => {
               {!isArchive ? (
                 <td className={`pl-12`}>
                   <button className="hover:text-green-500" onClick={() => handleComplete(debtItem)}>
-                    <i className="fa fa-check-circle-o" style={{ fontSize: '1.5rem', margin: 0 }}></i>
+                    <i id={`complete-button-${debtItem.id}`} className="fa fa-check-circle-o"
+                       style={{ fontSize: '1.5rem', margin: 0 }}></i>
                   </button>
+                  <Tooltip anchorId={`complete-button-${debtItem.id}`} content="Mark as complete" place="top"
+                           variant="success"/>
                 </td>
               ) : (
                 <td className={`pl-12`}>
                   <button className="hover:text-red-500" onClick={() => deleteArchive(debtItem)}>
-                    <i className="fa fa-trash" style={{ fontSize: '1.5rem', margin: 0 }}></i>
+                    <i id={`delete-button-${debtItem.id}`} className="fa fa-trash"
+                       style={{ fontSize: '1.5rem', margin: 0 }}></i>
                   </button>
+                  <Tooltip anchorId={`delete-button-${debtItem.id}`} content="Delete" place="top" variant="error"/>
                 </td>
               )}
             </tr>

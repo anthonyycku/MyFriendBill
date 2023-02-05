@@ -7,7 +7,7 @@ import NoteTextArea from "./components/note-text-area";
 import PaneHeader from "./components/pane-header";
 import { BillTrackingContext } from "../../state/context/bill-tracking-context";
 import { DateTime } from "luxon";
-import { completeDebt, deleteArchiveById, sendToArchive } from "../../api/bill-tracking.api";
+import { completeDebt, deleteArchiveById, discontinueDebt, sendToArchive } from "../../api/bill-tracking.api";
 import { errorHandler } from "../../../../global/functions/error-handler/error-handler";
 import { DebtEntryFromDb } from "../../models/bill-tracking.model";
 import { toast } from "react-toastify";
@@ -55,6 +55,25 @@ const BillingRightPane = () => {
     }).catch(error => errorHandler(error));
   }
 
+  const handleDiscontinue = () => {
+    const archiveRowData = { original_id: selectedRowData!.id, ...selectedRowData };
+    delete archiveRowData.id;
+    delete archiveRowData.sender_data;
+    delete archiveRowData.receiver_data;
+    delete archiveRowData.created_at;
+
+    sendToArchive(archiveRowData).then(response => {
+      insertNewArchive(response);
+    }).catch(error => errorHandler(error));
+
+    discontinueDebt(selectedRowData!.id).then(response => {
+      deleteFromTableData(selectedRowData!.id);
+      setSelectedRowData(null);
+      toast('Success: Discontinued recurring debt', { type: 'success' });
+    }).catch(error => errorHandler(error));
+
+  }
+
   const deleteArchive = () => {
     deleteArchiveById(selectedRowData!.id).then(response => {
       deleteFromArchiveTable(selectedRowData!.id);
@@ -89,14 +108,24 @@ const BillingRightPane = () => {
           </button>
         </div>
       ) : (
-        <div className="self-center w-full">
-          <button
-            className="w-full text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800"
-            onClick={handleComplete}
-          >
-            Mark as complete
-          </button>
-        </div>
+        <>
+          <div className="flex flex-col">
+            <button
+              className="w-full text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800"
+              onClick={handleComplete}
+            >
+              Mark as complete
+            </button>
+            {selectedRowData?.frequency_interval !== null &&
+                <button
+                    className="mt-2 w-full text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-800"
+                    onClick={handleDiscontinue}
+                >
+                    Discontinue this recurring debt
+                </button>
+            }
+          </div>
+        </>
       )}
     </div>
   )

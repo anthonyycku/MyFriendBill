@@ -150,3 +150,13 @@ export async function completeDebt(debtData: Partial<DebtEntryFromDb>) {
     return data[0];
   }
 }
+
+export async function discontinueDebt(debtId: number) {
+  const { data, error } = await supabase
+    .from('debt')
+    .delete()
+    .eq('id', debtId)
+
+  if (error) throw error;
+  return data;
+}

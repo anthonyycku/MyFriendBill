@@ -23,7 +23,7 @@ export const formatDate = (next_recurrence_date: string | null): string => {
   if (next_recurrence_date === null) return 'No due date';
 
 
-  const dueDate = DateTime.fromISO(next_recurrence_date);
+  const dueDate = DateTime.fromISO(next_recurrence_date).startOf("day");
   const today = DateTime.local();
   let { days } = dueDate.diff(today, 'days').toObject();
   days = Math.ceil(days!);
@@ -62,5 +62,9 @@ export const textOpacityFormat = (next_recurrence_date: string | null): string =
   if (days! < 0) return 'text-opacity-50';
 
   return '';
+}
+
+export const formatAmount = (amount: number): string => {
+  return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 

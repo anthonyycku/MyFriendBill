@@ -11,10 +11,10 @@ interface RowDataItemProps {
 const RowDataItem = ({ heading, data, inline = true, rawData }: RowDataItemProps) => {
 
   return (
-    <div className={`grid grid-flow-row-dense grid-cols-4 ${!inline && 'flex-col'}`}>
-      <p className={`font-medium col-span-1`}>{heading}</p>
+    <div className={`flex flex-wrap ${!inline && 'flex-col'}`}>
+      <p className={`font-medium min-w-[120px]`}>{heading}</p>
       {heading === 'Due Date' ? (
-        <div className="flex items-center space-x-2 col-span-3">
+        <div className="flex items-center space-x-2">
           <p className={`${rawData === null ? 'text-gray-300' : textColorFormat(rawData)}`}>{data}</p>
           {textColorFormat(rawData) && <i className={`fa fa-exclamation-triangle ${textColorFormat(rawData)}`}/>}
         </div>

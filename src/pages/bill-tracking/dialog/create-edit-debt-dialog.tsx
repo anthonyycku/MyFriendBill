@@ -76,7 +76,6 @@ const CreateEditDebtDialog: FC<DialogProps> = ({
         setReceiverId(userId);
         return DebtDirection.FROM
       }
-
     }
 
     const getOtherUser = (): UserTableData => {
@@ -174,11 +173,12 @@ const CreateEditDebtDialog: FC<DialogProps> = ({
 
           <span className="my-4">
         <DialogInputBox
-          value={amount}
+          value={isEdit ? amount : undefined}
           setValue={setAmount}
           heading="Amount ($)"
           type="number"
           placeholder="Amount ($)"
+          required
         />
           </span>
 
@@ -209,7 +209,11 @@ const CreateEditDebtDialog: FC<DialogProps> = ({
               type="submit"
               disabled={loading}
             >
-              {loading ? <BasicLoader size="small"/> : 'Submit'}
+              {loading ? (
+                <BasicLoader size="small"/>
+              ) : (
+                <p>{isEdit ? 'Update' : 'Submit'}</p>
+              )}
             </button>
           </div>
         </div>

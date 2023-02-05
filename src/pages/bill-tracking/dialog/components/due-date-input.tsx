@@ -24,6 +24,7 @@ const DueDateInput = ({ dueDate, setDueDate }: { dueDate: Date | null, setDueDat
           onChange={(date: Date) => setDueDate(date)}
           className={`${disabled ? 'bg-gray-900' : 'bg-gray-500'} rounded p-2 w-40`}
           disabled={disabled}
+          placeholderText={disabled ? "" : "No Due Date"}
         />
       </div>
 
