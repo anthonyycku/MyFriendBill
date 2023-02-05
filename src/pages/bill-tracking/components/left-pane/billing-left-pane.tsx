@@ -38,18 +38,14 @@ const BillingLeftPane = () => {
       <div className="flex flex-col h-full">
 
         {displayedTableData.length > 0 && (
-          <div className="flex justify-between mb-2 flex-wrap">
-            <div className="flex items-center">
+          <div className="flex mb-2 justify-between">
+            <div className="flex flex-col lg:flex-row space-y-1 lg:space-y-0">
               <ArchiveToggleButton/>
               <DebtSearchBar/>
-              <DropdownMenu
-                value={debtDirection}
-                setChangeValue={setDebtDirection}
-                menuItems={debtDirectionList}
-              />
+              <DropdownMenu value={debtDirection} setChangeValue={setDebtDirection} menuItems={debtDirectionList}/>
             </div>
 
-            <div className="flex mt-2 sm:mt-0">
+            <div className="mt-2 sm:mt-0">
               {!isArchive && (
                 <CreateButton handleClick={() => setOpenDialog(true)} text="Create new debt"/>
               )}
