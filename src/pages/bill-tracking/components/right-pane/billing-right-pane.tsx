@@ -88,7 +88,7 @@ const BillingRightPane = () => {
         <PaneHeader/>
 
         <div className="overflow-auto space-y-4">
-          <RowDataItem heading="Description" data={description} inline={false}/>
+          <RowDataItem heading="Description" data={description}/>
           <RowDataItem heading={isArchive ? "Archive Date" : "Creation Date"}
                        data={DateTime.fromISO(created_at).toFormat("MM/dd/yyyy, HH:mm")}/>
           <RowDataItem heading="Due Date" data={formatDate(next_recurrence_date)} rawData={next_recurrence_date}/>

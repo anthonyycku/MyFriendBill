@@ -17,7 +17,7 @@ const NavBar = () => {
         className="flex bg-gray-800 w-full text-white pr-2 py-2 items-center h-16">
         <div className="flex flex-grow">
           <Link to="/"><img className="h-16" src={logo} alt=""/></Link>
-          <NavBarMarquee/>
+          {/*<NavBarMarquee/>*/}
         </div>
         {signedIn && <ProfileLogoutButton/>}
       </nav>

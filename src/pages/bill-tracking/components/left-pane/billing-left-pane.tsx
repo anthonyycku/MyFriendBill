@@ -46,11 +46,10 @@ const BillingLeftPane = () => {
                 value={debtDirection}
                 setChangeValue={setDebtDirection}
                 menuItems={debtDirectionList}
-                styles="ml-2"
               />
             </div>
 
-            <div className="flex">
+            <div className="flex mt-2 sm:mt-0">
               {!isArchive && (
                 <CreateButton handleClick={() => setOpenDialog(true)} text="Create new debt"/>
               )}

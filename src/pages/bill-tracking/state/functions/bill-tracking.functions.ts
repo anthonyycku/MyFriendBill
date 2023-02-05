@@ -51,7 +51,8 @@ export const textColorFormat = (next_recurrence_date: string | null): string => 
   return '';
 }
 
-export const textOpacityFormat = (next_recurrence_date: string | null): string => {
+export const textOpacityFormat = (next_recurrence_date: string | null, isArchive: boolean): string => {
+  if (isArchive) return 'text-opacity-50';
   if (next_recurrence_date === null) return '';
 
   const dueDate = DateTime.fromISO(next_recurrence_date);

@@ -5,7 +5,7 @@
 
 html {
     height: 100vh;
-    overflow-y: hidden;
+    overflow: hidden;
     --scrollbarBG: #696969;
     --thumbBG: #31384b;
 }

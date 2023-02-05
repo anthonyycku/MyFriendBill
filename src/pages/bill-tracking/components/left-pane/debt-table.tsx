@@ -133,18 +133,18 @@ const DebtTable = () => {
 
               {/* Name */}
               <th scope="row"
-                  className={`px-6 py-4 font-medium text-white truncate ${textOpacityFormat(debtItem.next_recurrence_date)}`}>
+                  className={`px-6 py-4 font-medium text-white truncate ${textOpacityFormat(debtItem.next_recurrence_date, isArchive)}`}>
                 {`${formatSenderReceiver(userId!, debtItem.sender_id, debtItem.sender_data, debtItem.receiver_data)}`}
               </th>
 
               {/*Amount*/}
               <td
-                className={`px-6 py-4 truncate ${renderSenderReceiverColor(userId!, debtItem.sender_id)} ${textOpacityFormat(debtItem.next_recurrence_date)}`}>
+                className={`px-6 py-4 truncate ${renderSenderReceiverColor(userId!, debtItem.sender_id)} ${textOpacityFormat(debtItem.next_recurrence_date, isArchive)}`}>
                 {`$ ${formatAmount(debtItem.amount)}`}
               </td>
 
               {/*Description*/}
-              <td className={`${cellClassLong} ${textOpacityFormat(debtItem.next_recurrence_date)}`}>
+              <td className={`${cellClassLong} ${textOpacityFormat(debtItem.next_recurrence_date, isArchive)}`}>
                 {debtItem.description}
               </td>
 
@@ -156,9 +156,9 @@ const DebtTable = () => {
                   </span>
                 </td>
               ) : (
-                <td className={`${cellClassLong} ${textOpacityFormat(debtItem.next_recurrence_date)}`}>
+                <td className={`${cellClassLong} ${textOpacityFormat(debtItem.next_recurrence_date, isArchive)}`}>
               <span
-                className={`flex space-x-2 items-center ${textColorFormat(debtItem.next_recurrence_date)} ${textOpacityFormat(debtItem.next_recurrence_date)}`}>
+                className={`flex space-x-2 items-center ${textColorFormat(debtItem.next_recurrence_date)} ${textOpacityFormat(debtItem.next_recurrence_date, isArchive)}`}>
                 <p>{formatDate(debtItem.next_recurrence_date)}</p>
                 {textColorFormat(debtItem.next_recurrence_date) && <i className="fa fa-exclamation-triangle"/>}
               </span>
@@ -166,7 +166,7 @@ const DebtTable = () => {
               )}
 
               {/*Frequency*/}
-              <td className={`${cellClassLong} ${textOpacityFormat(debtItem.next_recurrence_date)}`}>
+              <td className={`${cellClassLong} ${textOpacityFormat(debtItem.next_recurrence_date, isArchive)}`}>
                 {debtItem.frequency_interval}
               </td>
 

@@ -33,11 +33,11 @@ const BillTrackingContainer = () => {
 
   return (
     <PageContainer>
-      <PaneContainer width="w-3/4">
+      <PaneContainer style="">
         {tableLoading ? <LoadingDots text="Loading table..."/> : <BillingLeftPane/>}
       </PaneContainer>
 
-      <PaneContainer width="w-1/4" overflowY>
+      <PaneContainer style="md:w-1/3 h-1/3 md:h-full" overflowY>
         {selectedRowData === null ? <EmptyInfoPane/> : <BillingRightPane/>}
       </PaneContainer>
     </PageContainer>
