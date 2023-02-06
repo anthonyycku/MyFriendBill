@@ -45,7 +45,7 @@ const BillingLeftPane = () => {
               <DropdownMenu value={debtDirection} setChangeValue={setDebtDirection} menuItems={debtDirectionList}/>
             </div>
 
-            <div className="mt-2 sm:mt-0">
+            <div>
               {!isArchive && (
                 <CreateButton handleClick={() => setOpenDialog(true)} text="Create new debt"/>
               )}

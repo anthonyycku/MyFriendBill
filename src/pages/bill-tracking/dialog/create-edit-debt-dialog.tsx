@@ -206,17 +206,23 @@ const CreateEditDebtDialog: FC<DialogProps> = ({
               {amountError && <p className="text-red-500">Amount cannot be 0 or less</p>}
               {unknownError && <p className="text-red-500">Unknown error occurred</p>}
             </div>
-            <button
-              className="w-[66px] max-h-[40px] bg-green-500 hover:bg-green-700 text-white p-2 rounded-lg"
-              type="submit"
-              disabled={loading}
-            >
-              {loading ? (
-                <BasicLoader size="small"/>
-              ) : (
-                <p>{isEdit ? 'Update' : 'Submit'}</p>
-              )}
-            </button>
+
+            <span className="space-x-4">
+              <button
+                className="w-[66px] max-h-[40px] bg-red-500 hover:bg-red-700 text-white p-2 rounded-lg"
+                onClick={() => setOpenDialog(false)}>Close</button>
+              <button
+                className="w-[66px] max-h-[40px] bg-green-500 hover:bg-green-700 text-white p-2 rounded-lg"
+                type="submit"
+                disabled={loading}
+              >
+                {loading ? (
+                  <BasicLoader size="small"/>
+                ) : (
+                  <p>{isEdit ? 'Update' : 'Submit'}</p>
+                )}
+              </button>
+            </span>
           </div>
         </div>
       </form>
