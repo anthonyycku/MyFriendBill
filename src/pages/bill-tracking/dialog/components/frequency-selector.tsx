@@ -15,7 +15,7 @@ const FrequencySelector = ({
     <div className="flex flex-col 2xl:flex-row mb-4">
       <label className="w-36 font-medium">Frequency:</label>
 
-      <span className="w-40">
+      <span className="w-auto">
       <DropdownMenu
         value={frequency}
         menuItems={frequencyOptions}
