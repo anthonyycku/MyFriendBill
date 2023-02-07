@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PageCard from "../../global/components/cards/page-cards/page-card";
 import billIcon from '../../assets/images/bill-icon.png';
-import investmentIcon from '../../assets/images/invest-icon.png'
+import aboutIcon from '../../assets/images/about.png'
 import DevToggleButton from "./components/dev-toggle-button";
 import { DevFeaturesKey } from "../../global/constants/local-storage.constants";
 import DevCard from "../../global/components/cards/page-cards/dev-card";
@@ -27,10 +27,10 @@ const Home = () => {
     "Send to friends, request from enemies"
   ];
 
-  const investmentDescription = [
-    "Under development",
-    "HELP"
-  ];
+  const aboutDescription = [
+    "Stack, technologies, tools information",
+    "Learn the features - How does it work?"
+  ]
 
   return (
     <PageContainer>
@@ -39,7 +39,7 @@ const Home = () => {
 
         <div className="flex flex-wrap gap-x-20 gap-y-10 justify-center mt-6 h-full">
           <PageCard title="Bill Tracking" description={billTrackDescription} image={billIcon} path="/bill-tracker"/>
-          <PageCard title="Investment Tracking" description={investmentDescription} image={investmentIcon}/>
+          <PageCard title="About" description={aboutDescription} image={aboutIcon} path="/about"/>
 
           {devFeatures && <DevCard/>}
         </div>

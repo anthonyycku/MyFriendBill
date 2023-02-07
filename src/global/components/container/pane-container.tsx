@@ -7,7 +7,7 @@ interface PaneContainerProps {
 }
 
 const PaneContainer: FC<PaneContainerProps> = ({
-                                                 style,
+                                                 style = '',
                                                  overflowY = false,
                                                  children
                                                }) => {

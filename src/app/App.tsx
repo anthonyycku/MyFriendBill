@@ -13,9 +13,9 @@ import { DbUserResponse } from "./models/app.models";
 import { User } from "@supabase/supabase-js";
 
 const Home = lazy(() => import('../pages/home/home'));
-const Users = lazy(() => import('../pages/users/users'));
 const BillTracking = lazy(() => import("../pages/bill-tracking/bill-tracking"));
 const PageNotFound = lazy(() => import("../pages/error-page/page-not-found"))
+const About = lazy(() => import("../pages/about/about-page"));
 
 const App = () => {
   const signedIn = useSelector((state: RootState) => state.auth.signedIn);
@@ -69,8 +69,7 @@ const App = () => {
               <Suspense fallback={<GlobalSpinningLoader/>}>
                 <Routes>
                   <Route path="/" element={<Home/>}/>
-                  <Route path="/users" element={<Users/>}/>
-                  <Route path="/about" element={<p>about</p>}/>
+                  <Route path="/about" element={<About/>}/>
                   <Route path="/bill-tracker" element={<BillTracking/>}/>
                   <Route path="*" element={<PageNotFound/>}/>
                 </Routes>

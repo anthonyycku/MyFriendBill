@@ -12,7 +12,6 @@ const LandingPage = () => {
         <div className="flex flex-col mt-6 px-10 space-y-2">
           <p>Please sign in using Google to access all features.</p>
           <p>Your Google information will<span className="font-medium">{` NOT `}</span> be collected.</p>
-          <p>I'm just some guy making an app.</p>
         </div>
       </div>
     </div>
