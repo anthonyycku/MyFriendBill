@@ -6,6 +6,8 @@ import updatedBillImage from "../../../../assets/features_images/updated-active-
 import rightArrowImage from "../../../../assets/features_images/arrow-right.png";
 import downArrowImage from "../../../../assets/features_images/arrow-down.png";
 import tableToolsImage from "../../../../assets/features_images/table-tools.png";
+import archiveDeleteImage from "../../../../assets/features_images/archive-delete.png";
+import Divider from "../../../../global/components/divider/divider";
 
 const Page3 = () => {
   return (
@@ -16,6 +18,8 @@ const Page3 = () => {
       <p>The search bar filters names, amounts, and descriptions.</p>
       <p>Dropdown menu can show all bills, only debts the user owes, or only debts owed to the user.</p>
       <img src={tableToolsImage} width={500} className="border border-2 border-emerald-800"/>
+
+      <Divider/>
 
       <p className="font-medium text-lg">Completing a bill</p>
 
@@ -38,6 +42,11 @@ const Page3 = () => {
         <img src={archiveBillImage} width={400} className="border border-2 border-emerald-800"/>
         <img src={updatedBillImage} width={400} className="border border-2 border-emerald-800"/>
       </div>
+      <Divider/>
+      <p className="font-medium text-lg">Archived bills</p>
+      <p>Archived bills can be deleted permanently by clicking the delete icon at the end of each row or the delete
+        button in the secondary pane.</p>
+      <img src={archiveDeleteImage} width={600} className="border border-2 border-emerald-800"/>
     </div>
   )
 };

@@ -27,7 +27,7 @@ const InformationPage = () => {
       </div>
 
       <div className="flex flex-col space-y-2 md:flex-row md:items-center md:space-x-4">
-        <p className="font-medium text-lg">Backend Technologies:</p>
+        <p className="font-medium text-lg">Back-End Technologies:</p>
         <ListItem img={supabaseIcon} text="Supabase"/>
         <ListItem img={postgresIcon} text="PostgreSQL"/>
         <ListItem img={googleIcon} text="Google OAuth 2.0"/>
