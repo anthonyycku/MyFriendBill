@@ -46,7 +46,7 @@ const PaneHeader = () => {
               onClick={() => setOpenDialog(true)}
               className="fa fa-pencil-square-o hover:text-orange-500 cursor-pointer ml-2"
             />
-            <Tooltip anchorId="edit-entry-icon" place="right" content="Edit debt entry" variant="info"/>
+            <Tooltip anchorId="edit-entry-icon" place="right" content="Edit bill entry" variant="info"/>
           </>
         )}
       </div>

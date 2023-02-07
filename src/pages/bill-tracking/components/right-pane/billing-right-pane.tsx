@@ -51,7 +51,7 @@ const BillingRightPane = () => {
       } else {
         updateTableData(response.id, response);
       }
-      toast(`Success: Debt archived and completed. Next due date has been updated.`, { type: 'success' })
+      toast(`Success: Bill archived and completed. Next due date has been updated.`, { type: 'success' })
     }).catch(error => errorHandler(error));
   }
 
@@ -69,7 +69,7 @@ const BillingRightPane = () => {
     discontinueDebt(selectedRowData!.id).then(response => {
       deleteFromTableData(selectedRowData!.id);
       setSelectedRowData(null);
-      toast('Success: Discontinued recurring debt', { type: 'success' });
+      toast('Success: Discontinued recurring bill', { type: 'success' });
     }).catch(error => errorHandler(error));
 
   }
@@ -78,7 +78,7 @@ const BillingRightPane = () => {
     deleteArchiveById(selectedRowData!.id).then(response => {
       deleteFromArchiveTable(selectedRowData!.id);
       setSelectedRowData(null);
-      toast('Success: Archived debt deleted.', { type: 'success' });
+      toast('Success: Archived bill deleted.', { type: 'success' });
     }).catch(error => errorHandler(error));
   }
 
@@ -121,7 +121,7 @@ const BillingRightPane = () => {
                     className="mt-2 w-full text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-800"
                     onClick={handleDiscontinue}
                 >
-                    Discontinue this recurring debt
+                    Discontinue this recurring bill
                 </button>
             }
           </div>

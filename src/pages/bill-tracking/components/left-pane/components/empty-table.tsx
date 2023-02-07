@@ -19,7 +19,7 @@ const EmptyTable = () => {
       <i className="fa fa-info-circle" style={{ fontSize: '3rem' }}/>
       <p className="font-medium">There is no data to display</p>
 
-      <CreateButton handleClick={() => setOpenDialog(true)} text="Create new debt"/>
+      <CreateButton handleClick={() => setOpenDialog(true)} text="Create new bill"/>
     </div>
   )
 };

@@ -161,7 +161,7 @@ const CreateEditDebtDialog: FC<DialogProps> = ({
   }
 
   return (
-    <DialogContainer title={isEdit ? "Update debt" : "Create new debt"} animationClass={animationClass}
+    <DialogContainer title={isEdit ? "Update bill" : "Create new bill"} animationClass={animationClass}
                      modalRef={modalRef}>
       <form onSubmit={e => handleSubmit(e)}>
         <div className="flex flex-col">

@@ -47,7 +47,7 @@ const BillingLeftPane = () => {
 
             <div>
               {!isArchive && (
-                <CreateButton handleClick={() => setOpenDialog(true)} text="Create new debt"/>
+                <CreateButton handleClick={() => setOpenDialog(true)} text="Create new bill"/>
               )}
             </div>
           </div>
