@@ -3,15 +3,18 @@ import { supabase } from "../../../supabase-config";
 import { signOut } from "../../../features/auth/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../app/store";
+import { useNavigate } from "react-router-dom";
 
 const ProfileLogoutButton = () => {
   const profileName = useSelector((state: RootState) => state.auth.profileName)
   const profileImage = useSelector((state: RootState) => state.auth.profileImage)
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const signOutWithGoogle = async () => {
     await supabase.auth.signOut().then(() => {
       dispatch(signOut());
+      navigate('/');
     })
   }
 

@@ -32,10 +32,9 @@ const GuestSignInButton = () => {
   return (
     <button
       type="button"
-      className="w-[234px] font-bold py-2.5 px-5 mr-2 mb-2 bg-gray-700 text-sm text-gray-400 focus:outline-none bg-white rounded-lg border border-gray-200 hover:text-white focus:z-10 hover:bg-blue-800 hover:bg-blue-700 focus:outline-none"
+      className="w-[234px] font-bold py-2.5 px-5 mr-2 mb-2 bg-gray-700 text-sm text-gray-400 focus:outline-none rounded-lg border border-gray-200 hover:text-white focus:z-10 hover:bg-blue-800 hover:bg-blue-700"
       onClick={handleSignIn}
     >
-
       Sign in as guest
     </button>
   )
