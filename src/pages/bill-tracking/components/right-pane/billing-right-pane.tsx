@@ -12,6 +12,7 @@ import { errorHandler } from "../../../../global/functions/error-handler/error-h
 import { DebtEntryFromDb } from "../../models/bill-tracking.model";
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import { FrequencyOptions } from "../../constants/bill-tracking.constants";
 
 const BillingRightPane = () => {
   const {
@@ -116,7 +117,7 @@ const BillingRightPane = () => {
             >
               Mark as complete
             </button>
-            {selectedRowData?.frequency_interval !== null &&
+            {selectedRowData?.frequency_interval !== null && selectedRowData?.frequency_interval !== FrequencyOptions.ONE_TIME &&
                 <button
                     className="mt-2 w-full text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-800"
                     onClick={handleDiscontinue}

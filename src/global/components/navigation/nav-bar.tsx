@@ -4,7 +4,7 @@ import logo from '../../../assets/images/logo.png';
 import NavBarMarquee from "../marquee/nav-bar-marquee";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../app/store";
-import ProfileLogoutButton from "../login/profile-logout-button";
+import ProfileLogoutButton from "../../../pages/landing-page/components/profile-logout-button";
 
 const NavBar = () => {
   const navigate = useNavigate();

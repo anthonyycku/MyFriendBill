@@ -12,7 +12,7 @@ import Divider from "../../../../global/components/divider/divider";
 const Page3 = () => {
   return (
     <div className="flex flex-col space-y-4">
-      <p className="font-medium text-lg">Table tools</p>
+      <p className="font-medium text-lg text-white">Table tools</p>
       <p>There are two tabs for the table - Active and Archive. Active shows current bills not yet completed. Archive
         shows bills that have been paid.</p>
       <p>The search bar filters names, amounts, and descriptions.</p>
@@ -21,7 +21,7 @@ const Page3 = () => {
 
       <Divider/>
 
-      <p className="font-medium text-lg">Completing a bill</p>
+      <p className="font-medium text-lg text-white">Completing a bill</p>
 
       <p>Users can complete bills by clicking either the check at the end of each row, or the the "Mark as complete"
         button in the secondary pane.</p>
@@ -43,7 +43,7 @@ const Page3 = () => {
         <img src={updatedBillImage} width={400} className="border border-2 border-emerald-800"/>
       </div>
       <Divider/>
-      <p className="font-medium text-lg">Archived bills</p>
+      <p className="font-medium text-lg text-white">Archived bills</p>
       <p>Archived bills can be deleted permanently by clicking the delete icon at the end of each row or the delete
         button in the secondary pane.</p>
       <img src={archiveDeleteImage} width={600} className="border border-2 border-emerald-800"/>

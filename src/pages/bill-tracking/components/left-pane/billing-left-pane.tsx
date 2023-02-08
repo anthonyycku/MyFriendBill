@@ -17,7 +17,8 @@ const BillingLeftPane = () => {
     displayedTableData,
     setDebtDirection,
     debtDirection,
-    isArchive
+    isArchive,
+    archivedTableData
   } = useContext(BillTrackingContext);
 
   const { modalRef, setOpenDialog, openDialog, animationClass } = UseDialogHook();
@@ -37,7 +38,7 @@ const BillingLeftPane = () => {
 
       <div className="flex flex-col h-full">
 
-        {displayedTableData.length > 0 && (
+        {(displayedTableData.length > 0 || archivedTableData.length > 0) && (
           <div className="flex mb-2 justify-between">
             <div className="flex flex-col lg:flex-row space-y-1 lg:space-y-0">
               <ArchiveToggleButton/>
@@ -53,7 +54,7 @@ const BillingLeftPane = () => {
           </div>
         )}
 
-        {displayedTableData.length === 0 ? <EmptyTable/> : <DebtTable/>}
+        {displayedTableData.length === 0 && archivedTableData.length === 0 ? <EmptyTable/> : <DebtTable/>}
       </div>
     </>
   )

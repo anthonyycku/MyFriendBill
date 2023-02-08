@@ -6,7 +6,7 @@ export async function checkUser() {
   return data;
 }
 
-export async function createNewUser(name: string, googleId: string) {
+export async function createNewUser(name: string, googleId: string = '') {
   const sendData = [{ name: name, google_id: googleId }]
   let { data, error } = await supabase
     .from('user')

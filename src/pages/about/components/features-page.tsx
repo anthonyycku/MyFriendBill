@@ -14,7 +14,7 @@ const FeaturesPage = () => {
   }, [page]);
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full text-gray-300">
       {loading ? (
         <></>
       ) : (

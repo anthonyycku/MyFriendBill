@@ -4,13 +4,14 @@ import NavBar from "../global/components/navigation/nav-bar";
 import GlobalSpinningLoader from "../global/components/loading/global-spinning-loader";
 import AppContainer from "../global/components/container/app-container";
 import Footer from "../global/components/footer/footer";
-import { AuthProfile, signIn, setUserDatabaseId } from "../features/auth/authSlice";
+import { AuthProfile, signIn, setUserDatabaseId, signInAsGuest } from "../features/auth/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "./store";
 import LandingPage from "../pages/landing-page/landing-page";
 import { checkUser, checkUserExists, createNewUser } from "./api/app.api";
 import { DbUserResponse } from "./models/app.models";
 import { User } from "@supabase/supabase-js";
+import { errorHandler } from "../global/functions/error-handler/error-handler";
 
 const Home = lazy(() => import('../pages/home/home'));
 const BillTracking = lazy(() => import("../pages/bill-tracking/bill-tracking"));
@@ -19,28 +20,38 @@ const About = lazy(() => import("../pages/about/about-page"));
 
 const App = () => {
   const signedIn = useSelector((state: RootState) => state.auth.signedIn);
-  const googleId = useSelector((state: RootState) => state.auth.googleId)
-  const profileName = useSelector((state: RootState) => state.auth.profileName)
+  const googleId = useSelector((state: RootState) => state.auth.googleId);
+  const profileName = useSelector((state: RootState) => state.auth.profileName);
+  const isGuest = useSelector((state: RootState) => state.auth.isGuest)
   const dispatch = useDispatch();
   const [pageLoading, setPageLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    checkUser().then((response: { user: User | null }) => {
-      if (response.user === null) {
-        return;
-      }
+    const guestId = localStorage.getItem('guestLoginId');
+    const guestName = localStorage.getItem('guestLoginName');
 
-      const { full_name, picture } = response.user.user_metadata
-      const googleId: string = response.user.id;
-      const profileData: AuthProfile = { name: full_name, image: picture, googleId: googleId }
-      dispatch(signIn(profileData));
-    }).finally(() => setPageLoading(false));
-  }, [])
+    if (guestId && guestName) {
+      dispatch(signInAsGuest({ name: guestName }));
+      dispatch(setUserDatabaseId(+guestId));
+      setPageLoading(false);
+    } else {
+      checkUser().then((response: { user: User | null }) => {
+        if (response.user === null) {
+          return;
+        }
+
+        const { full_name, picture } = response.user.user_metadata
+        const googleId: string = response.user.id;
+        const profileData: AuthProfile = { name: full_name, image: picture, googleId: googleId }
+        dispatch(signIn(profileData));
+      }).finally(() => setPageLoading(false));
+    }
+  }, []);
 
   useEffect(() => {
-    if (!signedIn) return;
+    if (!signedIn || isGuest) return;
 
-    const setUserState = (response: DbUserResponse[] | null) => {
+    const setUserStateId = (response: DbUserResponse[] | null) => {
       if (response === null) return;
       const userDatabaseData: DbUserResponse = response[0];
       dispatch(setUserDatabaseId(userDatabaseData.id));
@@ -49,12 +60,13 @@ const App = () => {
     checkUserExists(googleId).then((response: DbUserResponse[]) => {
       if (response.length === 0) {
         createNewUser(profileName, googleId).then((response: DbUserResponse[] | null) => {
-          setUserState(response)
-        }).catch(error => console.error(error))
+          setUserStateId(response)
+        }).catch(error => errorHandler(error))
       } else {
-        setUserState(response);
+        setUserStateId(response);
       }
-    }).catch(error => console.error(error))
+    }).catch(error => errorHandler(error))
+
   }, [signedIn])
 
 
@@ -64,20 +76,23 @@ const App = () => {
       <AppContainer>
         {pageLoading && <GlobalSpinningLoader/>}
         {!pageLoading && (
-          <>
-            {signedIn ? (
-              <Suspense fallback={<GlobalSpinningLoader/>}>
-                <Routes>
+          <Suspense fallback={<GlobalSpinningLoader/>}>
+            <Routes>
+              {signedIn ? (
+                <>
                   <Route path="/" element={<Home/>}/>
                   <Route path="/about" element={<About/>}/>
                   <Route path="/bill-tracker" element={<BillTracking/>}/>
                   <Route path="*" element={<PageNotFound/>}/>
-                </Routes>
-              </Suspense>
-            ) : (
-              <LandingPage/>
-            )}
-          </>
+                </>
+              ) : (
+                <>
+                  <Route path="/" element={<LandingPage/>}/>
+                  <Route path="/about" element={<About/>}/>
+                </>
+              )}
+            </Routes>
+          </Suspense>
         )}
       </AppContainer>
       <Footer/>

@@ -4,7 +4,7 @@ import Divider from "../../../../global/components/divider/divider";
 const Page1 = () => {
   return (
     <div className="flex flex-col space-y-4">
-      <p className="font-medium text-lg">What is MyFriendBill?</p>
+      <p className="font-medium text-lg text-white">What is MyFriendBill?</p>
       <p>
         MyFriendBill is an application that allows users to keep track of the money they are owed/owe to other users or
         institutions.
@@ -16,7 +16,7 @@ const Page1 = () => {
 
       <Divider/>
 
-      <p className="font-medium text-lg">Getting started</p>
+      <p className="font-medium text-lg text-white">Getting started</p>
 
     </div>
   )

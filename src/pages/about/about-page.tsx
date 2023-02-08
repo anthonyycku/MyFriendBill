@@ -7,7 +7,7 @@ import FeaturesPage from "./components/features-page";
 import PaneContainer from "../../global/components/container/pane-container";
 
 const AboutPage = () => {
-  const [currentTab, setCurrentTab] = useState(Tabs.INFORMATION);
+  const [currentTab, setCurrentTab] = useState(Tabs.FEATURES);
 
   return (
     <PageContainer>
