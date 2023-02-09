@@ -1,5 +1,6 @@
 import React from 'react';
 import createDebtImage from "../../../../assets/features_images/create-debt.png";
+import usersListImage from "../../../../assets/features_images/create-debt-users-list.png";
 import editDebtImage from "../../../../assets/features_images/edit-debt.png";
 import updateDebtImage from "../../../../assets/features_images/update-debt.png";
 import requestMoneyTableImage from "../../../../assets/features_images/request-money-table.png";
@@ -33,7 +34,10 @@ const Page2 = () => {
       <p className="font-medium text-lg text-white">Creating a new debt</p>
 
       <p>Users can create a debt through the "Create new bill" button.</p>
-      <img src={createDebtImage} width={400} className="border border-2 border-emerald-800"/>
+      <div className="flex flex-col space-y-2 lg:flex-row lg:space-x-2 lg:space-y-0">
+        <img src={createDebtImage} width={400} className="border border-2 border-emerald-800"/>
+        <img src={usersListImage} width={400} className="border border-2 border-emerald-800"/>
+      </div>
 
       <span className="flex flex-col lg:flex-row lg:space-x-2">
         <p className="font-medium text-white">To/From Users:</p><p>Users can select whether to send (To) or receive (from) other users.

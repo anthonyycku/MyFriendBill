@@ -1,5 +1,6 @@
 import React from 'react';
 import Divider from "../../../../global/components/divider/divider";
+import landingPageImage from '../../../../assets/features_images/landing-page.png'
 
 const Page1 = () => {
   return (
@@ -18,6 +19,15 @@ const Page1 = () => {
 
       <p className="font-medium text-lg text-white">Getting started</p>
 
+      <img src={landingPageImage} width={500} className="border border-2 border-emerald-800"/>
+      <span className="flex flex-col lg:flex-row lg:space-x-2">
+        <p className="font-medium text-white">Sign in with Google:</p><p>Signing in with Google allows the user to share their name with other users. Other than profile image and name, no other data is saved.
+        </p>
+      </span>
+      <span className="flex flex-col lg:flex-row lg:space-x-2">
+        <p className="font-medium text-white">Sign in as guest:</p><p>Signing in as guest will provide the user with a randomly generated name. If the user logs out, the user will be assigned a new name and a clean profile.
+        </p>
+      </span>
     </div>
   )
 };
