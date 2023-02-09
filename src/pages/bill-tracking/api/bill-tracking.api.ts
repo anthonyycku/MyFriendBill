@@ -42,7 +42,7 @@ export async function updateNote(debtId: number, note: string) {
 export async function getUsersList(userId: number) {
   const { data: user, error } = await supabase
     .from('user')
-    .select('id, name, owner_id')
+    .select('id, name, owner_id, google_id')
     .or(`owner_id.eq.${userId}, owner_id.is.null`)
 
   if (error) throw error;

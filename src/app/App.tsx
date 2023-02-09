@@ -36,13 +36,11 @@ const App = () => {
       setPageLoading(false);
     } else {
       checkUser().then((response: { user: User | null }) => {
-        if (response.user === null) {
-          return;
-        }
-
-        const { full_name, picture } = response.user.user_metadata
+        if (response.user === null) return;
+        
+        const { full_name, picture } = response.user.user_metadata;
         const googleId: string = response.user.id;
-        const profileData: AuthProfile = { name: full_name, image: picture, googleId: googleId }
+        const profileData: AuthProfile = { name: full_name, image: picture, googleId: googleId };
         dispatch(signIn(profileData));
       }).finally(() => setPageLoading(false));
     }
@@ -78,17 +76,16 @@ const App = () => {
         {!pageLoading && (
           <Suspense fallback={<GlobalSpinningLoader/>}>
             <Routes>
+              <Route path="*" element={<PageNotFound/>}/>
+              <Route path="/about" element={<About/>}/>
               {signedIn ? (
                 <>
                   <Route path="/" element={<Home/>}/>
-                  <Route path="/about" element={<About/>}/>
                   <Route path="/bill-tracker" element={<BillTracking/>}/>
-                  <Route path="*" element={<PageNotFound/>}/>
                 </>
               ) : (
                 <>
                   <Route path="/" element={<LandingPage/>}/>
-                  <Route path="/about" element={<About/>}/>
                 </>
               )}
             </Routes>

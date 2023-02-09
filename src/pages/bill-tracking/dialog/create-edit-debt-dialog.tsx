@@ -7,12 +7,11 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../app/store";
 import DirectionToggle from "./components/direction-toggle";
 import SelectedUser from "./components/selected-user";
-import UsersList from "./components/users-list";
 import NoteInput from "./components/note-input";
 import DueDateInput from "./components/due-date-input";
 import FrequencySelector from "./components/frequency-selector";
 import Divider from "../../../global/components/divider/divider";
-import { DebtEntryFromDb, DebtEntryInput } from "../models/bill-tracking.model";
+import { DebtEntryInput } from "../models/bill-tracking.model";
 import { createNewDebt, updateDebt } from "../api/bill-tracking.api";
 import { BillTrackingContext } from "../state/context/bill-tracking-context";
 import { DateTime } from "luxon";
@@ -21,6 +20,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { errorHandler } from "../../../global/functions/error-handler/error-handler";
 import BasicLoader from "../../../global/components/loading/basic-loader";
 import { UserTableData } from "../../../models/user.model";
+import useDialogHook from "../../../global/components/dialog/hooks/use-dialog-hook";
+import UsersList from "./users-list";
 
 const CreateEditDebtDialog: FC<DialogProps> = ({
                                                  isEdit = false,
@@ -42,8 +43,6 @@ const CreateEditDebtDialog: FC<DialogProps> = ({
   const [dueDate, setDueDate] = useState<Date | null>(null);
   const [frequency, setFrequency] = useState<string | null>(FrequencyOptions.ONE_TIME);
   const [note, setNote] = useState<string>('');
-
-  const [showUsers, setShowUsers] = useState<boolean>(false);
 
   const [noUserError, setNoUserError] = useState<boolean>(false);
   const [amountError, setAmountError] = useState<boolean>(false);
@@ -160,18 +159,33 @@ const CreateEditDebtDialog: FC<DialogProps> = ({
     })
   }
 
+  const {
+    animationClass: userAnimationClass,
+    setOpenDialog: setUserOpenDialog,
+    openDialog: userOpenDialog,
+    modalRef: userModalRef
+  } = useDialogHook();
+
   return (
     <DialogContainer title={isEdit ? "Update bill" : "Create new bill"} animationClass={animationClass}
                      modalRef={modalRef}>
+
+      {userOpenDialog &&
+          <UsersList
+              setOpenDialog={setUserOpenDialog}
+              animationClass={userAnimationClass}
+              modalRef={userModalRef}
+              otherUser={otherUser}
+              setOtherUser={setOtherUser}
+          />
+      }
+
       <form onSubmit={e => handleSubmit(e)}>
         <div className="flex flex-col">
 
           <div className="flex flex-wrap 2xl:flex-row">
             <DirectionToggle debtDirection={debtDirection} setDebtDirection={setDebtDirection}/>
-            <SelectedUser user={otherUser} showUsers={showUsers} setShowUsers={setShowUsers}/>
-            <span className="flex flex-col w-full">
-              {showUsers && <UsersList otherUser={otherUser} setShowUsers={setShowUsers} setOtherUser={setOtherUser}/>}
-            </span>
+            <SelectedUser setOpenDialog={setUserOpenDialog} user={otherUser}/>
           </div>
 
           <span className="my-4">

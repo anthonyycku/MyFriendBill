@@ -14,6 +14,7 @@ const GuestSignInButton = () => {
   const handleSignIn = () => {
     const guestId = localStorage.getItem('guestLoginId');
     const guestName = localStorage.getItem('guestLoginName');
+    
     if (guestId && guestName) {
       dispatch(signInAsGuest({ name: guestName }));
       dispatch(setUserDatabaseId(+guestId));
