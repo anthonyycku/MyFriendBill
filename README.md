@@ -26,6 +26,10 @@ During bill creation, users can choose other users to send/request money to. Cre
 Users can select whether to send (To) or receive (From) other users. Selecting an existing user will reciprocate the bill to the other user. Alternatively, if the existing user does not exist, it is possible to create "custom users".
 
 # Update existing bill
+Existing bills can be updated through the edit button in the secondary pane, after selecting a row from the table.
+
+Note that both users (sender and receiver) will see the same changes to the updated bill.
+
 ![image](https://user-images.githubusercontent.com/8136106/217981046-72c7526b-631a-4674-bff7-d307e515fa6b.png)
 
 ![image](https://user-images.githubusercontent.com/8136106/217981027-82748ecc-9733-45bc-9cb6-12ce802af9a4.png)
