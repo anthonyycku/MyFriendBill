@@ -34,6 +34,30 @@ Note that both users (sender and receiver) will see the same changes to the upda
 
 ![image](https://user-images.githubusercontent.com/8136106/217981027-82748ecc-9733-45bc-9cb6-12ce802af9a4.png)
 
+# Table features
+There are two tabs for the table - Active and Archive. Active shows current bills not yet completed. Archive shows bills that have been paid.
+
+The search bar filters names, amounts, and descriptions.
+
+Dropdown menu can show all bills, only debts the user owes, or only debts owed to the user.
+![image](https://user-images.githubusercontent.com/8136106/217981309-c9996ad2-9f5f-41dc-ab54-28a8599696a9.png)
+
+Users can complete bills by clicking either the check at the end of each row, or the "Mark as complete" button in the secondary pane
+![image](https://user-images.githubusercontent.com/8136106/217981402-995cda9b-4337-47c8-a9c4-a5679a6f8b3b.png)
+
+Completing a bill sends a copy of the current bill to the archive for record-keeping.
+
+If the bill has a recurring frequency, a copy gets sent to the archive while the current bill's date will update to the date of its next recurrence (based on frequency).
+
+On the archived bill, the creation date and time are replaced with the date and time the bill was archived.
+
+![image](https://user-images.githubusercontent.com/8136106/217981482-647e0fe3-4aca-4a66-8895-b41413f55999.png)
+
+# Archived bills
+Archived bills can be deleted permanently by clicking the delete icon at the end of each row or the delete button in the secondary pane.
+
+![image](https://user-images.githubusercontent.com/8136106/217981511-943599fb-4cd6-47cf-95c2-3594b6fe8402.png)
+
 
 # Database
 
