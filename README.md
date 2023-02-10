@@ -16,10 +16,27 @@ By signing in through Google, only your name and profile image are saved to the 
 
 ## Database
 
+# User Table
+| id | serial |
+| name | string |
+| google_id | number |
+| owner_id | number |
+
 # Debt Table
 | id | serial |
-| ----------- | ----------- |
 | created_at | Date |
+| sender_id | number |
+| receiver_id | number |
+| amount | number |
+| description | string |
+| frequency_interval | string |
+| next_recurrence_date | Date |
+| note | string |
+
+# Archive Table
+| id | serial |
+| archived_at | Date |
+| created_at  | Date |
 | sender_id | number |
 | receiver_id | number |
 | amount | number |
