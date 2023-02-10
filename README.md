@@ -14,9 +14,9 @@ By signing in through Google, only your name and profile image are saved to the 
 #UI (1/31/2023)
 ![327993215_1119641395381264_698175583430670011_n](https://user-images.githubusercontent.com/8136106/215684982-2e9d5efc-1826-4a9d-b9ab-4bc3ff28931c.png)
 
-## Database
+# Database
 
-# User Table
+## User Table
 
 | id | serial |
 | -- | ------ |
@@ -24,7 +24,7 @@ By signing in through Google, only your name and profile image are saved to the 
 | google_id | number |
 | owner_id | number |
 
-# Debt Table
+## Debt Table
 | id | serial |
 | -- | ------ |
 | created_at | Date |
@@ -36,7 +36,7 @@ By signing in through Google, only your name and profile image are saved to the 
 | next_recurrence_date | Date |
 | note | string |
 
-# Archive Table
+## Archive Table
 | id | serial |
 | -- | ------ |
 | archived_at | Date |
