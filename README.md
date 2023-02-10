@@ -15,8 +15,21 @@ By signing in through Google, only your name and profile image are saved to the 
 
 **Sign in as guest:** Signing in as guest will provide the user with a randomly generated name. If the user logs out, the user will be assigned a new name and a clean profile.
 
-# Bills Table
+# Usage Guide
 ![image](https://user-images.githubusercontent.com/8136106/216792514-a1f52529-dfe3-4b62-ac93-f6b7522bf85a.png)
+
+# Create a new bill
+![image](https://user-images.githubusercontent.com/8136106/217980577-61badb00-9e9d-419b-a108-00a586f32158.png)
+
+During bill creation, users can choose other users to send/request money to. Creating a bill to an existing user will show the bill on their side too.
+
+Users can select whether to send (To) or receive (From) other users. Selecting an existing user will reciprocate the bill to the other user. Alternatively, if the existing user does not exist, it is possible to create "custom users".
+
+# Update existing bill
+![image](https://user-images.githubusercontent.com/8136106/217981046-72c7526b-631a-4674-bff7-d307e515fa6b.png)
+
+![image](https://user-images.githubusercontent.com/8136106/217981027-82748ecc-9733-45bc-9cb6-12ce802af9a4.png)
+
 
 # Database
 
