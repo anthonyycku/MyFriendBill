@@ -17,6 +17,7 @@ By signing in through Google, only your name and profile image are saved to the 
 ## Database
 
 # User Table
+| -- | ------ |
 | id | serial |
 | name | string |
 | google_id | number |
