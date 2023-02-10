@@ -26,6 +26,7 @@ By signing in through Google, only your name and profile image are saved to the 
 
 # Debt Table
 | id | serial |
+| -- | ------ |
 | created_at | Date |
 | sender_id | number |
 | receiver_id | number |
@@ -37,6 +38,7 @@ By signing in through Google, only your name and profile image are saved to the 
 
 # Archive Table
 | id | serial |
+| -- | ------ |
 | archived_at | Date |
 | created_at  | Date |
 | sender_id | number |
