@@ -16,7 +16,7 @@ By signing in through Google, only your name and profile image are saved to the 
 
 # Database
 
-## User Table
+**User Table**
 
 | id | serial |
 | -- | ------ |
@@ -24,7 +24,7 @@ By signing in through Google, only your name and profile image are saved to the 
 | google_id | number |
 | owner_id | number |
 
-## Debt Table
+**Debt Table**
 | id | serial |
 | -- | ------ |
 | created_at | Date |
@@ -36,7 +36,7 @@ By signing in through Google, only your name and profile image are saved to the 
 | next_recurrence_date | Date |
 | note | string |
 
-## Archive Table
+**Archive Table**
 | id | serial |
 | -- | ------ |
 | archived_at | Date |
