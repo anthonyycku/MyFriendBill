@@ -2,7 +2,7 @@ Version 1 hosted: [version 1](https://myfriendbill.netlify.app/)
 
 
 
-##What is MyFriendBill?##
+## What is MyFriendBill?
 
 MyFriendBill is an application that allows users to keep track of the money they are owed/owe to other users or institutions.
 
