@@ -6,9 +6,10 @@ export interface UserBoxProps {
   data: UserTableData[];
   otherUser: UserTableData;
   setOtherUser: (user: UserTableData) => void;
+  setOpenDialog: (open: boolean) => void;
 }
 
-const UserBox: FC<UserBoxProps> = ({ title, data, otherUser, setOtherUser }) => {
+const UserBox: FC<UserBoxProps> = ({ setOpenDialog, title, data, otherUser, setOtherUser }) => {
 
   return (
     <div
@@ -19,7 +20,10 @@ const UserBox: FC<UserBoxProps> = ({ title, data, otherUser, setOtherUser }) => 
           className={`truncate min-h-[35px] px-2 hover:bg-blue-600 hover:text-blue-200 ${otherUser.id === item.id ? 'shadow-[inset_0_0_5px_1px_#10b305] text-emerald-500' : ''}`}
           key={item.id}
           type="button"
-          onClick={() => setOtherUser(item)}
+          onClick={() => {
+            setOtherUser(item);
+            setOpenDialog(false);
+          }}
         >
           {item.name}
         </button>

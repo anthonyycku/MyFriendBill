@@ -12,7 +12,7 @@ interface CustomUserBox extends UserBoxProps {
   setRefresh: Dispatch<SetStateAction<boolean>>;
 }
 
-const CustomUserBox: FC<CustomUserBox> = ({ title, data, otherUser, setOtherUser, setRefresh }) => {
+const CustomUserBox: FC<CustomUserBox> = ({ setOpenDialog, title, data, otherUser, setOtherUser, setRefresh }) => {
   const userId = useSelector((state: RootState) => state.auth.userDatabaseId);
   const [toggleInput, setToggleInput] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -72,7 +72,10 @@ const CustomUserBox: FC<CustomUserBox> = ({ title, data, otherUser, setOtherUser
           className={`truncate min-h-[35px] px-2 hover:bg-blue-600 hover:text-blue-200 ${otherUser.id === item.id ? 'shadow-[inset_0_0_5px_1px_#10b305] text-emerald-500' : ''}`}
           key={item.id}
           type="button"
-          onClick={() => setOtherUser(item)}
+          onClick={() => {
+            setOtherUser(item);
+            setOpenDialog(false);
+          }}
         >
           {item.name}
         </button>

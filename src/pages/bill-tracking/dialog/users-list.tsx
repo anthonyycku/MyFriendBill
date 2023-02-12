@@ -64,11 +64,11 @@ const UsersList: FC<UsersDialogProps> = ({ setOpenDialog, animationClass, modalR
             <div
               className="flex flex-col lg:flex-row lg:justify-between lg:space-y-0 space-y-2 lg:flex-wrap">
               <UserBox title="Authorized Users" data={filterBySearch(usersList)} otherUser={otherUser}
-                       setOtherUser={setOtherUser}/>
+                       setOtherUser={setOtherUser} setOpenDialog={setOpenDialog!}/>
               <CustomUserBox title="Custom Users" data={filterBySearch(customUsersList)} otherUser={otherUser}
-                             setOtherUser={setOtherUser} setRefresh={setRefresh}/>
+                             setOtherUser={setOtherUser} setRefresh={setRefresh} setOpenDialog={setOpenDialog!}/>
               {showGuests && <UserBox title="Guest Users" data={filterBySearch(guestList)} otherUser={otherUser}
-                                      setOtherUser={setOtherUser}/>}
+                                      setOtherUser={setOtherUser} setOpenDialog={setOpenDialog!}/>}
             </div>
 
             <Divider/>

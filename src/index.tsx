@@ -18,8 +18,8 @@ root.render(
         autoClose={5000}
         newestOnTop
         closeOnClick
-        pauseOnFocusLoss
-        pauseOnHover
+        pauseOnFocusLoss={false}
+        pauseOnHover={false}
         theme="dark"
       />
     </Provider>

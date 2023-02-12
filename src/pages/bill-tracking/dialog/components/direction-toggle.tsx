@@ -17,14 +17,14 @@ const DirectionToggle = ({
         onClick={() => setDebtDirection(DebtDirection.TO)}
         className={`${style(DebtDirection.TO)} w-16 border-r-2 border-gray-500 px-4 py-2 text-sm font-medium rounded-l-lg text-white hover:bg-gray-600 `}
       >
-        {DebtDirection.TO}
+        Pay
       </button>
       <button
         type="button"
         onClick={() => setDebtDirection(DebtDirection.FROM)}
-        className={`${style(DebtDirection.FROM)} w-16 px-4 py-2 text-sm font-medium rounded-r-lg text-white hover:bg-gray-600`}
+        className={`${style(DebtDirection.FROM)} w-20 px-4 py-2 text-sm font-medium rounded-r-lg text-white hover:bg-gray-600`}
       >
-        {DebtDirection.FROM}
+        Request
       </button>
     </div>
   )

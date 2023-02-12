@@ -23,7 +23,7 @@ const Page3 = () => {
 
       <p className="font-medium text-lg text-white">Completing a bill</p>
 
-      <p>Users can complete bills by clicking either the check at the end of each row, or the the "Mark as complete"
+      <p>Users can complete bills by clicking either the check at the end of each row, or the "Mark as complete"
         button in the secondary pane.</p>
       <img src={completeImage} width={800} className="border border-2 border-emerald-800"/>
       <p>Completing a bill sends a copy of the current bill to the archive for record-keeping.</p>

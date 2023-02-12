@@ -1,7 +1,7 @@
 export const DebtDirection = {
   TO: 'To',
   FROM: 'From',
-  ALL: 'All'
+  ALL: 'All',
 }
 
 export const FrequencyOptions = {

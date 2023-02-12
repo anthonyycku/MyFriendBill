@@ -46,13 +46,18 @@ const BillingRightPane = () => {
     }).catch(error => errorHandler(error));
 
     completeDebt(updatedRowData!).then((response: DebtEntryFromDb) => {
+      const rowData = { ...updatedRowData };
       if (response === null) {
         deleteFromTableData(updatedRowData.id!);
         setSelectedRowData(null);
       } else {
         updateTableData(response.id, response);
       }
-      toast(`Success: Bill archived and completed. Next due date has been updated.`, { type: 'success' })
+      if (rowData.frequency_interval === null || rowData.frequency_interval === FrequencyOptions.ONE_TIME) {
+        toast('Success: Bill archived and completed.', { type: 'success' });
+      } else {
+        toast(`Success: Bill archived and completed. Next due date has been updated.`, { type: 'success' });
+      }
     }).catch(error => errorHandler(error));
   }
 

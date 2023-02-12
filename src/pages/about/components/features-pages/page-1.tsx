@@ -12,7 +12,7 @@ const Page1 = () => {
       </p>
       <p>
         By signing in through Google, only your name and profile image are saved to the database. This is to allow other
-        users to send/request debts from you.
+        users to send/request bills to and from you.
       </p>
 
       <Divider/>

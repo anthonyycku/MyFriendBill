@@ -31,16 +31,16 @@ const Page2 = () => {
 
       <Divider/>
 
-      <p className="font-medium text-lg text-white">Creating a new debt</p>
+      <p className="font-medium text-lg text-white">Creating a new bill</p>
 
-      <p>Users can create a debt through the "Create new bill" button.</p>
+      <p>Users can create a bill through the "Create new bill" button.</p>
       <div className="flex flex-col space-y-2 lg:flex-row lg:space-x-2 lg:space-y-0">
         <img src={createDebtImage} width={400} className="border border-2 border-emerald-800"/>
         <img src={usersListImage} width={400} className="border border-2 border-emerald-800"/>
       </div>
 
       <span className="flex flex-col lg:flex-row lg:space-x-2">
-        <p className="font-medium text-white">To/From Users:</p><p>Users can select whether to send (To) or receive (from) other users.
+        <p className="font-medium text-white">To/From Users:</p><p>Users can select whether to send (To) or receive (From) other users.
         Selecting an existing user will reciprocate the bill to the other user. Alternatively, if the existing user does not exist, it is possible to create "custom users".
         </p>
       </span>
@@ -61,7 +61,7 @@ const Page2 = () => {
         <p className="font-medium text-white">Frequency:</p><p>Time between each recurrence. Options are: One time, weekly, bi-weekly, monthly, every 2 months, every 3 months, every 6 months, annually.</p>
       </span>
 
-      <span className="flex flex-col lg:flex-row lg:space-x-2 ">
+      <span className="flex flex-col lg:flex-row lg:space-x-2">
         <p className="font-medium text-white">Notes:</p><p>Text. Optional. Not shown on table.</p>
       </span>
 
