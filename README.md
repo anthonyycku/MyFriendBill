@@ -70,7 +70,7 @@ Bill Summary combines all active bills of the same name, displaying the final am
 | id | serial |
 | -- | ------ |
 | name | string |
-| google_id | number |
+| google_id | string |
 | owner_id | number |
 
 ### Debt Table
