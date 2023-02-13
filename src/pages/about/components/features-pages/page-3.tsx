@@ -7,6 +7,8 @@ import rightArrowImage from "../../../../assets/features_images/arrow-right.png"
 import downArrowImage from "../../../../assets/features_images/arrow-down.png";
 import tableToolsImage from "../../../../assets/features_images/table-tools.png";
 import archiveDeleteImage from "../../../../assets/features_images/archive-delete.png";
+import billSummaryButton from "../../../../assets/features_images/bill-summary-button.png";
+import billSummary from "../../../../assets/features_images/bill-summary.png";
 import Divider from "../../../../global/components/divider/divider";
 
 const Page3 = () => {
@@ -47,6 +49,14 @@ const Page3 = () => {
       <p>Archived bills can be deleted permanently by clicking the delete icon at the end of each row or the delete
         button in the secondary pane.</p>
       <img src={archiveDeleteImage} width={600} className="border border-2 border-emerald-800"/>
+
+      <Divider/>
+      <p className="font-medium text-lg text-white">Bill Summary **NEW (2/12/2023 update)**</p>
+      <p>A "Bill Summary" button has been added to the table tools, next to "Create Bill".</p>
+      <img src={billSummaryButton} width={400} className="border border-2 border-emerald-800"/>
+      <p>Bill Summary combines all active bills of the same name, displaying the final amount that the user owes or is
+        owed from a specific user.</p>
+      <img src={billSummary} width={800} className="border border-2 border-emerald-800"/>
     </div>
   )
 };
