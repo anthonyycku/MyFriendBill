@@ -58,6 +58,10 @@ Archived bills can be deleted permanently by clicking the delete icon at the end
 
 ![image](https://user-images.githubusercontent.com/8136106/217981511-943599fb-4cd6-47cf-95c2-3594b6fe8402.png)
 
+# Bill Summary
+Bill Summary combines all active bills of the same name, displaying the final amount that the user owes or is owed from a specific user.
+![image](https://user-images.githubusercontent.com/8136106/218374861-769cdb7c-5221-4831-8bd8-6e44a52b9fdd.png)
+
 
 # Database
 
